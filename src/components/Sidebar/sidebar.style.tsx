@@ -1,25 +1,47 @@
 'use client';
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const SidebarSection = styled.div <{ isHiddeSidebar: boolean }>`
-  width: 300px;
+interface IProps {
+  isShowSidebar?: boolean | undefined,
+  isShowButton?: boolean | undefined,
+}
+
+export const SidebarSection = styled.div <IProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 0px;
   height: 100vh;
+  padding-bottom: 45px;
   background-color: aqua;
-  transition: width 0.2s;
-  ${({ isHiddeSidebar }) => isHiddeSidebar && `
-    width: 0px;
-    overflow: hidden;
-    transition: width 0.2s;
+  transition: all 0.2s;
+  overflow: hidden;
+  
+  ${props => props.isShowSidebar && css`
+    width: 300px;
+    overflow: visible;
+    transition: all 0.2s;
   `}
 `;
 
-export const Title = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  color: red;
+export const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  height: 96px;
+  width: 300px;
+  padding-left: 35px;
+
+   p {
+    margin-left: 15px;
+    color: #000112;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 25px;
+   }
 `;
 
-export const ToggleSideBar = styled.button`
+export const ToggleSideBar = styled.button<IProps>`
   position: fixed;
   left: 0;
   bottom: 32px;
@@ -33,8 +55,33 @@ export const ToggleSideBar = styled.button`
   border-bottom-right-radius: 24px;
   background-color: #635FC7;
   cursor: pointer;
+  transition: all 0.2s;
+  overflow: visible;
 
   &:hover {
     background-color: #A8A4FF;
   }
+
+  ${props => props.isShowButton && css`
+    width: 0;
+    overflow: hidden;
+    transition: all 0.2s;
+  `}
+`;
+
+export const HideSection = styled.div`
+  display: flex;
+  align-items: center;
+  width: 300px;
+  padding-left: 35px;
+  cursor: pointer;
+
+ 
+
+  p {
+    margin-left: 15px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #828FA3;
+   }
 `;
