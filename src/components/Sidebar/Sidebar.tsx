@@ -1,9 +1,9 @@
-import { SidebarSection } from './sidebar.style';
+import { SidebarSection, Title } from './sidebar.style';
 
 const Sidebar = () => {
   return (
     <SidebarSection>
-
+      <Title>Hello</Title>
     </SidebarSection>
   )
 }
