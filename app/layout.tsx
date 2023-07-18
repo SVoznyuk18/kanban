@@ -1,8 +1,9 @@
-import StyledComponentsRegistry from '@/src/lib/registry';
-
-import Sidebar from '@/src/components/Sidebar/Sidebar'
-import './globals.css'
 import type { Metadata } from 'next'
+
+import StyledComponentsRegistry from '@/src/utils/registry';
+import Sidebar from '@/src/components/Sidebar/Sidebar'
+import { GlobalStyles } from '@/src/styles/GlobalStyles';
+import { RootLayoutThemeProvider } from '@/src/utils/providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,8 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StyledComponentsRegistry>
-          <Sidebar />
-          {children}
+          <RootLayoutThemeProvider>
+            <Sidebar />
+            {children}
+            <GlobalStyles />
+          </RootLayoutThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
