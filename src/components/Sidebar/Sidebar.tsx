@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { SidebarSection, LogoSection, ToggleSideBar, HideSection } from './sidebar.style';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 
-
 const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);

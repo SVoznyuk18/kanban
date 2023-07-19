@@ -1,11 +1,23 @@
 import styled from 'styled-components';
 
+
+export const ThemeSwitcherWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  min-width: 235px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #F4F7FD;
+`;
+
 export const Switcher = styled.label`
   position: relative;
   display: inline-block;
   width: 44px;
   height: 20px;
-  margin: 0 0.75rem;
+  margin: 0 25px;
 
   input {
     display: none;
@@ -14,6 +26,12 @@ export const Switcher = styled.label`
   input:checked + span:before {
     transform: translateX(25px);
     background-color: #fff; 
+  }
+
+  &: hover {
+    span {
+      background-color: #A8A4FF;
+    }
   }
 
   span {
@@ -32,8 +50,8 @@ export const Switcher = styled.label`
         content: "";
         left: 2px;
         top: 2px;
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         background-color:  #fff;
         border-radius: 50%;
         transition: transform 0.3s ease;
