@@ -1,6 +1,7 @@
 'use client';
 
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
+import Image from 'next/image';
 
 interface IProps {
   isShowSidebar?: boolean | undefined,
@@ -72,11 +73,14 @@ export const ToggleSideBar = styled.button<IProps>`
 export const HideSection = styled.div`
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 275px;
+  min-width: 240px;
+  height: 48px;
   padding-left: 35px;
+  margin-top: 22px;
   cursor: pointer;
-
- 
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
 
   p {
     margin-left: 15px;
@@ -84,4 +88,12 @@ export const HideSection = styled.div`
     font-weight: 700;
     color: #828FA3;
    }
+
+  &: hover {
+    background-color: #E4EBFA;
+
+    p {
+      color: #635FC7;
+    }
+  }
 `;
