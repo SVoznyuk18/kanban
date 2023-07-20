@@ -8,9 +8,6 @@ import { SidebarSection, LogoSection, ToggleSideBar, HideSection } from './sideb
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { useModal } from '@/src/utils/ModalProvider';
 
-import Modal from '../Modal/Modal';
-
-
 const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
@@ -51,8 +48,6 @@ const Sidebar: React.FC = () => {
         />
         <p>Hide Sidebar</p>
       </HideSection>
-
-      <Modal />
     </SidebarSection>
   )
 }

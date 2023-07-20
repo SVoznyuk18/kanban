@@ -5,6 +5,7 @@ import Sidebar from '@/src/components/Sidebar/Sidebar'
 import { GlobalStyles } from '@/src/styles/GlobalStyles';
 import { RootLayoutThemeProvider } from '@/src/utils/providers';
 import { ModalProvider } from '@/src/utils/ModalProvider';
+import Modal from '@/src/components/Modal/Modal';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,10 +25,12 @@ export default function RootLayout({
             <ModalProvider>
               <Sidebar />
               {children}
+              <Modal />
               <GlobalStyles />
             </ModalProvider>
           </RootLayoutThemeProvider>
         </StyledComponentsRegistry>
+        <div id='modal-root'></div>
       </body>
     </html>
   )

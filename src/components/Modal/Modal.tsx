@@ -1,3 +1,6 @@
+'use client';
+
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useModal } from '@/src/utils/ModalProvider';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
@@ -20,7 +23,7 @@ const Modal = () => {
 
   const { handleToggleModal, isOpenModal, modalType } = useModal();
 
-  return (
+  return isOpenModal ? createPortal(
     <ModalWrapper isOpenModal={isOpenModal}>
       <ModalContent>
         <CloseButton onClick={() => handleToggleModal(modalType)}>
@@ -33,8 +36,9 @@ const Modal = () => {
         </CloseButton>
         <RenderModal isOpenModal={isOpenModal} modalType={modalType} handleToggleModal={handleToggleModal} />
       </ModalContent>
-    </ModalWrapper>
-  )
+    </ModalWrapper>,
+    document.getElementById("modal-root") as HTMLElement
+  ) : null
 }
 
 export default Modal;
