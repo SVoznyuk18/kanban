@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 interface Iprops {
-	isOpenModal?: boolean
+  isOpenModal?: boolean
 }
 
 export const ModalWrapper = styled.div<Iprops>`

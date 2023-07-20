@@ -1,12 +1,14 @@
 'use client';
 
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { useModal } from '@/src/utils/ModalProvider';
+import { useModal } from '@/src/components/Providers/ModalProvider';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
 interface IModalContext {
-  handleToggleModal: (T: string) => void,
+  handleOpenModal?: (T: string) => void,
+  handleCloseModal: () => void,
   isOpenModal: boolean,
   modalType: string,
 }
@@ -21,12 +23,31 @@ const RenderModal = ({ modalType, ...props }: IModalContext) => {
 }
 const Modal = () => {
 
-  const { handleToggleModal, isOpenModal, modalType } = useModal();
+  const { handleCloseModal, isOpenModal, modalType } = useModal();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.keyCode === 27 || e.key === "Escape") {
+        handleCloseModal();
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+
+  }, [isOpenModal])
+
+  const handleBackgroudClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.target === e.currentTarget) handleCloseModal()
+  }
 
   return isOpenModal ? createPortal(
-    <ModalWrapper isOpenModal={isOpenModal}>
+    <ModalWrapper isOpenModal={isOpenModal} onClick={handleBackgroudClick}>
       <ModalContent>
-        <CloseButton onClick={() => handleToggleModal(modalType)}>
+        <CloseButton onClick={() => handleCloseModal()}>
           <Image
             width="18"
             height="18"
@@ -34,7 +55,7 @@ const Modal = () => {
             alt='close_icon'
           />
         </CloseButton>
-        <RenderModal isOpenModal={isOpenModal} modalType={modalType} handleToggleModal={handleToggleModal} />
+        <RenderModal isOpenModal={isOpenModal} modalType={modalType} handleCloseModal={handleCloseModal} />
       </ModalContent>
     </ModalWrapper>,
     document.getElementById("modal-root") as HTMLElement

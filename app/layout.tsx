@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import StyledComponentsRegistry from '@/src/utils/registry';
 import Sidebar from '@/src/components/Sidebar/Sidebar'
 import { GlobalStyles } from '@/src/styles/GlobalStyles';
-import { RootLayoutThemeProvider } from '@/src/utils/providers';
-import { ModalProvider } from '@/src/utils/ModalProvider';
+import { RootLayoutThemeProvider } from '@/src/components/Providers/ThemeProvider';
+import { ModalProvider } from '@/src/components/Providers/ModalProvider';
 import Modal from '@/src/components/Modal/Modal';
 
 export const metadata: Metadata = {

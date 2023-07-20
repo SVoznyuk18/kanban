@@ -3,7 +3,8 @@
 import React, { useState, useContext, createContext, PropsWithChildren } from "react";
 
 interface IModalContext {
-  handleToggleModal: (T: string) => void,
+  handleOpenModal: (T: string) => void,
+  handleCloseModal: () => void,
   isOpenModal: boolean,
   modalType: string,
 }
@@ -15,15 +16,20 @@ export const ModalProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>('');
 
-  const handleToggleModal = (modaType: string) => {
+  const handleOpenModal = (modaType: string) => {
     setIsOpenModal(!isOpenModal);
     setModalType(modaType);
+  }
+
+  const handleCloseModal = () => {
+    setIsOpenModal(!isOpenModal);
   }
 
   return (
     <ModalContext.Provider
       value={{
-        handleToggleModal,
+        handleOpenModal,
+        handleCloseModal,
         modalType,
         isOpenModal
       }}
