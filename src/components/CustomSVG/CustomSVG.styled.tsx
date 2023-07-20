@@ -3,13 +3,10 @@ import styled from 'styled-components';
 interface ISvgProps {
   width: string,
   height: string,
-  viewBox: string,
   fill: string,
-  path: string,
   fillHover?: string,
   stroke?: string,
   strokeHover?: string,
-  handleClick?: () => void
 }
 
 export const SVG = styled.svg<ISvgProps>`
