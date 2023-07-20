@@ -24,30 +24,31 @@ export const NavList = styled.ul`
 
 `;
 export const NavItem = styled.li`
-    display: flex;
-    align-items: center;
-    width: 275px;
-    min-width: 240px;
-    height: 48px;
-    padding-left: 35px;
+  display: flex;
+  align-items: center;
+  width: 275px;
+  min-width: 240px;
+  height: 48px;
+  padding-left: 35px;
+  
+  cursor: pointer;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+
+  color: #828FA3;
+  font-size: 15px;
+  font-weight: 700;
+
+  p {
+    margin-left: 15px;
+  }
+
+  &: hover {
+    background-color: #635FC7;
+    color: #fff;
     
-    cursor: pointer;
-    border-top-right-radius: 24px;
-    border-bottom-right-radius: 24px;
-
-    color: #828FA3;
-    font-size: 15px;
-    font-weight: 700;
-
-    p {
-        margin-left: 15px;
+    svg {
+      fill: #FFFFFF;
     }
-
-    &: hover {
-        background-color: #635FC7;
-
-    
-        color: #fff;
-        
-    }
+  }
 `;
