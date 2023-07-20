@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState } from "react";
 import Image from "next/image";
-import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.style';
+
+import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
 
 const ThemeSwitcher: React.FC = () => {
   const [isToggled, setIsToggled] = useState<boolean>(false);
