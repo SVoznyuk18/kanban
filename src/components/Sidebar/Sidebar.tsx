@@ -6,10 +6,14 @@ import Image from 'next/image';
 
 import { SidebarSection, LogoSection, ToggleSideBar, HideSection } from './sidebar.style';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { useModal } from '@/src/components/Providers/ModalProvider';
 
 const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
+
+  const { handleOpenModal } = useModal();
 
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
@@ -24,7 +28,7 @@ const Sidebar: React.FC = () => {
       </LogoSection>
       <ToggleSideBar
         isShowButton={toggleSidebar !== undefined ? toggleSidebar : false}
-        onClick={() => setToggleSidebar(!toggleSidebar)}
+        onClick={() => handleOpenModal('navMenu')}
       >
         <Image
           width='20'
