@@ -4,6 +4,7 @@ import StyledComponentsRegistry from '@/src/utils/registry';
 import Sidebar from '@/src/components/Sidebar/Sidebar'
 import { GlobalStyles } from '@/src/styles/GlobalStyles';
 import { RootLayoutThemeProvider } from '@/src/utils/providers';
+import { ModalProvider } from '@/src/utils/ModalProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,9 +21,11 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <RootLayoutThemeProvider>
-            <Sidebar />
-            {children}
-            <GlobalStyles />
+            <ModalProvider>
+              <Sidebar />
+              {children}
+              <GlobalStyles />
+            </ModalProvider>
           </RootLayoutThemeProvider>
         </StyledComponentsRegistry>
       </body>
