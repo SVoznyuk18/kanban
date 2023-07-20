@@ -3,7 +3,7 @@
 import React from 'react'
 import { ThemeProvider } from "styled-components";
 
-import { theme } from '@/src/styles/Theme';
+import { theme } from '@/StylesRoot';
 
 export function RootLayoutThemeProvider({
   children

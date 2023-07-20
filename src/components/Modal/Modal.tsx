@@ -3,7 +3,8 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { useModal } from '@/src/components/Providers/ModalProvider';
+
+import { useModal } from '@/UtilsRoot';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
 interface IModalContext {
