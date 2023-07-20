@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const ThemeSwitcherWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
