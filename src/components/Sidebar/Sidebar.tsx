@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import { ThemeSwitcher } from '@/ComponentsRoot';
+import { Nav } from '@/ComponentsRoot'
 import { SidebarSection, LogoSection, ToggleSideBar, HideSection } from './sidebar.style';
 
 const Sidebar: React.FC = () => {
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <ThemeSwitcher />
+      <Nav />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'
