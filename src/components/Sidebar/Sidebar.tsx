@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 import { Nav } from '@/ComponentsRoot'
-import { SidebarSection, LogoSection, ToggleSideBar, HideSection } from './sidebar.style';
+import { SidebarSection, ToggleSideBar, HideSection } from './sidebar.style';
 
 const Sidebar: React.FC = () => {
 
@@ -12,15 +12,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
-      <LogoSection>
-        <Image
-          width='25'
-          height='25'
-          src='/logo-dark.svg'
-          alt="logo_icon"
-        />
-        <p>kanban</p>
-      </LogoSection>
       <ToggleSideBar
         isShowButton={toggleSidebar !== undefined ? toggleSidebar : false}
         onClick={() => setToggleSidebar(!toggleSidebar)}

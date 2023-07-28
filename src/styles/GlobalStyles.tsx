@@ -12,6 +12,14 @@ export const GlobalStyles = createGlobalStyle`
   html,
   body {
     max-width: 100vw;
+    max-height: 100vh;
     overflow-x: hidden;
+
+  }
+  main {
+    width: 100%;
+    height: calc(100vh - 96px);
+    background-color: #F4F7FD;
+    display: flex;
   }
 `;
