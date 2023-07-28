@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider } from '@/UtilsRoot';
 import { GlobalStyles } from '@/StylesRoot';
-import { Modal, Sidebar } from '@/ComponentsRoot';
+import { Modal, Sidebar, Header } from '@/ComponentsRoot';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,8 +20,11 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <RootLayoutThemeProvider>
             <ModalProvider>
-              <Sidebar />
-              {children}
+              <Header />
+              <main>
+                <Sidebar />
+                {children}
+              </main>
               <Modal />
               <GlobalStyles />
             </ModalProvider>

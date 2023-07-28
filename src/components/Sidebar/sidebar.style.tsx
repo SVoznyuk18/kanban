@@ -12,33 +12,19 @@ export const SidebarSection = styled.div <IProps>`
   flex-direction: column;
   justify-content: space-between;
   width: 0px;
-  height: 100vh;
+  min-width: 0px;
+  height: 100%;
   padding-bottom: 45px;
   background-color: aqua;
-  transition: all 0.2s;
+  transition: all 0.4s;
   overflow: hidden;
   
   ${props => props.isShowSidebar && css`
     width: 300px;
+    min-width: 300px;
     overflow: visible;
-    transition: all 0.2s;
+    transition: all 0.4s;
   `}
-`;
-
-export const LogoSection = styled.div`
-  display: flex;
-  align-items: center;
-  height: 96px;
-  width: 300px;
-  padding-left: 35px;
-
-   p {
-    margin-left: 15px;
-    color: #000112;
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 25px;
-   }
 `;
 
 export const ToggleSideBar = styled.button<IProps>`
