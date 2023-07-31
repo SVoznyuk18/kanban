@@ -5,6 +5,7 @@ export const HeaderSection = styled.header`
 	align-items: center;
 	width: 100%;
 	height: 96px;
+	background-color: ${({ theme }) => theme.secondaryBgColor};
 `;
 
 export const LogoSection = styled.div`
@@ -17,7 +18,7 @@ export const LogoSection = styled.div`
 
 	p {
 		margin-left: 15px;
-		color: #000112;
+		color: ${({ theme }) => theme.textColor};
 		font-size: 36px;
 		font-weight: 600;
 		line-height: 25px;
@@ -42,6 +43,7 @@ export const TitleSection = styled.div`
 export const Title = styled.h1`
 	font-size: 24px;
 	font-weight: 700;
+	color: ${({ theme }) => theme.textColor};
 `;
 
 export const ControlsSection = styled.div`
@@ -55,7 +57,7 @@ export const ClassicButton = styled.button`
 	width: 164px;
 	height: 48px;
 	border-radius: 24px;
-	background-color: rgba(99, 95, 199, 0.25);
+	background-color: #A8A4FF;
 	cursor: pointer;
 	border: none;
 	color: #FFFF;

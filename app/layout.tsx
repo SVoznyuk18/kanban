@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
-import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider } from '@/UtilsRoot';
-import { GlobalStyles } from '@/StylesRoot';
+import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider, ThemeChangeProvider } from '@/UtilsRoot';
+import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
 
 export const metadata: Metadata = {
@@ -18,17 +18,20 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StyledComponentsRegistry>
-          <RootLayoutThemeProvider>
-            <ModalProvider>
-              <Header />
-              <main>
-                <Sidebar />
-                {children}
-              </main>
-              <Modal />
-              <GlobalStyles />
-            </ModalProvider>
-          </RootLayoutThemeProvider>
+          <ThemeChangeProvider>
+            <RootLayoutThemeProvider>
+              <ModalProvider>
+                <Header />
+                <Main>
+                  <Sidebar />
+                  {children}
+                </Main>
+                <Modal />
+                <GlobalStyles />
+              </ModalProvider>
+            </RootLayoutThemeProvider>
+          </ThemeChangeProvider>
+
         </StyledComponentsRegistry>
         <div id='modal-root'></div>
       </body>

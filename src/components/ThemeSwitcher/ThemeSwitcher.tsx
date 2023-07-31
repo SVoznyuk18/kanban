@@ -4,11 +4,10 @@ import React from "react";
 import Image from "next/image";
 
 import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
-import { useThemeMode } from "../../utils/hooks";
+import { useThemeContext } from "../../utils/ThemeProvider";
 
 const ThemeSwitcher: React.FC = () => {
-  const [theme, toggleTheme] = useThemeMode('dark');
-
+  const { handleChangeTheme, theme } = useThemeContext();
   return (
     <ThemeSwitcherWrapper>
       <Image
@@ -21,7 +20,7 @@ const ThemeSwitcher: React.FC = () => {
         <input
           type="checkbox"
           checked={theme === 'dark'}
-          onChange={() => toggleTheme()}
+          onChange={() => handleChangeTheme()}
         />
         <span />
       </Switcher>

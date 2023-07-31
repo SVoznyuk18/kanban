@@ -12,7 +12,7 @@ export const ThemeSwitcherWrapper = styled.div`
   min-width: 235px;
   height: 48px;
   border-radius: 4px;
-  background-color: #F4F7FD;
+  background-color: ${({ theme }) => theme.primaryBgColor};
 `;
 
 export const Switcher = styled.label`

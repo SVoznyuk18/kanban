@@ -15,7 +15,7 @@ export const SidebarSection = styled.div <IProps>`
   min-width: 0px;
   height: 100%;
   padding-bottom: 45px;
-  background-color: aqua;
+  background-color: ${({ theme }) => theme.secondaryBgColor};
   transition: all 0.4s;
   overflow: hidden;
   

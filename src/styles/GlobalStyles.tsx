@@ -1,6 +1,6 @@
 'use client';
 
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -16,10 +16,11 @@ export const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
 
   }
-  main {
-    width: 100%;
-    height: calc(100vh - 96px);
-    background-color: #F4F7FD;
-    display: flex;
-  }
+`;
+
+export const Main = styled.main`
+  width: 100%;
+  height: calc(100vh - 96px);
+  background-color: ${({ theme }) => theme.primaryBgColor};
+  display: flex;
 `;
