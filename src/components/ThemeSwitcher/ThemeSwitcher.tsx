@@ -1,15 +1,13 @@
 'use client';
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
 import { useThemeMode } from "../../utils/hooks";
 
 const ThemeSwitcher: React.FC = () => {
-  const [isToggled, setIsToggled] = useState<boolean>(false);
-  const [theme, toggleTheme] = useThemeMode<'dark' | 'light'>('dark');
-
+  const [theme, toggleTheme] = useThemeMode('dark');
 
   return (
     <ThemeSwitcherWrapper>
@@ -20,7 +18,11 @@ const ThemeSwitcher: React.FC = () => {
         height={20}
       />
       <Switcher>
-        <input type="checkbox" checked={isToggled} onChange={() => { setIsToggled(!isToggled) }} />
+        <input
+          type="checkbox"
+          checked={theme === 'dark'}
+          onChange={() => toggleTheme()}
+        />
         <span />
       </Switcher>
       <Image

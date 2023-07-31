@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-
+type themeType = 'dark' | 'light';
 
 export function useLocalStorage<Type>(
   key: string,
@@ -37,22 +37,19 @@ export function useLocalStorage<Type>(
   return [value, setValue]
 }
 
-export function useThemeMode<Type>(themeMode: Type) {
-  const [theme, setTheme] = useState<Type>(themeMode);
+export function useThemeMode(themeMode: themeType): [themeType, (() => void)] {
+  const [theme, setTheme] = useState<themeType>(themeMode);
   const [themeStorage, setThemeStorage] = useLocalStorage('theme', themeMode)
-
-  const setMode = (mode: Type) => {
+  const setMode = (mode: themeType) => {
     setThemeStorage(mode);
     setTheme(mode)
   }
 
   const toggleTheme = () => {
-    // @ts-ignore
     theme === 'dark' ? setMode('light') : setMode('dark')
   }
 
   useEffect(() => {
-    // @ts-ignore
     themeStorage ? setMode(themeStorage) : setMode('dark');
   }, []);
 
