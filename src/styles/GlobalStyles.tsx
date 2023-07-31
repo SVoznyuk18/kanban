@@ -4,17 +4,15 @@ import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
     
-  html,
-  body {
+  html, body {
     max-width: 100vw;
     max-height: 100vh;
     overflow-x: hidden;
-
   }
 `;
 

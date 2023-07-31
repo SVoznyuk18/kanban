@@ -33,6 +33,9 @@
       "@/StylesRoot": [
         "./src/styles/index.tsx"
       ],
+      "@/ConstantsRoot": [
+        "./src/constants/index.tsx"
+      ],
     }
   },
   "include": [

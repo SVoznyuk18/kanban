@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider, ThemeChangeProvider } from '@/UtilsRoot';
+import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider, } from '@/UtilsRoot';
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
 
@@ -18,20 +18,17 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StyledComponentsRegistry>
-          <ThemeChangeProvider>
-            <RootLayoutThemeProvider>
-              <ModalProvider>
-                <Header />
-                <Main>
-                  <Sidebar />
-                  {children}
-                </Main>
-                <Modal />
-                <GlobalStyles />
-              </ModalProvider>
-            </RootLayoutThemeProvider>
-          </ThemeChangeProvider>
-
+          <RootLayoutThemeProvider>
+            <ModalProvider>
+              <Header />
+              <Main>
+                <Sidebar />
+                {children}
+              </Main>
+              <Modal />
+              <GlobalStyles />
+            </ModalProvider>
+          </RootLayoutThemeProvider>
         </StyledComponentsRegistry>
         <div id='modal-root'></div>
       </body>

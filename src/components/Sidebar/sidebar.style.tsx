@@ -16,6 +16,7 @@ export const SidebarSection = styled.div <IProps>`
   height: 100%;
   padding-bottom: 45px;
   background-color: ${({ theme }) => theme.secondaryBgColor};
+  border-right: 1px solid ${({ theme }) => theme.borderColor};
   transition: all 0.4s;
   overflow: hidden;
   
@@ -72,7 +73,7 @@ export const HideSection = styled.div`
     font-size: 15px;
     font-weight: 700;
     color: #828FA3;
-   }
+  }
 
   &: hover {
     background-color: #E4EBFA;

@@ -4,7 +4,7 @@ import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
 
 import { NavWrapper, Title, NavList, NavItem } from './Nav.styled';
 
-import { SVGPath } from '../../constants';
+import { SVGPath } from '@/ConstantsRoot';
 
 const Nav = () => {
   return (

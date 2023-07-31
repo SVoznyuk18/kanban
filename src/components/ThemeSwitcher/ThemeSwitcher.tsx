@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 
 import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
-import { useThemeContext } from "../../utils/ThemeProvider";
+import { useThemeContext } from "@/UtilsRoot";
 
 const ThemeSwitcher: React.FC = () => {
   const { handleChangeTheme, theme } = useThemeContext();

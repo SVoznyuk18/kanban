@@ -6,6 +6,7 @@ export const HeaderSection = styled.header`
 	width: 100%;
 	height: 96px;
 	background-color: ${({ theme }) => theme.secondaryBgColor};
+	border-bottom: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 export const LogoSection = styled.div`
@@ -14,7 +15,7 @@ export const LogoSection = styled.div`
 	height: 96px;
 	min-width: 300px;
 	padding-left: 35px;
-	border-right: 1px solid #E4EBFA;
+	border-right: 1px solid ${({ theme }) => theme.borderColor};
 
 	p {
 		margin-left: 15px;
@@ -31,6 +32,7 @@ export const HeaderMainSection = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
+	height: 100%;
 `;
 
 export const TitleSection = styled.div`
@@ -80,7 +82,6 @@ export const EditBoardControl = styled.div`
 	cursor: pointer;
 
 	span {
-
 		min-width: 5px;
 		min-height: 5px;
 		border: none;
