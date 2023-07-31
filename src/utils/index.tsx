@@ -1,6 +1,7 @@
 import { ModalProvider, useModal } from "../utils/ModalProvider";
-import { RootLayoutThemeProvider } from "../utils/ThemeProvider";
+import { RootLayoutThemeProvider, useThemeContext } from "../utils/ThemeProvider";
 import StyledComponentsRegistry from "./registry";
 
+import { useLocalStorage, useThemeMode } from './hooks';
 
-export { ModalProvider, useModal, RootLayoutThemeProvider, StyledComponentsRegistry };
+export { ModalProvider, useModal, RootLayoutThemeProvider, StyledComponentsRegistry, useLocalStorage, useThemeMode, useThemeContext };
