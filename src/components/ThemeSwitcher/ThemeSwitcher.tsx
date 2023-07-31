@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
+import { useThemeMode } from "../../utils/hooks";
 
 const ThemeSwitcher: React.FC = () => {
   const [isToggled, setIsToggled] = useState<boolean>(false);
+  const [theme, toggleTheme] = useThemeMode<'dark' | 'light'>('dark');
+
+
   return (
     <ThemeSwitcherWrapper>
       <Image

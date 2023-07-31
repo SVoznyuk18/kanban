@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
+
+
 export function useLocalStorage<Type>(
   key: string,
   initialValue?: Type
@@ -34,3 +36,26 @@ export function useLocalStorage<Type>(
 
   return [value, setValue]
 }
+
+export function useThemeMode<Type>(themeMode: Type) {
+  const [theme, setTheme] = useState<Type>(themeMode);
+  const [themeStorage, setThemeStorage] = useLocalStorage('theme', themeMode)
+
+  const setMode = (mode: Type) => {
+    setThemeStorage(mode);
+    setTheme(mode)
+  }
+
+  const toggleTheme = () => {
+    // @ts-ignore
+    theme === 'dark' ? setMode('light') : setMode('dark')
+  }
+
+  useEffect(() => {
+    // @ts-ignore
+    themeStorage ? setMode(themeStorage) : setMode('dark');
+  }, []);
+
+  return [theme, toggleTheme];
+}
+
