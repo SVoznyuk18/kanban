@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { media } from '../../utils/mediaTypes';
+
 export const HeaderSection = styled.header`
 	display: flex;
 	align-items: center;
@@ -22,7 +23,7 @@ export const LogoSection = styled.div`
 	min-width: 300px;
 	padding-left: 35px;
 	border-right: 1px solid ${({ theme }) => theme.borderColor};
-
+	
 	p {
 		margin-left: 15px;
 		color: ${({ theme }) => theme.textColor};

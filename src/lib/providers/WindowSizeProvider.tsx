@@ -9,7 +9,7 @@ interface IWindowSizeContext {
 	isDesktop: boolean,
 }
 
-const WindowSizeContext = createContext<IWindowSizeContext>({} as IWindowSizeContext);
+export const WindowSizeContext = createContext<IWindowSizeContext>({} as IWindowSizeContext);
 
 export const WindowSizeProvider: React.FC<PropsWithChildren> = ({ children }) => {
 

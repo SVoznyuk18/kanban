@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
-import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider, } from '@/UtilsRoot';
+import { StyledComponentsRegistry } from '@/UtilsRoot';
+import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider } from '@/libRoot'
 
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
-import { WindowSizeProvider } from '../src/utils/WindowSizeProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
