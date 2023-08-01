@@ -1,7 +1,7 @@
 'use client';
 
 import styled, { css } from 'styled-components';
-
+import { media } from '../../utils/mediaTypes';
 interface IProps {
   isShowSidebar?: boolean | undefined,
   isShowButton?: boolean | undefined,
@@ -25,6 +25,8 @@ export const SidebarSection = styled.div <IProps>`
     min-width: 300px;
     overflow: visible;
     transition: all 0.4s;
+    
+
   `}
 `;
 

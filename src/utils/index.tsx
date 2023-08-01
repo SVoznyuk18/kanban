@@ -4,4 +4,6 @@ import StyledComponentsRegistry from "./registry";
 
 import { useLocalStorage, useThemeMode } from './hooks';
 
-export { ModalProvider, useModal, RootLayoutThemeProvider, StyledComponentsRegistry, useLocalStorage, useThemeMode, useThemeContext };
+import { media } from './mediaTypes'
+
+export { ModalProvider, useModal, RootLayoutThemeProvider, StyledComponentsRegistry, useLocalStorage, useThemeMode, useThemeContext, media };
