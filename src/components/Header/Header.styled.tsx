@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from '../../utils/mediaTypes';
 
 export const HeaderSection = styled.header`
 	display: flex;
@@ -7,6 +8,12 @@ export const HeaderSection = styled.header`
 	height: 96px;
 	background-color: ${({ theme }) => theme.secondaryBgColor};
 	border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+	${media.tablet} {
+		height: 80px;
+	}
+	${media.mobile} {
+		height: 64px;
+	}
 `;
 
 export const LogoSection = styled.div`
@@ -16,7 +23,7 @@ export const LogoSection = styled.div`
 	min-width: 300px;
 	padding-left: 35px;
 	border-right: 1px solid ${({ theme }) => theme.borderColor};
-
+	
 	p {
 		margin-left: 15px;
 		color: ${({ theme }) => theme.textColor};
@@ -24,6 +31,19 @@ export const LogoSection = styled.div`
 		font-weight: 600;
 		line-height: 25px;
 	}
+
+	${media.tablet} {
+		min-width: 260px;
+	}
+
+	${media.mobile} {
+		overflow: hidden;
+		width: 0;
+		min-width: 0;
+		height: 0;
+		padding: 0;
+	}
+
 `;
 
 export const HeaderMainSection = styled.div`
@@ -46,6 +66,13 @@ export const Title = styled.h1`
 	font-size: 24px;
 	font-weight: 700;
 	color: ${({ theme }) => theme.textColor};
+
+	${media.tablet} {
+		font-size: 20px;
+	}
+	${media.mobile} {
+		font-size: 18px;
+	}
 `;
 
 export const ControlsSection = styled.div`

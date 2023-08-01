@@ -36,6 +36,9 @@
       "@/ConstantsRoot": [
         "./src/constants/index.tsx"
       ],
+      "@/LibRoot": [
+        "./src/lib/index.tsx"
+      ],
     }
   },
   "include": [

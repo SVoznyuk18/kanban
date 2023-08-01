@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 interface Iprops {
-  isOpenModal?: boolean
+	isOpenModal?: boolean
 }
 
 export const ModalWrapper = styled.div<Iprops>`
@@ -22,7 +22,8 @@ export const ModalWrapper = styled.div<Iprops>`
 
 export const ModalContent = styled.div`
 	position: relative;
-	width: 500px;
+	width: 480px;
+	min-width: 340px;
 	height: 500px;
 	padding: 20px ;
 	background-color: #ffff;

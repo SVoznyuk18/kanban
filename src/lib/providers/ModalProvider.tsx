@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useContext, createContext, PropsWithChildren } from "react";
+import React, { useState, createContext, PropsWithChildren } from "react";
 
 interface IModalContext {
   handleOpenModal: (T: string) => void,
@@ -9,7 +9,7 @@ interface IModalContext {
   modalType: string,
 }
 
-const ModalContext = createContext<IModalContext>({} as IModalContext);
+export const ModalContext = createContext<IModalContext>({} as IModalContext);
 
 export const ModalProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
@@ -38,5 +38,3 @@ export const ModalProvider: React.FC<PropsWithChildren> = ({ children }) => {
     </ModalContext.Provider>
   )
 }
-
-export const useModal = () => useContext(ModalContext);

@@ -1,13 +1,15 @@
 'use client';
 
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 
 import { ThemeSwitcherWrapper, Switcher } from './ThemeSwitcher.styled';
-import { useThemeContext } from "@/UtilsRoot";
+import { ThemeContext } from "@/LibRoot";
 
 const ThemeSwitcher: React.FC = () => {
-  const { handleChangeTheme, theme } = useThemeContext();
+
+  const { handleChangeTheme, theme } = useContext(ThemeContext);
+  console.log('ThemeSwitcher', theme)
   return (
     <ThemeSwitcherWrapper>
       <Image

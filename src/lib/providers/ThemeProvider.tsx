@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext } from 'react'
+import React, { createContext } from 'react'
 import { ThemeProvider } from "styled-components";
 
 import { lightTheme, darkTheme } from '@/StylesRoot';
@@ -11,7 +11,7 @@ interface IThemeContext {
   handleChangeTheme: () => void
 }
 
-const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
+export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 export function RootLayoutThemeProvider({
   children
@@ -33,5 +33,3 @@ export function RootLayoutThemeProvider({
     </ThemeContext.Provider>
   )
 }
-
-export const useThemeContext = () => useContext(ThemeContext);

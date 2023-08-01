@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 
-import { useModal } from '@/UtilsRoot';
+import { ModalContext } from '@/LibRoot';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
 interface IModalContext {
@@ -24,7 +24,7 @@ const RenderModal = ({ modalType, ...props }: IModalContext) => {
 }
 const Modal = () => {
 
-  const { handleCloseModal, isOpenModal, modalType } = useModal();
+  const { handleCloseModal, isOpenModal, modalType } = useContext(ModalContext);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
