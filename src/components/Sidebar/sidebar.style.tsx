@@ -17,15 +17,26 @@ export const SidebarSection = styled.div <IProps>`
   padding-bottom: 45px;
   background-color: ${({ theme }) => theme.secondaryBgColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
-  transition: all 0.4s;
+  transition: width min-width 0.4s;
   overflow: hidden;
   
   ${props => props.isShowSidebar && css`
     width: 300px;
     min-width: 300px;
     overflow: visible;
-    transition: all 0.4s;
-    
+    transition: width min-width 0.4s;
+
+    ${media.tablet} {
+      width: 260px;
+      min-width: 260px;
+    }
+
+    ${media.mobile} {
+      overflow: hidden;
+      width: 0;
+      min-width: 0;
+      height: 0;
+    }
 
   `}
 `;
