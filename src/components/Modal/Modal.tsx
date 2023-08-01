@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 
-import { ModalContext } from '@/libRoot';
+import { ModalContext } from '@/LibRoot';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
 interface IModalContext {

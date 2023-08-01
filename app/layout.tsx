@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { StyledComponentsRegistry } from '@/UtilsRoot';
-import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider } from '@/libRoot'
+import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider } from '@/LibRoot'
 
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';

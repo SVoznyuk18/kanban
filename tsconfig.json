@@ -36,7 +36,7 @@
       "@/ConstantsRoot": [
         "./src/constants/index.tsx"
       ],
-      "@/libRoot": [
+      "@/LibRoot": [
         "./src/lib/index.tsx"
       ],
     }
