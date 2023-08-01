@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 
 import { StyledComponentsRegistry, RootLayoutThemeProvider, ModalProvider, } from '@/UtilsRoot';
+
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
+import { WindowSizeProvider } from '../src/utils/WindowSizeProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,17 +20,19 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StyledComponentsRegistry>
-          <RootLayoutThemeProvider>
-            <ModalProvider>
-              <Header />
-              <Main>
-                <Sidebar />
-                {children}
-              </Main>
-              <Modal />
-              <GlobalStyles />
-            </ModalProvider>
-          </RootLayoutThemeProvider>
+          <WindowSizeProvider>
+            <RootLayoutThemeProvider>
+              <ModalProvider>
+                <Header />
+                <Main>
+                  <Sidebar />
+                  {children}
+                </Main>
+                <Modal />
+                <GlobalStyles />
+              </ModalProvider>
+            </RootLayoutThemeProvider>
+          </WindowSizeProvider>
         </StyledComponentsRegistry>
         <div id='modal-root'></div>
       </body>
