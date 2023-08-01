@@ -10,10 +10,12 @@ interface ISvgProps {
   fillHover?: string,
   stroke?: string,
   strokeHover?: string,
+  strokeWidth?: string,
+  transform?: string,
   handleClick?: () => void
 }
 
-const CustomSVG = ({ width, height, fill, path, fillHover, stroke, strokeHover, handleClick }: ISvgProps) => {
+const CustomSVG = ({ width, height, fill, path, fillHover, stroke, strokeHover, strokeWidth, transform, handleClick }: ISvgProps) => {
   return (
     <SVG
       width={width}
@@ -23,6 +25,8 @@ const CustomSVG = ({ width, height, fill, path, fillHover, stroke, strokeHover, 
       fillHover={fillHover}
       stroke={stroke}
       strokeHover={strokeHover}
+      strokeWidth={strokeWidth}
+      transform={transform}
       onClick={handleClick}
     >
       <path

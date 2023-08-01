@@ -1,18 +1,19 @@
 import styled from 'styled-components';
-
+import { media } from '../../utils/mediaTypes';
 export const ThemeSwitcherWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-self: center;
+  align-self: center;
   width: 250px;
-  min-width: 235px;
   height: 48px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.primaryBgColor};
+
+  ${media.tablet} {
+    width: 235px;
+  }
 `;
 
 export const Switcher = styled.label`
@@ -48,16 +49,16 @@ export const Switcher = styled.label`
     left: 0;
     transition: background-color 0.2s ease;
 
-    &:before {
-        position: absolute;
-        content: "";
-        left: 2px;
-        top: 2px;
-        width: 15px;
-        height: 15px;
-        background-color:  #fff;
-        border-radius: 50%;
-        transition: transform 0.3s ease;
+  &:before {
+      position: absolute;
+      content: "";
+      left: 2px;
+      top: 2px;
+      width: 15px;
+      height: 15px;
+      background-color:  #fff;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
     }
   }
 `;

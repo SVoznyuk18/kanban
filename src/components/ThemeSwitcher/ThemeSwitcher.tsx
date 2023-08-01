@@ -9,7 +9,7 @@ import { ThemeContext } from "@/LibRoot";
 const ThemeSwitcher: React.FC = () => {
 
   const { handleChangeTheme, theme } = useContext(ThemeContext);
-  console.log('ThemeSwitcher', theme)
+
   return (
     <ThemeSwitcherWrapper>
       <Image

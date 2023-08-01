@@ -43,7 +43,6 @@ export const LogoSection = styled.div`
 		height: 0;
 		padding: 0;
 	}
-
 `;
 
 export const HeaderMainSection = styled.div`
@@ -66,6 +65,7 @@ export const Title = styled.h1`
 	font-size: 24px;
 	font-weight: 700;
 	color: ${({ theme }) => theme.textColor};
+	margin-right: 8px;
 
 	${media.tablet} {
 		font-size: 20px;
@@ -83,8 +83,9 @@ export const ControlsSection = styled.div`
 `;
 
 export const ClassicButton = styled.button`
-	width: 164px;
-	height: 48px;
+	width: 48px;
+	height: 32px;
+	// padding: 15px 25px;
 	border-radius: 24px;
 	background-color: #A8A4FF;
 	cursor: pointer;
