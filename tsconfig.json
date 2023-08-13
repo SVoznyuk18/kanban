@@ -37,7 +37,10 @@
         "./src/constants/index.tsx"
       ],
       "@/LibRoot": [
-        "./src/lib/index.tsx"
+        "./src/lib/index.ts"
+      ],
+      "@/ModelsRoot": [
+        "./src/models/board.ts"
       ],
     }
   },

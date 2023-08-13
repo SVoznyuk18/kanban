@@ -1,6 +1,23 @@
 import styles from './page.module.css'
 
-export default function Home() {
+
+const getData = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/api/boards');
+    if (!response.ok) throw new Error("sometging went wrong");
+
+    return response.json();
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export default async function Home() {
+
+  const boards = await getData();
+
+
   return (
     <div className={styles.div}>
       Когда я добавлял больше элементов внутрь родителя-обёртки всё начинало работать как ожидалось.
