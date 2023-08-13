@@ -82,23 +82,6 @@ export const ControlsSection = styled.div`
 	justify-content: center;
 `;
 
-export const ClassicButton = styled.button`
-	width: 48px;
-	height: 32px;
-	// padding: 15px 25px;
-	border-radius: 24px;
-	background-color: #A8A4FF;
-	cursor: pointer;
-	border: none;
-	color: #FFFF;
-	font-size: 15px;
-	font-weight: 700;
-
-	&:hover {
-		background-color: #635FC7;
-	}
-`;
-
 export const EditBoardControl = styled.div`
 	margin-left: 24px;
 	min-width: 10px;
