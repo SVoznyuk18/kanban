@@ -1,5 +1,6 @@
 import { ModalProvider, ModalContext } from './providers/ModalProvider';
 import { RootLayoutThemeProvider, ThemeContext } from './providers/ThemeProvider';
 import { WindowSizeProvider, WindowSizeContext } from './providers/WindowSizeProvider';
+import { connectMongoDB } from './mongodb';
 
-export { ModalProvider, ModalContext, RootLayoutThemeProvider, ThemeContext, WindowSizeProvider, WindowSizeContext };
+export { ModalProvider, ModalContext, RootLayoutThemeProvider, ThemeContext, WindowSizeProvider, WindowSizeContext, connectMongoDB };
