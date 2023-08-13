@@ -4,11 +4,11 @@ import { useState, useContext } from 'react';
 import Image from 'next/image';
 
 import { WindowSizeContext } from '@/LibRoot';
-import { MobileMenu, CustomSVG } from '@/ComponentsRoot';
+import { MobileMenu, CustomSVG, ClassicButton } from '@/ComponentsRoot';
 import { SVGPath } from '@/ConstantsRoot';
 
 
-import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, ClassicButton, EditBoardControl } from './Header.styled';
+import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, EditBoardControl } from './Header.styled';
 
 const Header = () => {
 	const { isMobile } = useContext(WindowSizeContext);
