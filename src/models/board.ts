@@ -53,13 +53,13 @@ const columnSchema = new Schema<IColumn>(
   }
 );
 
-interface IColumn extends Document {
+interface IBoard extends Document {
   name: string,
   columns: Array<IColumn>,
 }
 
 // schema for board
-const boardSchema = new Schema<IColumn>(
+const boardSchema = new Schema<IBoard>(
   {
     name: { type: String, required: true },
     columns: [columnSchema]
