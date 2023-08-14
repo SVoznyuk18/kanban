@@ -136,7 +136,7 @@ const board =
           "title": "Design onboarding flow",
           "description": "",
           "status": "Doing",
-          id: 'Add account management endpoints',
+          id: 'Design onboarding flow',
           "subtasks": [
             {
               "title": "Sign up page",
@@ -214,7 +214,7 @@ const board =
           "title": "Conduct 5 wireframe tests",
           "description": "Ensure the layout continues to make sense and we have strong buy-in from potential users.",
           "status": "Done",
-          id: 'Conduct 5 wireframe tests',
+          id: 'Conduct 5 wireframe testsaaa',
           "subtasks": [
             {
               "title": "Complete 5 wireframe prototype tests",
@@ -226,7 +226,7 @@ const board =
           "title": "Create wireframe prototype",
           "description": "Create a greyscale clickable wireframe prototype to test our asssumptions so far.",
           "status": "Done",
-          id: 'Conduct 5 wireframe tests',
+          id: 'Conduct 5 wireframe testssss',
           "subtasks": [
             {
               "title": "Create clickable wireframe prototype in Balsamiq",

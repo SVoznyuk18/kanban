@@ -33,8 +33,6 @@ interface IBoardProps {
 }
 
 const Board: React.FC<IBoardProps> = ({ board }) => {
-
-
   return (
     <BoardWrapper>
       {board?.columns.length > 0 && board?.columns.map((column) => (

@@ -13,6 +13,7 @@ export const TaskWrapper = styled.li`
   border-radius: 8px;
   list-style-type: none;
   background-color: ${({ theme }) => theme.secondaryBgColor};
+  cursor: grab;
 `;
 
 export const Title = styled.h4`
