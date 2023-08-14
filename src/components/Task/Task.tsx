@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { DragEvent } from 'react'
 
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
+
+interface IColumn extends Document {
+  name: string,
+  id: string,
+  tasks: Array<ITask>
+}
 
 interface ISubtask extends Document {
   title: string,
@@ -17,10 +23,17 @@ interface ITask extends Document {
 }
 
 interface ITaskProps {
-  task: ITask
+  task: ITask,
+  column: IColumn,
+  draggable: boolean,
+  dragOverHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
+  dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
+  dragStartHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void,
+  dragEndHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
+  dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
 }
 
-const Task: React.FC<ITaskProps> = ({ task }) => {
+const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
 
   const countDoneSubTasks = (subTasks: Array<ISubtask>): number => {
     let count: number = 0;
@@ -32,7 +45,13 @@ const Task: React.FC<ITaskProps> = ({ task }) => {
   }
 
   return (
-    <TaskWrapper>
+    <TaskWrapper
+      onDragOver={(e) => dragOverHandler(e)}
+      onDragLeave={(e) => dragLeaveHandler(e)}
+      onDragStart={(e) => dragStartHandler(e, column, task)}
+      onDrop={(e) => dropHandler(e, column, task)}
+      draggable={draggable}
+    >
       <Title>{task?.title}</Title>
       <SubTitle>{`${countDoneSubTasks(task?.subtasks)} of ${task?.subtasks?.length} subtasks`}</SubTitle>
     </TaskWrapper>
