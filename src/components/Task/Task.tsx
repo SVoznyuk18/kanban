@@ -1,26 +1,7 @@
 import React, { DragEvent } from 'react'
 
+import { ISubtask, ITask, IColumn } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
-
-interface IColumn extends Document {
-  name: string,
-  id: string,
-  tasks: Array<ITask>
-}
-
-interface ISubtask extends Document {
-  title: string,
-  isCompleted: boolean,
-  timestamps: boolean
-}
-
-interface ITask extends Document {
-  title: string,
-  description: string,
-  status: string,
-  id: string,
-  subtasks: Array<ISubtask>
-}
 
 interface ITaskProps {
   task: ITask,
