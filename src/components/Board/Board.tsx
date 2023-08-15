@@ -1,32 +1,9 @@
 'use client'
 import React from 'react';
 
+import { IBoard } from '@/TypesRoot';
 import { Column } from '@/ComponentsRoot'
 import { BoardWrapper } from './Board.styled';
-
-interface ISubtask extends Document {
-  title: string,
-  isCompleted: boolean,
-  timestamps: boolean
-}
-
-interface ITask extends Document {
-  title: string,
-  description: string,
-  status: string,
-  subtasks: Array<ISubtask>
-}
-
-interface IColumn extends Document {
-  name: string,
-  id: string,
-  tasks: Array<ITask>
-}
-
-interface IBoard extends Document {
-  name: string,
-  columns: Array<IColumn>,
-}
 
 interface IBoardProps {
   board: IBoard

@@ -1,35 +1,15 @@
 'use client'
 import React, { useState, DragEvent } from 'react';
 
+import { ITask, IColumn } from '@/TypesRoot';
 import { Task } from '@/ComponentsRoot'
 import { ColumnWrapper, Title, TasksList } from './Column.styled';
-
-interface ISubtask extends Document {
-  title: string,
-  isCompleted: boolean,
-  timestamps: boolean
-}
-
-interface ITask extends Document {
-  title: string,
-  description: string,
-  status: string,
-  id: string,
-  subtasks: Array<ISubtask>
-}
-
-interface IColumn extends Document {
-  name: string,
-  id: string,
-  tasks: Array<ITask>
-}
 
 interface IColumnProps {
   column: IColumn
 }
 
 const Column: React.FC<IColumnProps> = ({ column }) => {
-
 
   const [currentColumn, setCurrentColumn] = useState<IColumn | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
@@ -92,7 +72,7 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
               dragStartHandler={dragStartHandler}
               dragEndHandler={dragEndHandler}
               dropHandler={dropHandler}
-              key={task?.id}
+              key={task?._id}
               column={column}
               task={task}
             />

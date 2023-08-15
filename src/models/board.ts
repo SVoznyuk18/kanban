@@ -1,13 +1,14 @@
 import { Schema, model, models, Document } from "mongoose";
 
-interface ISubtask extends Document {
-  title: string,
-  isCompleted: boolean,
-  timestamps: boolean
-}
+import { ISubtask, ITask, IColumn, IBoard } from '@/TypesRoot';
+
+interface ISchemaSubtask extends Omit<ISubtask, '_id'>, Document { };
+interface ISchemaTask extends Omit<ITask, '_id'>, Document { };
+interface ISchemaColumn extends Omit<IColumn, '_id'>, Document { };
+interface ISchemaBoard extends Omit<IBoard, "_id">, Document { };
 
 // schema for subtask
-const subtaskSchema = new Schema<ISubtask>(
+const subtaskSchema = new Schema<ISchemaSubtask>(
   {
     title: { type: String, required: true },
     isCompleted: { type: Boolean, default: false },
@@ -17,15 +18,8 @@ const subtaskSchema = new Schema<ISubtask>(
   }
 );
 
-interface ITask extends Document {
-  title: string,
-  description: string,
-  status: string,
-  subtasks: Array<ISubtask>
-}
-
 // schema for task
-const taskSchema = new Schema<ITask>(
+const taskSchema = new Schema<ISchemaTask>(
   {
     title: { type: String, required: true },
     description: String,
@@ -37,13 +31,8 @@ const taskSchema = new Schema<ITask>(
   }
 );
 
-interface IColumn extends Document {
-  name: string,
-  tasks: Array<ITask>
-}
-
 // schema for column
-const columnSchema = new Schema<IColumn>(
+const columnSchema = new Schema<ISchemaColumn>(
   {
     name: { type: String, required: true },
     tasks: [taskSchema]
@@ -53,13 +42,8 @@ const columnSchema = new Schema<IColumn>(
   }
 );
 
-interface IBoard extends Document {
-  name: string,
-  columns: Array<IColumn>,
-}
-
 // schema for board
-const boardSchema = new Schema<IBoard>(
+const boardSchema = new Schema<ISchemaBoard>(
   {
     name: { type: String, required: true },
     columns: [columnSchema]
