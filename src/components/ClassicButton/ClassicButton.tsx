@@ -11,9 +11,13 @@ interface IClassicButton {
 	onClick?: () => void,
 }
 
-const ClassicButton = ({ children }: IClassicButton) => {
+const ClassicButton = ({ children, width, height, onClick }: IClassicButton) => {
 	return (
-		<Button>
+		<Button
+			width={width}
+			height={height}
+			onClick={onClick}
+		>
 			{children}
 		</Button>
 

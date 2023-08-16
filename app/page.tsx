@@ -1,6 +1,6 @@
 import styles from './page.module.css'
 
-import { Board } from '@/ComponentsRoot'
+import { EmptyBoard } from '@/ComponentsRoot'
 
 // const getData = async () => {
 //   try {
@@ -350,6 +350,8 @@ export default async function Home() {
 
   return (
     // @ts-ignore
-    <Board board={board} />
+    // <Board board={board} />
+    <EmptyBoard />
+
   )
 }
