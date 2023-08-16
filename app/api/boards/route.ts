@@ -1,9 +1,9 @@
 
 import { NextResponse } from "next/server"
 
-// import { connectMongoDB } from "@/LibRoot";
-import { connectMongoDB } from "../../../src/lib/mongodb";
-import Board from "@/ModelsRoot";
+import { connectMongoDB } from "@/LibRoot";
+// import { connectMongoDB } from "../../../src/lib/mongodb";
+import { Board } from "@/ModelsRoot";
 
 // import { NextApiRequest, NextApiResponse } from "next";
 const boards = {
