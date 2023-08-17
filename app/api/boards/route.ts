@@ -3,8 +3,7 @@ import { NextResponse } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 
-import Board from "../../../src/models/boardModel";
-
+import { Board } from '@/ModelsRoot'
 // import { NextApiRequest, NextApiResponse } from "next";
 
 

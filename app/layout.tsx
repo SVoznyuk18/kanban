@@ -28,7 +28,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { boards } = await getData();
+  const data = await getData();
 
   return (
     <html lang="en">
@@ -39,7 +39,7 @@ export default async function RootLayout({
               <ModalProvider>
                 <Header />
                 <Main>
-                  <Sidebar boards={boards} />
+                  <Sidebar boards={data?.boards} />
                   {children}
                 </Main>
                 <Modal />
