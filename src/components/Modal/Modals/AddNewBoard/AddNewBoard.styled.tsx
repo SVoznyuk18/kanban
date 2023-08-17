@@ -18,4 +18,9 @@ export const Title = styled.h3`
   line-height: normal;
 `;
 
-export const Form = styled.form``;
+export const Form = styled.form`
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+`;

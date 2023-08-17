@@ -1,8 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-
-
-import { ClassicButton } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 interface IData {
@@ -10,12 +8,10 @@ interface IData {
 }
 
 const AddNewBoard = () => {
-
-
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields }
+    formState: { errors }
   } = useForm({ mode: "all" });
 
 
@@ -28,20 +24,24 @@ const AddNewBoard = () => {
       },
       body: JSON.stringify(data)
     })
-
     const result = await response.json();
     console.log(result);
-
   }
-  console.log('errors', errors)
 
   return (
     <ModalContent>
       <Title>Add New Board</Title>
       <Form>
-        <input
+        <ClassicInput
+          label="Name"
+          htmlFor='name'
+          id='name'
           type='text'
-          {...register('name', { required: 'required field' })}
+          name='name'
+          placeholder='e.g. Web Design'
+          register={register}
+          validation={{ required: 'Required field' }}
+          errorMessage={errors?.name && errors?.name?.message?.toString()}
         />
       </Form>
       <ClassicButton
