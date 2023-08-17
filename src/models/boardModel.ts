@@ -1,4 +1,4 @@
-import { Schema, model, models, Document } from "mongoose";
+import mongoose, { Schema, model, models, Document } from "mongoose";
 
 import { ISubtask, ITask, IColumn, IBoard } from '@/TypesRoot';
 
@@ -53,6 +53,6 @@ const boardSchema = new Schema<ISchemaBoard>(
   }
 );
 
-const Board = models.Board || model('Board', boardSchema);
+const Board = mongoose.models.Board || mongoose.model('Board', boardSchema);
 
 export default Board;
