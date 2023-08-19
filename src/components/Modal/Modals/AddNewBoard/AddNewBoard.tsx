@@ -17,16 +17,18 @@ const AddNewBoard = () => {
 
   const onSubmit = async (data: IData) => {
 
-    // const response = await fetch('http://localhost:3000/api/boards', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // const result = await response.json();
-    // console.log(result);
-    console.log(data)
+
+
+    const response = await fetch('http://localhost:3000/api/boards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    })
+    const result = await response.json();
+    console.log(result);
+    // console.log(data)
   }
 
   return (
@@ -35,14 +37,14 @@ const AddNewBoard = () => {
       <Form>
         <ClassicInput
           label="Name"
-          htmlFor='name'
-          id='name'
+          htmlFor='boardName'
+          id='boardName'
           type='text'
-          name='name'
+          name='boardName'
           placeholder='e.g. Web Design'
           register={register}
           validation={{ required: 'Required field' }}
-          errorMessage={errors?.name && errors?.name?.message?.toString()}
+          errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
         <AdditionalInput
           id='columnName'

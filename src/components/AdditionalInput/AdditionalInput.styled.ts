@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   row-gap: 4px;
+  margin-top: 16px;
 `;
 export const Title = styled.h4`
   width: 100%;

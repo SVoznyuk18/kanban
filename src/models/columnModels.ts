@@ -8,7 +8,8 @@ interface ISchemaColumn extends Omit<IColumn, '_id'>, Document { };
 export const columnSchema = new Schema<ISchemaColumn>(
   {
     columnName: { type: String, required: true },
-    tasks: [taskSchema]
+    mainBoardId: { type: String, required: true }
+    // tasks: [taskSchema]
   },
   {
     timestamps: true,

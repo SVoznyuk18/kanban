@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 
-import { Board } from '@/ModelsRoot'
+import { Board, Column } from '@/ModelsRoot'
 // import { NextApiRequest, NextApiResponse } from "next";
 
 
@@ -28,15 +28,31 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
 
-  const { name } = await req.json()
+  const { boardName, ...columns } = await req.json();
+  const arrayColumns = Object.values(columns);
   await connectMongoDB();
-  const addedBoard = await Board.create({ name })
 
-  if (!addedBoard) {
-    throw Error("Failed to create partner");
+
+
+  try {
+    const addedBoard = await Board.create({ boardName });
+
+    if (addedBoard?.success) {
+      const addedColumns = await Promise.all(arrayColumns.map(async column => {
+        const createdColumns = await Column.create({ columnName: column, mainBoardId: addedBoard?.result?._id });
+        return createdColumns
+      }))
+    } else {
+      throw Error("Failed to create board");
+    }
+
+  } catch (error) {
+    throw Error("Failed to create board and columns");
   }
 
-  return NextResponse.json({ success: true, result: addedBoard }, {
+
+
+  return NextResponse.json({ success: true }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }

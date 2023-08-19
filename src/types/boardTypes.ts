@@ -2,6 +2,7 @@ export interface ISubtask {
   _id: string,
   title: string,
   isCompleted: boolean,
+  mainTaskId: string,
   createdAt: Date,
   updatedAt: Date
 }
@@ -11,7 +12,8 @@ export interface ITask {
   title: string,
   description: string,
   status: string,
-  subtasks: Array<ISubtask>,
+  mainColumnId: string
+  // subtasks: Array<ISubtask>,
   createdAt: Date,
   updatedAt: Date
 }
@@ -19,15 +21,17 @@ export interface ITask {
 export interface IColumn {
   _id: string,
   columnName: string,
-  tasks: Array<ITask>,
+  mainBoardId: string,
+
+  // tasks: Array<ITask>,
   createdAt: Date,
   updatedAt: Date
 }
 
 export interface IBoard {
   _id: string,
-  name: string,
-  columns: Array<IColumn>,
+  boardName: string,
+  // columns: Array<IColumn>,
   createdAt: Date,
   updatedAt: Date
 }

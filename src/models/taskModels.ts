@@ -11,7 +11,8 @@ export const taskSchema = new Schema<ISchemaTask>(
     title: { type: String, required: true },
     description: String,
     status: { type: String },
-    subtasks: [subtaskSchema]
+    mainColumnId: { type: String, required: true }
+    // subtasks: [subtaskSchema]
   },
   {
     timestamps: true,

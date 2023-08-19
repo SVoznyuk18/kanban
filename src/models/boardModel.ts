@@ -7,8 +7,8 @@ interface ISchemaBoard extends Omit<IBoard, "_id">, Document { };
 
 export const boardSchema = new Schema<ISchemaBoard>(
   {
-    name: { type: String, required: true },
-    columns: [columnSchema]
+    boardName: { type: String, required: true },
+    // columns: [columnSchema]
   },
   {
     timestamps: true,

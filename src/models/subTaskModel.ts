@@ -8,6 +8,7 @@ export const subtaskSchema = new Schema<ISchemaSubtask>(
   {
     title: { type: String, required: true },
     isCompleted: { type: Boolean, default: false },
+    mainTaskId: { type: String, required: true }
   },
   {
     timestamps: true,
