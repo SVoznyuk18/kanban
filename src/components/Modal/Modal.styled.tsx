@@ -24,9 +24,9 @@ export const ModalContent = styled.div`
 	position: relative;
 	width: 480px;
 	min-width: 340px;
-	height: 500px;
-	padding: 20px ;
-	background-color: #ffff;
+	height: auto;
+	padding: 32px ;
+	background-color: ${({ theme }) => theme.secondaryBgColor};
 	border-radius: 20px;
 `;
 

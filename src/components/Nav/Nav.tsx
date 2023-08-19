@@ -1,42 +1,32 @@
 'use client';
-
+import React from 'react';
+import { IBoard } from '@/TypesRoot';
 import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
 
 import { NavWrapper, Title, NavList, NavItem } from './Nav.styled';
 
 import { SVGPath } from '@/ConstantsRoot';
 
-const Nav = () => {
+interface INavProps {
+  boards: Array<IBoard>
+}
+
+const Nav: React.FC<INavProps> = ({ boards }) => {
   return (
     <NavWrapper>
-      <Title>ALL BOARDS (3)</Title>
+      <Title>{`ALL BOARDS (${boards && boards.length})`}</Title>
       <NavList>
-        <NavItem>
-          <CustomSVG
-            width='16px'
-            height='16px'
-            fill='#828FA3'
-            path={SVGPath.board}
-          />
-          <p>Platform Launch</p>
-        </NavItem>
-        <NavItem>
-          <CustomSVG
-            width='16px'
-            height='16px'
-            fill='#828FA3'
-            path={SVGPath.board}
-          />
-          <p>Marketing Plan</p></NavItem>
-        <NavItem>
-          <CustomSVG
-            width='16px'
-            height='16px'
-            fill='#828FA3'
-            path={SVGPath.board}
-          />
-          <p>Roadmap</p>
-        </NavItem>
+        {boards && boards.map(board => (
+          <NavItem key={board?._id}>
+            <CustomSVG
+              width='16px'
+              height='16px'
+              fill='#828FA3'
+              path={SVGPath.board}
+            />
+            <p>{board?.name}</p>
+          </NavItem>
+        ))}
       </NavList>
       <ThemeSwitcher />
     </NavWrapper>

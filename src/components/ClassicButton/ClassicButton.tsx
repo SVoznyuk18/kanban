@@ -8,12 +8,16 @@ interface IClassicButton {
 	width?: string,
 	height?: string,
 	disabled?: boolean,
-	onClick?: () => void,
+	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ClassicButton = ({ children }: IClassicButton) => {
+const ClassicButton = ({ children, width, height, onClick }: IClassicButton) => {
 	return (
-		<Button>
+		<Button
+			width={width}
+			height={height}
+			onClick={onClick}
+		>
 			{children}
 		</Button>
 
