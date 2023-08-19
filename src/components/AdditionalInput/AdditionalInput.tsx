@@ -1,11 +1,9 @@
 'use client'
 
 import React, { useState } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
-
+import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap } from "react-hook-form";
 
 import { ClassicButton, ClassicInput, CustomSVG } from "@/ComponentsRoot";
-
 import { SVGPath } from '@/ConstantsRoot';
 
 import { Wrapper, Title, InputWrapper, Button } from './AdditionalInput.styled';
@@ -13,6 +11,8 @@ import { Wrapper, Title, InputWrapper, Button } from './AdditionalInput.styled';
 interface IValidation {
   required: string
 }
+
+type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
 
 interface IProps {
   width?: string,
@@ -29,7 +29,9 @@ interface IProps {
   fontSize?: string,
   register: UseFormRegister<FieldValues>,
   validation: IValidation,
+  unregister: UseFormUnregister<FieldValues>,
   errorMessage?: string,
+  errors: FieldErrors
 }
 
 const AdditionalInput: React.FC<IProps> = ({
@@ -46,7 +48,9 @@ const AdditionalInput: React.FC<IProps> = ({
   borderRadius,
   fontSize,
   register,
+  unregister,
   validation,
+  errors
 }) => {
 
   const [additionalInputs, setAdditionalsInputs] = useState<Array<number>>([]);
@@ -56,9 +60,10 @@ const AdditionalInput: React.FC<IProps> = ({
     setAdditionalsInputs([...additionalInputs, Date.now()]);
   }
 
-  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, elem: number) => {
+  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number) => {
     e.preventDefault();
     const filteredInputs = additionalInputs.filter(input => input !== elem);
+    unregister(`${name}_${elem}`)
     setAdditionalsInputs(filteredInputs);
   }
 
@@ -68,19 +73,14 @@ const AdditionalInput: React.FC<IProps> = ({
       {additionalInputs && additionalInputs.map(aditionalInput => (
         <InputWrapper key={aditionalInput}>
           <ClassicInput
-            id={id}
+            id={`${id}_${aditionalInput}`}
             type={type}
-            name={name}
-            placeholder={placeholder}
-            width={width}
-            height={height}
-            padding={padding}
-            borderRadius={borderRadius}
-            fontSize={fontSize}
+            name={`${name}_${aditionalInput}`}
             validation={validation}
             register={register}
+            errorMessage={errors?.[`${name}_${aditionalInput}`] && errors?.[`${name}_${aditionalInput}`]?.message?.toString()}
           />
-          <Button onClick={(e) => handleDeleteInput(e, aditionalInput)}>
+          <Button onClick={(e) => handleDeleteInput(e, name, aditionalInput)}>
             <CustomSVG
               width='15px'
               height='15px'
@@ -90,11 +90,8 @@ const AdditionalInput: React.FC<IProps> = ({
             // strokeWidth="2"
             />
           </Button>
-
         </InputWrapper>
       ))}
-
-
       <ClassicButton
         width='100%'
         height="40px"
@@ -102,7 +99,6 @@ const AdditionalInput: React.FC<IProps> = ({
       >
         + Add New Column
       </ClassicButton>
-
     </Wrapper>
   )
 }

@@ -10,22 +10,23 @@ interface IData {
 const AddNewBoard = () => {
   const {
     register,
+    unregister,
     handleSubmit,
     formState: { errors }
   } = useForm({ mode: "all" });
 
-
   const onSubmit = async (data: IData) => {
 
-    const response = await fetch('http://localhost:3000/api/boards', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-    const result = await response.json();
-    console.log(result);
+    // const response = await fetch('http://localhost:3000/api/boards', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8'
+    //   },
+    //   body: JSON.stringify(data)
+    // })
+    // const result = await response.json();
+    // console.log(result);
+    console.log(data)
   }
 
   return (
@@ -48,7 +49,9 @@ const AddNewBoard = () => {
           type='text'
           name='columnName'
           register={register}
+          unregister={unregister}
           validation={{ required: 'Required field' }}
+          errors={errors}
         />
       </Form>
       <ClassicButton
