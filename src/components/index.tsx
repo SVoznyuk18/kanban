@@ -11,5 +11,6 @@ import Column from "./Column/Column";
 import Task from './Task/Task';
 import EmptyBoard from './EmptyBoard/EmptyBoard';
 import ClassicInput from './ClassicInput/ClassicInput';
+import AdditionalInput from './AdditionalInput/AdditionalInput';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput };
+export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput };

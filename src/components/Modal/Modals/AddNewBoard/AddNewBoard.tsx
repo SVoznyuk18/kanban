@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { ClassicButton, ClassicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 interface IData {
@@ -43,10 +43,17 @@ const AddNewBoard = () => {
           validation={{ required: 'Required field' }}
           errorMessage={errors?.name && errors?.name?.message?.toString()}
         />
+        <AdditionalInput
+          id='columnName'
+          type='text'
+          name='columnName'
+          register={register}
+          validation={{ required: 'Required field' }}
+        />
       </Form>
       <ClassicButton
-        width='174px'
-        height="48px"
+        width='100%'
+        height="40px"
         onClick={handleSubmit(onSubmit)}
       >
         Create New Board

@@ -18,7 +18,7 @@ export interface ITask {
 
 export interface IColumn {
   _id: string,
-  name: string,
+  columnName: string,
   tasks: Array<ITask>,
   createdAt: Date,
   updatedAt: Date

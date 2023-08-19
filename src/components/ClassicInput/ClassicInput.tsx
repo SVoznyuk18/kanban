@@ -43,13 +43,17 @@ export const ClassicInput: React.FC<IProps> = ({
 }) => {
   return (
     <Wrapper width={width}>
-      <Label
-        htmlFor={htmlFor}
-        labelFontSize={labelFontSize}
-        label={label}
-      >
-        {label}
-      </Label>
+      {
+        label && (
+          <Label
+            htmlFor={htmlFor}
+            labelFontSize={labelFontSize}
+            label={label}
+          >
+            {label}
+          </Label>
+        )
+      }
       <Input
         id={id}
         type={type}
