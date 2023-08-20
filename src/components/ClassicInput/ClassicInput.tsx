@@ -1,12 +1,12 @@
 import React, { InputHTMLAttributes } from 'react';
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldValues, UseFormRegister, Path } from "react-hook-form";
 import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
 
 interface IValidation {
   required: string
 }
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
   width?: string,
   height?: string,
   htmlFor?: string,
@@ -14,17 +14,17 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string,
   id?: string,
   type?: string,
-  name: string,
+  name: Path<T>,
   placeholder?: string,
   padding?: string,
   borderRadius?: string,
   fontSize?: string,
-  register: UseFormRegister<FieldValues>,
+  register: UseFormRegister<T>,
   validation: IValidation,
   errorMessage?: string,
 }
 
-export const ClassicInput: React.FC<IProps> = ({
+export const ClassicInput = <T extends FieldValues>({
   width,
   height,
   htmlFor,
@@ -40,7 +40,7 @@ export const ClassicInput: React.FC<IProps> = ({
   register,
   validation,
   errorMessage,
-}) => {
+}: IProps<T>) => {
   return (
     <Wrapper width={width}>
       {

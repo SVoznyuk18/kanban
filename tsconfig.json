@@ -45,6 +45,12 @@
       "@/TypesRoot": [
         "./src/types/index.ts"
       ],
+      "@/ReduxRoot": [
+        "./src/redux/index.ts"
+      ],
+      "@/SagaRoot": [
+        "./src/saga/index.ts"
+      ],
     }
   },
   "include": [
