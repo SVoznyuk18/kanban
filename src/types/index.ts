@@ -1,3 +1,5 @@
 import { ISubtask, ITask, IColumn, IBoard } from "./boardTypes";
 
-export type { ISubtask, ITask, IColumn, IBoard };
+import { IBoartState } from './boardReducerTypes';
+
+export type { ISubtask, ITask, IColumn, IBoard, IBoartState };

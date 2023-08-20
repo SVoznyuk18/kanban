@@ -28,31 +28,15 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
 
-  const { boardName, ...columns } = await req.json();
-  const arrayColumns = Object.values(columns);
+  const { boardName } = await req.json();
   await connectMongoDB();
+  const addedBoard = await Board.create({ boardName })
 
-
-
-  try {
-    const addedBoard = await Board.create({ boardName });
-
-    if (addedBoard?.success) {
-      const addedColumns = await Promise.all(arrayColumns.map(async column => {
-        const createdColumns = await Column.create({ columnName: column, mainBoardId: addedBoard?.result?._id });
-        return createdColumns
-      }))
-    } else {
-      throw Error("Failed to create board");
-    }
-
-  } catch (error) {
-    throw Error("Failed to create board and columns");
+  if (!addedBoard) {
+    throw Error("Failed to create partner");
   }
 
-
-
-  return NextResponse.json({ success: true }, {
+  return NextResponse.json({ success: true, result: addedBoard }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap } from "react-hook-form";
+import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap, Path } from "react-hook-form";
 
 import { ClassicButton, ClassicInput, CustomSVG } from "@/ComponentsRoot";
 import { SVGPath } from '@/ConstantsRoot';
@@ -14,7 +14,7 @@ interface IValidation {
 
 type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
 
-interface IProps {
+interface IProps<T extends FieldValues> {
   width?: string,
   height?: string,
   htmlFor?: string,
@@ -22,19 +22,19 @@ interface IProps {
   label?: string,
   id?: string,
   type?: string,
-  name: string,
+  name: Path<T> | string,
   placeholder?: string,
   padding?: string,
   borderRadius?: string,
   fontSize?: string,
-  register: UseFormRegister<FieldValues>,
+  register: UseFormRegister<T>,
   validation: IValidation,
-  unregister: UseFormUnregister<FieldValues>,
+  unregister: UseFormUnregister<T>,
   errorMessage?: string,
   errors: FieldErrors
 }
 
-const AdditionalInput: React.FC<IProps> = ({
+const AdditionalInput = <T extends FieldValues>({
   width,
   height,
   htmlFor,
@@ -51,7 +51,7 @@ const AdditionalInput: React.FC<IProps> = ({
   unregister,
   validation,
   errors
-}) => {
+}: IProps<T>) => {
 
   const [additionalInputs, setAdditionalsInputs] = useState<Array<number>>([]);
 
@@ -63,7 +63,7 @@ const AdditionalInput: React.FC<IProps> = ({
   const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number) => {
     e.preventDefault();
     const filteredInputs = additionalInputs.filter(input => input !== elem);
-    unregister(`${name}_${elem}`)
+    unregister(`${name}_${elem}` as any)
     setAdditionalsInputs(filteredInputs);
   }
 
@@ -75,6 +75,7 @@ const AdditionalInput: React.FC<IProps> = ({
           <ClassicInput
             id={`${id}_${aditionalInput}`}
             type={type}
+            //@ts-ignore
             name={`${name}_${aditionalInput}`}
             validation={validation}
             register={register}

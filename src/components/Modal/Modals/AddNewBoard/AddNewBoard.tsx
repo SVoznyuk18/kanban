@@ -1,33 +1,40 @@
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+
+import { useDispatch, useSelector } from "react-redux";
+import { setBoardAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 interface IData {
-  name?: string
+  boardName: string
+  [x: string]: string | undefined;
 }
 
 const AddNewBoard = () => {
+
+  const dispatch = useDispatch();
+
+
   const {
     register,
     unregister,
     handleSubmit,
     formState: { errors }
-  } = useForm({ mode: "all" });
+  } = useForm<IData>({ mode: "all" });
 
-  const onSubmit = async (data: IData) => {
+  const onSubmit: SubmitHandler<IData> = async (data) => {
+    // const response = await fetch('http://localhost:3000/api/boards', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8'
+    //   },
+    //   body: JSON.stringify(data)
+    // })
+    // const result = await response.json();
+    dispatch(setBoardAction(data))
 
-
-
-    const response = await fetch('http://localhost:3000/api/boards', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-    const result = await response.json();
-    console.log(result);
+    // console.log(result);
     // console.log(data)
   }
 
@@ -35,7 +42,7 @@ const AddNewBoard = () => {
     <ModalContent>
       <Title>Add New Board</Title>
       <Form>
-        <ClassicInput
+        <ClassicInput<IData>
           label="Name"
           htmlFor='boardName'
           id='boardName'
@@ -46,7 +53,7 @@ const AddNewBoard = () => {
           validation={{ required: 'Required field' }}
           errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
-        <AdditionalInput
+        <AdditionalInput<IData>
           id='columnName'
           type='text'
           name='columnName'

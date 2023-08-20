@@ -24,7 +24,7 @@ const Nav: React.FC<INavProps> = ({ boards }) => {
               fill='#828FA3'
               path={SVGPath.board}
             />
-            <p>{board?.name}</p>
+            <p>{board?.boardName}</p>
           </NavItem>
         ))}
       </NavList>
