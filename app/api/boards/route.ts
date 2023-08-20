@@ -29,6 +29,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
 
   const { boardName } = await req.json();
+  console.log('boardName', boardName)
   await connectMongoDB();
   const addedBoard = await Board.create({ boardName })
 
