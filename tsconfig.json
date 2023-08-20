@@ -51,6 +51,9 @@
       "@/SagaRoot": [
         "./src/saga/index.ts"
       ],
+      "@/ApiRoot": [
+        "./src/api/index.ts"
+      ],
     }
   },
   "include": [
