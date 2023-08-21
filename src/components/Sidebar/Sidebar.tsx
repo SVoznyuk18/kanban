@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-
+import { useTypedSelector } from '@/UtilsRoot';
 import { IBoard } from '@/TypesRoot';
 import { Nav } from '@/ComponentsRoot'
 import { SidebarSection, ToggleSideBar, HideSection } from './sidebar.style';
@@ -14,6 +14,7 @@ interface INavProps {
 const Sidebar: React.FC<INavProps> = ({ boards }) => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
+  const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
 
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
@@ -28,7 +29,7 @@ const Sidebar: React.FC<INavProps> = ({ boards }) => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <Nav boards={boards} />
+      <Nav boards={boardsFromStore || boards} />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'

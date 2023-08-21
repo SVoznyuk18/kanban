@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 
 import { useDispatch, useSelector } from "react-redux";
-import { setBoardAction } from '@/ReduxRoot'
+import { addNewBoardsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
@@ -32,7 +32,7 @@ const AddNewBoard = () => {
     //   body: JSON.stringify(data)
     // })
     // const result = await response.json();
-    dispatch(setBoardAction(data))
+    dispatch(addNewBoardsAction(data))
 
     // console.log(result);
     // console.log(data)

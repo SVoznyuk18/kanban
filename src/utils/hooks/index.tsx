@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+
+import { RootState } from '@/ReduxRoot';
 
 type themeType = 'dark' | 'light';
 
@@ -55,4 +58,7 @@ export function useThemeMode(themeMode: themeType): [themeType, (() => void)] {
 
   return [theme, toggleTheme];
 }
+
+//@ts-ignore
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
