@@ -38,7 +38,7 @@ export default async function RootLayout({
                 <ModalProvider>
                   <Header />
                   <Main>
-                    <Sidebar boards={data?.boards} />
+                    <Sidebar boards={data?.result} />
                     {children}
                   </Main>
                   <Modal />

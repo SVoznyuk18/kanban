@@ -1,9 +1,12 @@
 import { boardReducer } from './boardSlice';
-import { IBoard, IBoartState } from '@/TypesRoot';
-
+import { boardsReducer } from './boardsSlice'
 
 const rootReducer = {
-  board: boardReducer
+  board: boardReducer,
+  boards: boardsReducer
 }
+
+//@ts-ignore
+export type RootState = ReturnType<typeof rootReducer>
 
 export default rootReducer;

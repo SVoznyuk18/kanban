@@ -1,17 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IBoard, IBoartState } from '@/TypesRoot';
+import { IBoard } from '@/TypesRoot';
+
+export interface IBoartState {
+  board: IBoard | null,
+  isLoading: boolean,
+  errors: string
+};
+
+interface IBoardPayload {
+  boardName: string,
+  [x: string]: string | undefined;
+};
 
 const boardInitialState = {
   board: null,
   isLoading: false,
   errors: ''
 };
-
-interface IBoardPayload {
-  boardName: string,
-  [x: string]: string | undefined;
-
-}
 
 const boardSlice = createSlice({
   name: 'board',

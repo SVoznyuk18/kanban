@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 
-import { Board, Column } from '@/ModelsRoot'
+import { Board } from '@/ModelsRoot'
 // import { NextApiRequest, NextApiResponse } from "next";
 
 
@@ -16,11 +16,10 @@ export async function GET(req: Request) {
       status: 404
     })
   }
-  return NextResponse.json({ success: true, boards });
+  return NextResponse.json({ success: true, result: boards });
 }
 
 export async function POST(req: Request) {
-
   const { boardName } = await req.json();
   await connectMongoDB();
   const addedBoard = await Board.create({ boardName })

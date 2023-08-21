@@ -1,15 +1,15 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IBoard, IBoartState, IColumn } from '@/TypesRoot';
-import { postData } from '@/ApiRoot';
+import { PayloadAction } from "@reduxjs/toolkit";
+import { IBoard, IColumn } from '@/TypesRoot';
+import { postData, getData } from '@/ApiRoot';
 
 interface IBoardPayload {
   boardName: string,
 }
 
 interface IResponse {
-  result: IBoard | Array<IColumn>
+  result: IBoard | Array<IColumn> | Array<IBoard>
   success: boolean
 }
 
@@ -23,6 +23,9 @@ function* workAddNewBoard(action: PayloadAction<IBoardPayload>) {
     //@ts-ignore
     const columnResponse: IResponse = yield call(postData, '/columns', { mainBoardId: boardResponse?.result?._id, columns });
   }
+
+  const allBoards: IResponse = yield call(getData, '/boards');
+  console.log('allBoards', allBoards);
 
 }
 
