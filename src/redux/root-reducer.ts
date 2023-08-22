@@ -1,5 +1,5 @@
 import { boardReducer } from './boardSlice';
-import { boardsReducer } from './boardsSlice'
+import { boardsReducer } from './boards/boardsSlice'
 
 const rootReducer = {
   board: boardReducer,
