@@ -7,11 +7,6 @@ const boardInitialState = {
   errors: ''
 };
 
-interface IBoardPayload {
-  boardName: string,
-  [x: string]: string | undefined;
-};
-
 interface IBoardsState {
   boards: Array<IBoard>,
   isLoading: boolean,
@@ -22,21 +17,19 @@ const boardsSlice = createSlice({
   name: 'boards',
   initialState: boardInitialState,
   reducers: {
-    addNewBoardsAction: (state: IBoardsState, { payload: boardName }: PayloadAction<IBoardPayload>) => {
+    addNewBoardsLoading: (state: IBoardsState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    addNewBoardsSuccessAction: (state: IBoardsState, { payload }: PayloadAction<Array<IBoard>>) => {
+    addNewBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<Array<IBoard>>) => {
       state.isLoading = false;
-
       state.boards = payload;
     },
-    addNewBoardsFailureAction: (state: IBoardsState, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
+    addNewBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<{ error: string }>) => {
+      state.isLoading = false;
+      state.errors = payload?.error;
     }
   }
 });
-
-export const { addNewBoardsAction, addNewBoardsSuccessAction, addNewBoardsFailureAction } = boardsSlice.actions;
 
 export const boardsReducer = boardsSlice.reducer;

@@ -29,7 +29,7 @@ const Sidebar: React.FC<INavProps> = ({ boards }) => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <Nav boards={boardsFromStore || boards} />
+      <Nav boards={boardsFromStore.length > 0 ? boardsFromStore : boards} />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'
