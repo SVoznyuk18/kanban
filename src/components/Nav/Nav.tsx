@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
 import { IBoard } from '@/TypesRoot';
 import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
 
@@ -18,13 +19,15 @@ const Nav: React.FC<INavProps> = ({ boards }) => {
       <NavList>
         {boards && boards.map(board => (
           <NavItem key={board?._id}>
-            <CustomSVG
-              width='16px'
-              height='16px'
-              fill='#828FA3'
-              path={SVGPath.board}
-            />
-            <p>{board?.boardName}</p>
+            <Link href={board?._id}>
+              <CustomSVG
+                width='16px'
+                height='16px'
+                fill='#828FA3'
+                path={SVGPath.board}
+              />
+              <p>{board?.boardName}</p>
+            </Link>
           </NavItem>
         ))}
       </NavList>

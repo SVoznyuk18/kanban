@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
-import { addNewBoardLoadingAction, addNewBoardsSuccessAction, addNewBoardsFailureAction } from '@/ReduxRoot';
+import { addNewBoardsLoadingAction, addNewBoardsSuccessAction, addNewBoardsFailureAction } from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
@@ -24,7 +24,7 @@ function* workAddNewBoards(action: PayloadAction<any>) {
   const columns = Object.values(rest);
 
   try {
-    yield put(addNewBoardLoadingAction());
+    yield put(addNewBoardsLoadingAction());
 
     const boardResponse: IResponseBoard | undefined = yield call(postData, '/boards', { boardName });
     const allBoards: IResponseAllBoards = yield call(getData, '/boards');
