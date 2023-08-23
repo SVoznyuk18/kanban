@@ -28,7 +28,19 @@ const boardsSlice = createSlice({
     addNewBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<{ error: string }>) => {
       state.isLoading = false;
       state.errors = payload?.error;
-    }
+    },
+    getAllBoardsLoading: (state: IBoardsState) => {
+      state.isLoading = true;
+      state.errors = '';
+    },
+    getAllBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<Array<IBoard>>) => {
+      state.isLoading = false;
+      state.boards = payload;
+    },
+    getAllBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<{ error: string }>) => {
+      state.isLoading = false;
+      state.errors = payload?.error;
+    },
   }
 });
 

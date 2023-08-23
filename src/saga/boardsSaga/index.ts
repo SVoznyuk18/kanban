@@ -1,6 +1,13 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
-import { addNewBoardsLoadingAction, addNewBoardsSuccessAction, addNewBoardsFailureAction } from '@/ReduxRoot';
+import {
+  addNewBoardsLoadingAction,
+  addNewBoardsSuccessAction,
+  addNewBoardsFailureAction,
+  getAllBoardsLoading,
+  getAllBoardsSuccess,
+  getAllBoardsFailure
+} from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
@@ -42,6 +49,18 @@ function* workAddNewBoards(action: PayloadAction<any>) {
   }
 }
 
+function* workGetAllBoards(action: PayloadAction<Array<IBoard>>) {
+  try {
+    yield put(getAllBoardsLoading());
+    const allBoards: IResponseAllBoards = yield call(getData, '/boards');
+    yield put(getAllBoardsSuccess(allBoards?.result));
+    console.log(action);
+  } catch (error) {
+    yield put(getAllBoardsFailure(`Failed to fetched boards`));
+  }
+}
+
 export function* watchBoards() {
-  yield takeEvery('ADD_NEW_BOARDS_ACTION', workAddNewBoards)
+  yield takeEvery('ADD_NEW_BOARDS_ACTION', workAddNewBoards),
+    yield takeLatest('GET_ALL_BOARDS', workGetAllBoards);
 }

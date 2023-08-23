@@ -8,3 +8,11 @@ export const addNewBoardsLoadingAction = createAction('boards/addNewBoardsLoadin
 export const addNewBoardsSuccessAction = createAction('boards/addNewBoardsSuccess', (boards: Array<IBoard>) => ({ payload: boards }));
 
 export const addNewBoardsFailureAction = createAction('boards/addNewBoardsFailure', (error: string) => ({ payload: { error } }));
+
+export const getAllBoards = createAction<any>('GET_ALL_BOARDS');
+
+export const getAllBoardsLoading = createAction('boards/getAllBoardsLoading');
+
+export const getAllBoardsSuccess = createAction('boards/getAllBoardsSuccess', (boards: Array<IBoard>) => ({ payload: boards }));
+
+export const getAllBoardsFailure = createAction('boards/getAllBoardsFailure', (error: string) => ({ payload: { error } }));

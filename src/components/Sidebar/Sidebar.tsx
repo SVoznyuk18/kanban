@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useDispatch } from "react-redux";
+
 import { useTypedSelector } from '@/UtilsRoot';
+import { getAllBoards } from '@/ReduxRoot'
 import { IBoard } from '@/TypesRoot';
 import { Nav } from '@/ComponentsRoot'
 import { SidebarSection, ToggleSideBar, HideSection } from './sidebar.style';
@@ -14,7 +17,14 @@ interface INavProps {
 const Sidebar: React.FC<INavProps> = ({ boards }) => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
+  const dispatch = useDispatch();
   const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
+
+  useEffect(() => {
+    dispatch(getAllBoards(boards))
+  }, [boards, dispatch]);
+
+  console.log('test');
 
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
