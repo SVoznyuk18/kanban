@@ -54,7 +54,6 @@ function* workGetAllBoards(action: PayloadAction<Array<IBoard>>) {
     yield put(getAllBoardsLoading());
     const allBoards: IResponseAllBoards = yield call(getData, '/boards');
     yield put(getAllBoardsSuccess(allBoards?.result));
-    console.log(action);
   } catch (error) {
     yield put(getAllBoardsFailure(`Failed to fetched boards`));
   }

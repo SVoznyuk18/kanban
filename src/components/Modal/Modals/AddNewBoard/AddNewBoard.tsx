@@ -1,6 +1,8 @@
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from "react-redux";
 
-import { useDispatch, useSelector } from "react-redux";
+import { IBoard } from '@/TypesRoot';
+import { useTypedSelector } from '@/UtilsRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
@@ -14,7 +16,7 @@ interface IData {
 const AddNewBoard = () => {
 
   const dispatch = useDispatch();
-
+  const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
 
   const {
     register,
@@ -23,20 +25,15 @@ const AddNewBoard = () => {
     formState: { errors }
   } = useForm<IData>({ mode: "all" });
 
-  const onSubmit: SubmitHandler<IData> = async (data) => {
-    // const response = await fetch('http://localhost:3000/api/boards', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // const result = await response.json();
-    dispatch(addNewBoardsAction(data))
 
-    // console.log(result);
-    // console.log(data)
-  }
+  const matchBoardname = (value: string) => {  // check match boardName with Saved boardName
+    const isMatch = boardsFromStore.some((board: IBoard) => board?.boardName === value);
+    if (isMatch) return 'Таке імя борду вже існує'
+  };
+
+  const onSubmit: SubmitHandler<IData> = async (data) => {
+    dispatch(addNewBoardsAction(data));
+  };
 
   return (
     <ModalContent>
@@ -50,7 +47,7 @@ const AddNewBoard = () => {
           name='boardName'
           placeholder='e.g. Web Design'
           register={register}
-          validation={{ required: 'Required field' }}
+          validation={{ required: 'Required field', validate: (value: string) => matchBoardname(value) }}
           errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
         <AdditionalInput<IData>

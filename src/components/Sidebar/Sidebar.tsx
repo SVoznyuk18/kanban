@@ -24,8 +24,6 @@ const Sidebar: React.FC<INavProps> = ({ boards }) => {
     dispatch(getAllBoards(boards))
   }, [boards, dispatch]);
 
-  console.log('test');
-
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
       <ToggleSideBar
