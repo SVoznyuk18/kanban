@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from "react-redux";
+import { camelCase } from 'lodash';
 
 import { IBoard } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
@@ -27,7 +28,7 @@ const AddNewBoard = () => {
 
 
   const matchBoardname = (value: string) => {  // check match boardName with Saved boardName
-    const isMatch = boardsFromStore.some((board: IBoard) => board?.boardName === value);
+    const isMatch = boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
     if (isMatch) return 'Таке імя борду вже існує'
   };
 

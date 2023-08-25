@@ -19,7 +19,7 @@ const Nav: React.FC<INavProps> = ({ boards }) => {
       <NavList>
         {boards && boards.map(board => (
           <NavItem key={board?._id}>
-            <Link href={board?._id}>
+            <Link href={`/${board?.url}`}>
               <CustomSVG
                 width='16px'
                 height='16px'

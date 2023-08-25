@@ -31,6 +31,7 @@ export interface IColumn {
 export interface IBoard {
   _id: string,
   boardName: string,
+  url: string,
   // columns: Array<IColumn>,
   createdAt: Date,
   updatedAt: Date
