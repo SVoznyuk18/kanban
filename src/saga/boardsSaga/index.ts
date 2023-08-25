@@ -1,6 +1,13 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
-import { addNewBoardLoadingAction, addNewBoardsSuccessAction, addNewBoardsFailureAction } from '@/ReduxRoot';
+import {
+  addNewBoardsLoadingAction,
+  addNewBoardsSuccessAction,
+  addNewBoardsFailureAction,
+  getAllBoardsLoadingAction,
+  getAllBoardsSuccessAction,
+  getAllBoardsFailureAction
+} from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
@@ -24,11 +31,9 @@ function* workAddNewBoards(action: PayloadAction<any>) {
   const columns = Object.values(rest);
 
   try {
-    yield put(addNewBoardLoadingAction());
-
+    yield put(addNewBoardsLoadingAction());
     const boardResponse: IResponseBoard | undefined = yield call(postData, '/boards', { boardName });
     const allBoards: IResponseAllBoards = yield call(getData, '/boards');
-
     yield put(addNewBoardsSuccessAction(allBoards?.result));
 
     if (boardResponse?.success && columns.length > 0) {
@@ -42,6 +47,17 @@ function* workAddNewBoards(action: PayloadAction<any>) {
   }
 }
 
+function* workGetAllBoards() {
+  try {
+    yield put(getAllBoardsLoadingAction());
+    const allBoards: IResponseAllBoards = yield call(getData, '/boards');
+    yield put(getAllBoardsSuccessAction(allBoards?.result));
+  } catch (error) {
+    yield put(getAllBoardsFailureAction(`Failed to fetched boards`));
+  }
+}
+
 export function* watchBoards() {
-  yield takeEvery('ADD_NEW_BOARDS_ACTION', workAddNewBoards)
+  yield takeLatest('ADD_NEW_BOARDS_ACTION', workAddNewBoards);
+  yield takeLatest('GET_ALL_BOARDS', workGetAllBoards);
 }

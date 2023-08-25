@@ -1,4 +1,4 @@
-import { boardReducer } from './boardSlice';
+import { boardReducer } from './board/boardSlice';
 import { boardsReducer } from './boards/boardsSlice'
 
 const rootReducer = {

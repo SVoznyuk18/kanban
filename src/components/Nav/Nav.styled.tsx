@@ -27,20 +27,26 @@ export const NavList = styled.ul`
   width: 100%;
 `;
 export const NavItem = styled.li`
-  display: flex;
-  align-items: center;
+ 
   width: 100%;
   height: 48px;
   padding-left: 35px;
   cursor: pointer;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
-  
-  font-size: 15px;
-  font-weight: 700;
 
+  a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+    text-decoration: none;
+  }
+ 
   p {
-    margin-left: 15px;
+    font-size: 15px;
+    font-weight: 700;
     color: #828FA3;
   }
 
@@ -55,3 +61,4 @@ export const NavItem = styled.li`
     }
   }
 `;
+

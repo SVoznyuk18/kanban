@@ -3,7 +3,8 @@ import { FieldValues, UseFormRegister, Path } from "react-hook-form";
 import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
 
 interface IValidation {
-  required: string
+  required: string,
+  validate: (value: string) => string | undefined
 }
 
 interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
@@ -64,6 +65,7 @@ export const ClassicInput = <T extends FieldValues>({
         borderRadius={borderRadius}
         fontSize={fontSize}
         {...register(name, validation)}
+
       />
       <ErrorMessage>
         {errorMessage}

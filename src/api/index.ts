@@ -19,6 +19,17 @@ export const getData = async<T>(url: string): Promise<T | undefined> => {
   }
 }
 
+export const getDataByParams = async<T>(url: string, params: string): Promise<T | undefined> => {
+  try {
+    const response: AxiosResponse<T> = await server.get(url, { params: { url: params } });
+    return response.data;
+    //@ts-ignore
+  } catch (error: AxiosError<ErrorResponse>) {
+    console.error(`Error fetching data to ${url} by ${params} params:`, error.message);
+    return undefined;
+  }
+}
+
 //@ts-ignore
 export const postData = async<T>(url: string, post): Promise<T | undefined> => {
   try {

@@ -3,8 +3,16 @@ import { IBoard } from '@/TypesRoot';
 
 export const addNewBoardsAction = createAction<any>('ADD_NEW_BOARDS_ACTION');
 
-export const addNewBoardLoadingAction = createAction('boards/addNewBoardsLoading');
+export const addNewBoardsLoadingAction = createAction('boards/addNewBoardsLoading');
 
 export const addNewBoardsSuccessAction = createAction('boards/addNewBoardsSuccess', (boards: Array<IBoard>) => ({ payload: boards }));
 
 export const addNewBoardsFailureAction = createAction('boards/addNewBoardsFailure', (error: string) => ({ payload: { error } }));
+
+export const getAllBoardsAction = createAction<any>('GET_ALL_BOARDS');
+
+export const getAllBoardsLoadingAction = createAction('boards/getAllBoardsLoading');
+
+export const getAllBoardsSuccessAction = createAction('boards/getAllBoardsSuccess', (boards: Array<IBoard>) => ({ payload: boards }));
+
+export const getAllBoardsFailureAction = createAction('boards/getAllBoardsFailure', (error: string) => ({ payload: { error } }));
