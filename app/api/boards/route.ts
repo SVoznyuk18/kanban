@@ -1,13 +1,10 @@
-
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server";
 import { camelCase } from 'lodash';
 import { connectMongoDB } from "@/LibRoot";
 
 import { Board } from '@/ModelsRoot'
-// import { NextApiRequest, NextApiResponse } from "next";
 
-
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   await connectMongoDB();
   const boards = await Board.find({}, "");
 
@@ -19,7 +16,7 @@ export async function GET(req: Request) {
   return NextResponse.json({ success: true, result: boards });
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const { boardName } = await req.json();
   const url = camelCase(boardName);
   await connectMongoDB();

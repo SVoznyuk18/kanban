@@ -1,10 +1,8 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 
-import { getDataByParams } from '@/ApiRoot';
-
-import { IBoard } from '@/TypesRoot';
-import { Column } from '@/ComponentsRoot'
+import { getBoardAction } from '@/ReduxRoot';
 import { BoardWrapper } from './Board.styled';
 
 interface IProps {
@@ -14,11 +12,18 @@ interface IProps {
 }
 
 const Board: React.FC<IProps> = ({ params }) => {
-  const result = await getDataByParams(`http://localhost:3000/api/boards/${params?.url}`, params?.url) as IBoard;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (params?.url) dispatch(getBoardAction(params?.url));
+
+  }, [dispatch, params])
 
   return (
     <BoardWrapper>
-      <h1>{result?.boardName}</h1>
+      <h1>Hello</h1>
+      {/* <h1>{result?.boardName}</h1> */}
       {/* {board?.columns.length > 0 && board?.columns.map((column) => (
         // @ts-ignore
         <Column key={column?.id} column={column} />

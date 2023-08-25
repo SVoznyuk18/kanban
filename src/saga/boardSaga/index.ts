@@ -1,34 +1,35 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
-
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IBoard, IColumn } from '@/TypesRoot';
-import { postData, getData } from '@/ApiRoot';
+
+import {
+  getBoardLoadingAction,
+  getBoardSuccessAction,
+  getBoardFailureAction
+} from '@/ReduxRoot';
+import { IBoard } from '@/TypesRoot';
+import { getDataByParams } from '@/ApiRoot';
 
 interface IBoardPayload {
-  boardName: string,
+  boardUrl: string,
 }
-
-interface IResponse {
-  result: IBoard | Array<IColumn> | Array<IBoard>
+interface IResponseBoard {
+  result: IBoard,
   success: boolean
 }
 
-function* workAddNewBoard(action: PayloadAction<IBoardPayload>) {
-  const { boardName, ...rest } = action?.payload;
-  const columns = Object.values(rest);
+function* workGetBoard(action: PayloadAction<IBoardPayload>) {
+  const { boardUrl } = action?.payload;
+  try {
+    yield put(getBoardLoadingAction());
+    const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, boardUrl);
+    if (success) yield put(getBoardSuccessAction(result));
 
-  const boardResponse: IResponse | undefined = yield call(postData, '/boards', { boardName });
-
-  if (boardResponse?.success && columns.length > 0) {
-    //@ts-ignore
-    const columnResponse: IResponse = yield call(postData, '/columns', { mainBoardId: boardResponse?.result?._id, columns });
+  } catch (error) {
+    console.log('error')
+    yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));
   }
-
-  const allBoards: IResponse = yield call(getData, '/boards');
-  console.log('allBoards', allBoards);
-
 }
 
 export function* watchBoard() {
-  yield takeEvery('board/setBoardAction', workAddNewBoard)
+  yield takeLatest('GET_BOARD', workGetBoard)
 }

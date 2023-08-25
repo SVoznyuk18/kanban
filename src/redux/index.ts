@@ -1,30 +1,31 @@
 import store from "./store";
-import { setBoardAction, setBoardSuccessAction, setBoardFailureAction } from './boardSlice';
+import { getBoardAction, getBoardLoadingAction, getBoardSuccessAction, getBoardFailureAction } from './board/board.action';
 import {
   addNewBoardsAction,
   addNewBoardsLoadingAction,
   addNewBoardsSuccessAction,
   addNewBoardsFailureAction,
-  getAllBoards,
-  getAllBoardsLoading,
-  getAllBoardsSuccess,
-  getAllBoardsFailure
+  getAllBoardsAction,
+  getAllBoardsLoadingAction,
+  getAllBoardsSuccessAction,
+  getAllBoardsFailureAction
 } from './boards/boards.actions';
 
 import RootState from './root-reducer';
 
 export {
   store,
-  setBoardAction,
-  setBoardSuccessAction,
-  setBoardFailureAction,
+  getBoardAction,
+  getBoardLoadingAction,
+  getBoardSuccessAction,
+  getBoardFailureAction,
   addNewBoardsAction,
   addNewBoardsSuccessAction,
   addNewBoardsFailureAction,
   addNewBoardsLoadingAction,
-  getAllBoards,
-  getAllBoardsLoading,
-  getAllBoardsSuccess,
-  getAllBoardsFailure,
+  getAllBoardsAction,
+  getAllBoardsLoadingAction,
+  getAllBoardsSuccessAction,
+  getAllBoardsFailureAction,
   RootState
 };

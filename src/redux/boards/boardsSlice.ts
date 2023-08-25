@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
-const boardInitialState = {
+const boardsInitialState = {
   boards: [],
   isLoading: false,
   errors: ''
@@ -15,7 +15,7 @@ interface IBoardsState {
 
 const boardsSlice = createSlice({
   name: 'boards',
-  initialState: boardInitialState,
+  initialState: boardsInitialState,
   reducers: {
     addNewBoardsLoading: (state: IBoardsState) => {
       state.isLoading = true;

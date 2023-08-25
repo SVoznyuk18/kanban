@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useDispatch } from "react-redux";
 
 import { useTypedSelector } from '@/UtilsRoot';
-import { getAllBoards } from '@/ReduxRoot'
+import { getAllBoardsAction } from '@/ReduxRoot'
 import { IBoard } from '@/TypesRoot';
 import { Nav } from '@/ComponentsRoot'
 import { SidebarSection, ToggleSideBar, HideSection } from './sidebar.style';
@@ -21,7 +21,7 @@ const Sidebar: React.FC<INavProps> = ({ boards }) => {
   const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
 
   useEffect(() => {
-    dispatch(getAllBoards(boards))
+    dispatch(getAllBoardsAction(boards))
   }, [boards, dispatch]);
 
   return (
