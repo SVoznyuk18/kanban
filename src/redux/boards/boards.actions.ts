@@ -9,7 +9,7 @@ export const addNewBoardsSuccessAction = createAction('boards/addNewBoardsSucces
 
 export const addNewBoardsFailureAction = createAction('boards/addNewBoardsFailure', (error: string) => ({ payload: { error } }));
 
-export const getAllBoardsAction = createAction('GET_ALL_BOARDS');
+export const getAllBoardsAction = createAction<IBoard[]>('GET_ALL_BOARDS');
 
 export const getAllBoardsLoadingAction = createAction('boards/getAllBoardsLoading');
 

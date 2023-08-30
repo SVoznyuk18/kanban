@@ -57,8 +57,8 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
 
   return (
     <ColumnWrapper>
-      <Title>{column?.name}</Title>
-      <TasksList
+      <Title>{column?.columnName}</Title>
+      {/* <TasksList
         // onDragOver={(e) => dragOverHandler(e)} 
         onDrop={(e) => dropTaskHandler(e)}
       >
@@ -78,7 +78,7 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
             />
           ))
         }
-      </TasksList>
+      </TasksList> */}
     </ColumnWrapper>
   )
 }
