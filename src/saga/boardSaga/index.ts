@@ -4,7 +4,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import {
   getBoardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction
+  getBoardFailureAction,
+  getColumnsAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams } from '@/ApiRoot';
@@ -19,13 +20,18 @@ interface IResponseBoard {
 
 function* workGetBoard(action: PayloadAction<IBoardPayload>) {
   const { boardUrl } = action?.payload;
+
   try {
     yield put(getBoardLoadingAction());
-    const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, boardUrl);
-    if (success) yield put(getBoardSuccessAction(result));
+    const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, { boardUrl });
+    if (success) {
+      yield put(getBoardSuccessAction(result));
+      yield put(getColumnsAction({ mainBoardId: result?._id }));
+    }
+
+    //need create columns reducer, actions, saga  and  in this place put getColumns(boardId)
 
   } catch (error) {
-    console.log('error')
     yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));
   }
 }

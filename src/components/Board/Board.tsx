@@ -2,8 +2,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 
+
+
+import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction } from '@/ReduxRoot';
+import { IColumn } from '@/TypesRoot';
+
 import { BoardWrapper } from './Board.styled';
+
+import { Column } from '@/ComponentsRoot';
 
 interface IProps {
   params: {
@@ -11,23 +18,28 @@ interface IProps {
   }
 }
 
+
+
 const Board: React.FC<IProps> = ({ params }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (params?.url) dispatch(getBoardAction(params?.url));
+  const columns = useTypedSelector(state => state?.columns?.columns);
 
-  }, [dispatch, params])
+  useEffect(() => {
+    if (params?.url) dispatch(getBoardAction({ boardUrl: params?.url }));
+
+  }, [dispatch, params]);
+
 
   return (
     <BoardWrapper>
       <h1>Hello</h1>
       {/* <h1>{result?.boardName}</h1> */}
-      {/* {board?.columns.length > 0 && board?.columns.map((column) => (
+      {columns?.length > 0 && columns?.map((column: IColumn) => (
         // @ts-ignore
-        <Column key={column?.id} column={column} />
-      ))} */}
+        <Column key={column?._id} column={column} />
+      ))}
 
     </BoardWrapper>
   )

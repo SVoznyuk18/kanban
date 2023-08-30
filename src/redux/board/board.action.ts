@@ -1,7 +1,11 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
-export const getBoardAction = createAction('GET_BOARD', (boardUrl: string) => ({ payload: { boardUrl } }));
+type BoardUrlPayload = {
+  boardUrl: string;
+};
+
+export const getBoardAction = createAction<BoardUrlPayload>('GET_BOARD');
 
 export const getBoardLoadingAction = createAction('board/getBoardLoading');
 

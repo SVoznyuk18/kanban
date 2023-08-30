@@ -4,9 +4,9 @@ import { connectMongoDB } from "@/LibRoot";
 import { Board } from '@/ModelsRoot';
 
 export async function GET(req: NextRequest) {
-  const query = req.nextUrl.searchParams.get('url');
-  await connectMongoDB();
 
+  const query = req.nextUrl.searchParams.get('boardUrl');
+  await connectMongoDB();
   const board = await Board.findOne({ url: query }).exec();
 
   if (!board) {
