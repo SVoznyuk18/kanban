@@ -16,9 +16,10 @@ const Board: React.FC<IProps> = ({ params }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (params?.url) dispatch(getBoardAction(params?.url));
+    if (params?.url) dispatch(getBoardAction({ boardUrl: params?.url }));
 
-  }, [dispatch, params])
+  }, [dispatch, params]);
+
 
   return (
     <BoardWrapper>

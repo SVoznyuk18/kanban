@@ -1,5 +1,5 @@
 
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 
@@ -7,17 +7,19 @@ import { Column } from '@/ModelsRoot'
 // import { NextApiRequest, NextApiResponse } from "next";
 
 
-// export async function GET(req: Request) {
-//   await connectMongoDB();
-//   const boards = await Board.find({}, "");
+export async function GET(req: NextRequest) {
+  const query = req.nextUrl.searchParams.get('mainBoardId');
+  await connectMongoDB();
 
-//   if (!boards) {
-//     return NextResponse.json({ success: false, msg: "Failed to get boards" }, {
-//       status: 404
-//     })
-//   }
-//   return NextResponse.json({ success: true, boards });
-// }
+  const columns = await Column.find().where({ mainBoardId: query }).exec();
+
+  if (!columns) {
+    return NextResponse.json({ success: false, msg: "Failed to get columns" }, {
+      status: 404
+    })
+  }
+  return NextResponse.json({ success: true, result: columns });
+}
 
 export async function POST(req: Request) {
   await connectMongoDB();

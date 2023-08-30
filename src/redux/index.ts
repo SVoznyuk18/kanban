@@ -11,6 +11,8 @@ import {
   getAllBoardsFailureAction
 } from './boards/boards.actions';
 
+import { getColumnsAction, getColumnsLoadingAction, getColumnsSuccessAction, getColumnsFailureAction } from './columns/columns.action';
+
 import RootState from './root-reducer';
 
 export {
@@ -27,5 +29,9 @@ export {
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
   getAllBoardsFailureAction,
+  getColumnsAction,
+  getColumnsLoadingAction,
+  getColumnsSuccessAction,
+  getColumnsFailureAction,
   RootState
 };
