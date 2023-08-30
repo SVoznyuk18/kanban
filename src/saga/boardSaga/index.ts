@@ -24,6 +24,9 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
     const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, boardUrl);
     if (success) yield put(getBoardSuccessAction(result));
 
+
+    //need create columns reducer, actions, saga  and  in this place put getColumns(boardId)
+
   } catch (error) {
     console.log('error')
     yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));
