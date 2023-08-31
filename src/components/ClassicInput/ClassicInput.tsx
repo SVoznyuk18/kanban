@@ -4,7 +4,7 @@ import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
 
 interface IValidation {
   required: string,
-  validate: (value: string) => string | undefined
+  validate?: (value: string) => string | undefined
 }
 
 interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {

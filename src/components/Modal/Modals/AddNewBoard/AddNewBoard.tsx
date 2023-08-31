@@ -52,6 +52,7 @@ const AddNewBoard = () => {
           errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
         <AdditionalInput<IData>
+          label="Columns"
           id='columnName'
           type='text'
           name='columnName'

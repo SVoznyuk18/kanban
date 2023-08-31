@@ -69,7 +69,7 @@ const AdditionalInput = <T extends FieldValues>({
 
   return (
     <Wrapper>
-      <Title>{additionalInputs.length > 0 && 'Columns'}</Title>
+      <Title>{additionalInputs.length > 0 && label}</Title>
       {additionalInputs && additionalInputs.map(aditionalInput => (
         <InputWrapper key={aditionalInput}>
           <ClassicInput
