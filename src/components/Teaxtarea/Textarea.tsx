@@ -1,20 +1,20 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { TextareaHTMLAttributes } from 'react';
 import { FieldValues, UseFormRegister, Path } from "react-hook-form";
-import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
+import { Wrapper, TextArea, ErrorMessage, Label } from './Textarea.styled';
 
 interface IValidation {
   required: string,
   validate?: (value: string) => string | undefined
 }
 
-interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
+interface IProps<T extends FieldValues> extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   width?: string,
   height?: string,
+  resize: 'both' | 'horizontal' | 'vertical' | 'none',
   htmlFor?: string,
   labelFontSize?: string,
   label?: string,
   id?: string,
-  type?: string,
   name: Path<T>,
   placeholder?: string,
   padding?: string,
@@ -25,14 +25,14 @@ interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputEle
   errorMessage?: string,
 }
 
-export const ClassicInput = <T extends FieldValues>({
+export const Teaxtarea = <T extends FieldValues>({
   width,
   height,
+  resize,
   htmlFor,
   labelFontSize,
   label,
   id,
-  type,
   name,
   placeholder,
   padding,
@@ -54,17 +54,16 @@ export const ClassicInput = <T extends FieldValues>({
           </Label>
         )
       }
-      <Input
+      <TextArea
         id={id}
-        type={type}
         placeholder={placeholder}
         width={width}
         height={height}
         padding={padding}
         borderRadius={borderRadius}
+        resize={resize}
         fontSize={fontSize}
         {...register(name, validation)}
-
       />
       <ErrorMessage>
         {errorMessage}
@@ -73,4 +72,4 @@ export const ClassicInput = <T extends FieldValues>({
   )
 }
 
-export default ClassicInput;
+export default Teaxtarea;

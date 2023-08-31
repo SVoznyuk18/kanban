@@ -12,5 +12,6 @@ import Task from './Task/Task';
 import EmptyBoard from './EmptyBoard/EmptyBoard';
 import ClassicInput from './ClassicInput/ClassicInput';
 import AdditionalInput from './AdditionalInput/AdditionalInput';
+import Teaxtarea from './Teaxtarea/Textarea';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput };
+export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea };

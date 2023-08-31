@@ -1,7 +1,7 @@
 import React from "react"
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
 
 interface IData {
@@ -43,6 +43,17 @@ const AddNewTask: React.FC = () => {
           validation={{ required: 'Required field' }}
           errorMessage={errors?.taskName && errors?.taskName?.message?.toString()}
         />
+        <Teaxtarea
+          label="Description"
+          htmlFor='description'
+          id='description'
+          name='description'
+          placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.'
+          resize='none'
+          register={register}
+          validation={{ required: 'Required field' }}
+          errorMessage={errors?.description && errors?.description?.message?.toString()}
+        />
         <AdditionalInput<IData>
           label="Subtasks"
           id='subTaskName'
@@ -53,6 +64,7 @@ const AddNewTask: React.FC = () => {
           validation={{ required: 'Required field' }}
           errors={errors}
         />
+
       </Form>
       <ClassicButton
         width='100%'

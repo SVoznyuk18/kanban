@@ -1,7 +1,5 @@
 'use client'
 import styled from 'styled-components';
-import React, { LabelHTMLAttributes } from 'react';
-
 
 interface IStyleProps {
   width?: string,
@@ -12,6 +10,10 @@ interface IStyleProps {
   fontSize?: string
 }
 
+interface ITextarea extends IStyleProps {
+  resize: 'both' | 'horizontal' | 'vertical' | 'none',
+}
+
 export const Wrapper = styled.div<IStyleProps>`
   display: inline-flex;
   flex-direction: column;
@@ -19,8 +21,8 @@ export const Wrapper = styled.div<IStyleProps>`
   width: ${({ width }) => width || '100%'};
 `;
 
-export const Input = styled.input<IStyleProps>`
-  height: ${({ height }) => height || '40px'};
+export const TextArea = styled.textarea<ITextarea>`
+  height: ${({ height }) => height || '112px'};
   width: ${({ width }) => width || '100%'};
   padding: ${({ padding }) => padding || '8px 16px'};
   border: solid 1px rgba(130, 143, 163, 0.25);
@@ -29,6 +31,7 @@ export const Input = styled.input<IStyleProps>`
   font-weight: 500;
   color: #000112;
   outline: none;
+  resize: ${({ resize }) => resize}
 `;
 
 export const Label = styled.label<IStyleProps>`
