@@ -1,7 +1,10 @@
 import React from "react"
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea } from "@/ComponentsRoot";
+import { IColumn } from '@/TypesRoot';
+
+import { useTypedSelector } from '@/UtilsRoot';
+import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
 
 interface IData {
@@ -14,14 +17,22 @@ interface IData {
 
 }
 
+
+
 const AddNewTask: React.FC = () => {
 
   const {
     register,
     unregister,
+    setValue,
     handleSubmit,
     formState: { errors }
   } = useForm<IData>({ mode: "all" });
+
+  const columns = useTypedSelector(state => state?.columns?.columns);
+  console.log('columns', columns)
+
+  const statuses = columns.map((column: IColumn) => column.columnName);
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
     //dispatch(addNewBoardsAction(data));
@@ -63,6 +74,18 @@ const AddNewTask: React.FC = () => {
           unregister={unregister}
           validation={{ required: 'Required field' }}
           errors={errors}
+        />
+
+        <CustomSelect
+          label="Status"
+          htmlFor='status'
+          id='status'
+          type='text'
+          name='status'
+          register={register}
+          validation={{ required: 'Required field' }}
+          setValue={setValue}
+          options={statuses}
         />
 
       </Form>

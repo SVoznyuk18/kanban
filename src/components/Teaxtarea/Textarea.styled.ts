@@ -36,7 +36,7 @@ export const TextArea = styled.textarea<ITextarea>`
 
 export const Label = styled.label<IStyleProps>`
   display: inline;
-  color: #828FA3;
+  color: ${({ theme }) => theme.labelColor};
   font-size: ${({ labelFontSize }) => labelFontSize || '12px'};
   font-weight: 500;
 `;
