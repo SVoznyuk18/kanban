@@ -1,7 +1,12 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
-export const addNewBoardsAction = createAction('ADD_NEW_BOARDS_ACTION');
+interface INewBoard {
+  boardName: string
+  [x: string]: string | undefined;
+}
+
+export const addNewBoardsAction = createAction<INewBoard>('ADD_NEW_BOARDS_ACTION');
 
 export const addNewBoardsLoadingAction = createAction('boards/addNewBoardsLoading');
 

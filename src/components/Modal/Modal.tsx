@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 
-import { AddNewBoard } from './Modals';
+import { AddNewBoard, AddNewTask } from './Modals';
 import { ModalContext } from '@/LibRoot';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
@@ -17,8 +17,8 @@ interface IModalContext {
 
 const RenderModal = ({ modalType, ...props }: IModalContext) => {
   switch (modalType) {
-    case 'navMenu':
-      return <h1>NAv</h1>
+    case 'AddNewTask':
+      return <AddNewTask />
     case 'AddNewBoard':
       return <AddNewBoard />
     default:
