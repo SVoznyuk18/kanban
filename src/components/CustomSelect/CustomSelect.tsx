@@ -48,7 +48,6 @@ const CustomSelect = <T extends FieldValues>({
 
   const [isShowOptions, setIsShowOptions] = useState<boolean>(false);
 
-  console.log()
 
   const handleSelectValue = (value: string) => {
     setIsShowOptions(!isShowOptions);
@@ -79,13 +78,15 @@ const CustomSelect = <T extends FieldValues>({
         {...register(name, validation)}
         onClick={() => setIsShowOptions(!isShowOptions)}
       />
-      <DropDownMenu isShow={isShowOptions}>
-        <OptionsList >
-          {options.length > 0 && options.map((option: string) => {
-            return <OptionItem key={option} onClick={() => handleSelectValue(option)}>{option}</OptionItem>
-          })}
-        </OptionsList>
-      </DropDownMenu>
+      {options.length > 0 && (
+        <DropDownMenu isShow={isShowOptions}>
+          <OptionsList >
+            {options.length > 0 && options.map((option: string) => {
+              return <OptionItem key={option} onClick={() => handleSelectValue(option)}>{option}</OptionItem>
+            })}
+          </OptionsList>
+        </DropDownMenu>
+      )}
     </Wrapper>
   )
 }
