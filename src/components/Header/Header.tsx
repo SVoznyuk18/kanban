@@ -3,15 +3,15 @@
 import { useState, useContext } from 'react';
 import Image from 'next/image';
 
-import { WindowSizeContext } from '@/LibRoot';
+import { WindowSizeContext, ModalContext } from '@/LibRoot';
 import { MobileMenu, CustomSVG, ClassicButton } from '@/ComponentsRoot';
 import { SVGPath } from '@/ConstantsRoot';
-
 
 import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, EditBoardControl } from './Header.styled';
 
 const Header = () => {
 	const { isMobile } = useContext(WindowSizeContext);
+	const { handleOpenModal } = useContext(ModalContext);
 	const [toggleMobileMenu, setToggleMobileMenu] = useState<boolean>(false);
 
 	return (
@@ -41,7 +41,9 @@ const Header = () => {
 					}
 				</TitleSection>
 				<ControlsSection>
-					<ClassicButton>
+					<ClassicButton
+						onClick={() => handleOpenModal('AddNewTask')}
+					>
 						+
 						{!isMobile && 'Add New Task'}
 					</ClassicButton>

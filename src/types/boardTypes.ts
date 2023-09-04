@@ -9,10 +9,11 @@ export interface ISubtask {
 
 export interface ITask {
   _id: string,
-  title: string,
+  taskName: string,
   description: string,
   status: string,
-  mainColumnId: string
+  mainColumnId: string,
+  mainBoardId: string
   // subtasks: Array<ISubtask>,
   createdAt: Date,
   updatedAt: Date
