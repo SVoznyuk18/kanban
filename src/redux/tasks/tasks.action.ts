@@ -2,11 +2,11 @@ import { createAction } from "@reduxjs/toolkit";
 
 import { ITask } from "@/TypesRoot";
 
-export const addNewTask = createAction('ADD_NEW_TASK');
+export const addNewTaskAction = createAction('ADD_NEW_TASK_ACTION', <T>(task: T) => ({payload: task}));
 
-export const addNewTaskLoading = createAction('tasks/addnewTaskLoading');
+export const addNewTaskLoadingAction = createAction('tasks/addnewTaskLoading');
 
-export const addNewTaskSuccess = createAction('tasks/addNewTaskSuccess', (task: ITask) => ({payload: task}));
+export const addNewTaskSuccessAction = createAction('tasks/addNewTaskSuccessAction', (task: ITask) => ({payload: task}));
 
-export const addNewTaskFailure = createAction('task/addNewTaskError', (error: string) => ({payload: error}));
+export const addNewTaskFailureAction = createAction('task/addNewTaskError', (error: string) => ({payload: error}));
 

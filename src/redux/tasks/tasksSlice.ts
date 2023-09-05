@@ -23,7 +23,7 @@ const tasksSlice = createSlice({
 			state.isLoading = true;
 			state.errors = '';
 		},
-		addNewTaskSuccess: (state: ITasksState, {payload}:PayloadAction<ITask>)	=> {
+		addNewTaskSuccessAction: (state: ITasksState, {payload}:PayloadAction<ITask>)	=> {
 			state.tasks = [...state.tasks, payload];
 			state.isLoading = false;
 		},

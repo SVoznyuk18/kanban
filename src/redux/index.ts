@@ -24,10 +24,10 @@ import {
 } from './columns/columns.action';
 
 import {
-  addNewTask,
-  addNewTaskLoading,
-  addNewTaskSuccess,
-  addNewTaskFailure
+  addNewTaskAction,
+  addNewTaskLoadingAction,
+  addNewTaskSuccessAction,
+  addNewTaskFailureAction
 } from './tasks/tasks.action';
 
 import RootState from './root-reducer';
@@ -50,9 +50,9 @@ export {
   getColumnsLoadingAction,
   getColumnsSuccessAction,
   getColumnsFailureAction,
-  addNewTask,
-  addNewTaskLoading,
-  addNewTaskSuccess,
-  addNewTaskFailure,
+  addNewTaskAction,
+  addNewTaskLoadingAction,
+  addNewTaskSuccessAction,
+  addNewTaskFailureAction,
   RootState
 };
