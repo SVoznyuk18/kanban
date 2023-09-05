@@ -12,10 +12,7 @@ interface IData {
   taskName: string;
   description: string;
   status: string;
-  // mainColumnId: string;
-  // mainBoardId: string;
   [x: string]: string | undefined;
-
 }
 
 const AddNewTask: React.FC = () => {
@@ -31,7 +28,7 @@ const AddNewTask: React.FC = () => {
   } = useForm<IData>({ mode: "all" });
 
   const columns = useTypedSelector(state => state?.columns?.columns);
-
+  const board = useTypedSelector(state => state?.board?.board);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
@@ -39,14 +36,13 @@ const AddNewTask: React.FC = () => {
     const {taskName, description, status, ...subTasks} = data;
 
     const configureTaskData = {
+      mainBoardId: board?._id,
       taskName,
       description,
       status,
       subTasks
     }
-    console.log('subTasks', subTasks);
     dispatch(addNewTaskAction(configureTaskData));
-    console.log(data)
   };
 
   return (
