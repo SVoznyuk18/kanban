@@ -12,9 +12,7 @@ export interface ITask {
   taskName: string,
   description: string,
   status: string,
-  mainColumnId: string,
   mainBoardId: string
-  // subtasks: Array<ISubtask>,
   createdAt: Date,
   updatedAt: Date
 }
@@ -23,8 +21,6 @@ export interface IColumn {
   _id: string,
   columnName: string,
   mainBoardId: string,
-
-  // tasks: Array<ITask>,
   createdAt: Date,
   updatedAt: Date
 }
@@ -33,7 +29,6 @@ export interface IBoard {
   _id: string,
   boardName: string,
   url: string,
-  // columns: Array<IColumn>,
   createdAt: Date,
   updatedAt: Date
 }

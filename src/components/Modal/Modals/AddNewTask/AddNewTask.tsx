@@ -1,8 +1,9 @@
 import React from "react"
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from "react-redux";
 
 import { IColumn } from '@/TypesRoot';
-
+import {addNewTaskAction} from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
@@ -11,15 +12,12 @@ interface IData {
   taskName: string;
   description: string;
   status: string;
-  // mainColumnId: string;
-  // mainBoardId: string;
   [x: string]: string | undefined;
-
 }
 
-
-
 const AddNewTask: React.FC = () => {
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -30,13 +28,21 @@ const AddNewTask: React.FC = () => {
   } = useForm<IData>({ mode: "all" });
 
   const columns = useTypedSelector(state => state?.columns?.columns);
-  console.log('columns', columns)
+  const board = useTypedSelector(state => state?.board?.board);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
-    //dispatch(addNewBoardsAction(data));
-    console.log(data)
+    const {taskName, description, status, ...subTasks} = data;
+
+    const configureTaskData = {
+      mainBoardId: board?._id,
+      taskName,
+      description,
+      status,
+      subTasks
+    }
+    dispatch(addNewTaskAction(configureTaskData));
   };
 
   return (

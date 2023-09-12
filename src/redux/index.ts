@@ -1,5 +1,10 @@
 import store from "./store";
-import { getBoardAction, getBoardLoadingAction, getBoardSuccessAction, getBoardFailureAction } from './board/board.action';
+import { getBoardAction, 
+  getBoardLoadingAction, 
+  getBoardSuccessAction, 
+  getBoardFailureAction 
+} from './board/board.action';
+
 import {
   addNewBoardsAction,
   addNewBoardsLoadingAction,
@@ -11,7 +16,19 @@ import {
   getAllBoardsFailureAction
 } from './boards/boards.actions';
 
-import { getColumnsAction, getColumnsLoadingAction, getColumnsSuccessAction, getColumnsFailureAction } from './columns/columns.action';
+import { 
+  getColumnsAction, 
+  getColumnsLoadingAction, 
+  getColumnsSuccessAction, 
+  getColumnsFailureAction
+} from './columns/columns.action';
+
+import {
+  addNewTaskAction,
+  addNewTaskLoadingAction,
+  addNewTaskSuccessAction,
+  addNewTaskFailureAction
+} from './tasks/tasks.action';
 
 import RootState from './root-reducer';
 
@@ -33,5 +50,9 @@ export {
   getColumnsLoadingAction,
   getColumnsSuccessAction,
   getColumnsFailureAction,
+  addNewTaskAction,
+  addNewTaskLoadingAction,
+  addNewTaskSuccessAction,
+  addNewTaskFailureAction,
   RootState
 };

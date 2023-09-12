@@ -9,11 +9,9 @@ interface ISchemaTask extends Omit<ITask, '_id'>, Document { };
 export const taskSchema = new Schema<ISchemaTask>(
   {
     taskName: { type: String, required: true },
-    description: String,
-    status: { type: String },
-    mainColumnId: { type: String, required: true },
+    description: { type: String, required: true },
+    status: { type: String, required: true },
     mainBoardId: { type: String, required: true }
-    // subtasks: [subtaskSchema]
   },
   {
     timestamps: true,
