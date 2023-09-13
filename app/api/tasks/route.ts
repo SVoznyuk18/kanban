@@ -6,11 +6,26 @@ import { connectMongoDB } from "@/LibRoot";
 import { Task } from '@/ModelsRoot'
 // import { NextApiRequest, NextApiResponse } from "next";
 
-export async function POST(req: NextRequest) {
-  
-  const { taskName, description, status, mainBoardId, subTasks} = await req.json();
+
+export async function GET(req: NextRequest) {
+  const query = req.nextUrl.searchParams.get('mainBoardId');
   await connectMongoDB();
-  
+
+  const tasks = await Task.find().where({ mainBoardId: query }).exec();
+
+  if (!tasks) {
+    return NextResponse.json({ success: false, msg: "Failed to get tasks" }, {
+      status: 404
+    })
+  }
+  return NextResponse.json({ success: true, result: tasks });
+}
+
+export async function POST(req: NextRequest) {
+
+  const { taskName, description, status, mainBoardId, subTasks } = await req.json();
+  await connectMongoDB();
+
   const addedTask = await Task.create({ taskName, description, status, mainBoardId })
 
   if (!addedTask) {
@@ -24,3 +39,9 @@ export async function POST(req: NextRequest) {
   })
 }
 
+
+
+// create getTasksByBoardId
+// save task in redux
+
+// make response getTasksByBoardId  when choice board

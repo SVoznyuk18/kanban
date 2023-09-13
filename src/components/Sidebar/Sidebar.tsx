@@ -6,23 +6,18 @@ import { useDispatch } from "react-redux";
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { getAllBoardsAction } from '@/ReduxRoot'
-import { IBoard } from '@/TypesRoot';
 import { Nav } from '@/ComponentsRoot'
 import { SidebarSection, ToggleSideBar, HideSection } from './sidebar.style';
 
-interface INavProps {
-  boards: Array<IBoard>
-}
-
-const Sidebar: React.FC<INavProps> = ({ boards }) => {
+const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
+  const boards = useTypedSelector(state => state?.boards?.boards);
 
   useEffect(() => {
-    dispatch(getAllBoardsAction(boards))
-  }, [boards, dispatch]);
+    dispatch(getAllBoardsAction())
+  }, [dispatch]);
 
   return (
     <SidebarSection isShowSidebar={toggleSidebar !== undefined ? toggleSidebar : false}>
@@ -37,7 +32,7 @@ const Sidebar: React.FC<INavProps> = ({ boards }) => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <Nav boards={boardsFromStore.length > 0 ? boardsFromStore : boards} />
+      <Nav boards={boards} />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'

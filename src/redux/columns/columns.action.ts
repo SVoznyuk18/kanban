@@ -4,10 +4,10 @@ import { IColumn } from "@/TypesRoot";
 
 type ColumnsPayload = { mainBoardId: string };
 
-export const getColumnsAction = createAction<ColumnsPayload>('GET_COLUMNS');
+export const getColumnsByBoardIAction = createAction('GET_COLUMNS_BY_BOARD_ID', <T>(mainBoardId: T) => ({ payload: mainBoardId }));
 
-export const getColumnsLoadingAction = createAction('columns/getColumnsLoading');
+export const getColumnsByBoardILoadingAction = createAction('columns/getColumnsByBoardILoading');
 
-export const getColumnsSuccessAction = createAction('columns/getColumnsSuccess', (columns: IColumn[]) => ({ payload: columns }));
+export const getColumnsByBoardISuccessAction = createAction('columns/getColumnsByBoardISuccess', (columns: IColumn[]) => ({ payload: columns }));
 
-export const getColumnsFailureAction = createAction('columns/getColumnsFailure', (error: string) => ({ payload: error }));
+export const getColumnsByBoardIFailureAction = createAction('columns/getColumnsByBoardIFailure', (error: string) => ({ payload: error }));

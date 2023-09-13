@@ -5,7 +5,8 @@ import {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
-  getColumnsAction
+  getColumnsByBoardIAction,
+  getTasksByBoardIdAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams } from '@/ApiRoot';
@@ -26,11 +27,9 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
     const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, { boardUrl });
     if (success) {
       yield put(getBoardSuccessAction(result));
-      yield put(getColumnsAction({ mainBoardId: result?._id }));
+      yield put(getColumnsByBoardIAction({ mainBoardId: result?._id }));
+      yield put(getTasksByBoardIdAction({ mainBoardId: result?._id }));
     }
-
-    //need create columns reducer, actions, saga  and  in this place put getColumns(boardId)
-
   } catch (error) {
     yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));
   }

@@ -25,8 +25,8 @@ const boardSlice = createSlice({
       state.isLoading = false;
       state.board = board
     },
-    getBoardFailure: (state: IBoartState, { payload: error }: PayloadAction<string>) => {
-      state.errors = error;
+    getBoardFailure: (state: IBoartState, { payload }: PayloadAction<string>) => {
+      state.errors = payload;
     }
   }
 });
