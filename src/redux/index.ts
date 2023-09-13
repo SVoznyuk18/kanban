@@ -18,10 +18,10 @@ import {
 } from './boards/boards.actions';
 
 import {
-  getColumnsAction,
-  getColumnsLoadingAction,
-  getColumnsSuccessAction,
-  getColumnsFailureAction
+  getColumnsByBoardIAction,
+  getColumnsByBoardILoadingAction,
+  getColumnsByBoardISuccessAction,
+  getColumnsByBoardIFailureAction
 } from './columns/columns.action';
 
 import {
@@ -51,10 +51,10 @@ export {
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
   getAllBoardsFailureAction,
-  getColumnsAction,
-  getColumnsLoadingAction,
-  getColumnsSuccessAction,
-  getColumnsFailureAction,
+  getColumnsByBoardIAction,
+  getColumnsByBoardILoadingAction,
+  getColumnsByBoardISuccessAction,
+  getColumnsByBoardIFailureAction,
   addNewTaskAction,
   addNewTaskLoadingAction,
   addNewTaskSuccessAction,

@@ -5,7 +5,7 @@ import {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
-  getColumnsAction,
+  getColumnsByBoardIAction,
   getTasksByBoardIdAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
@@ -27,7 +27,7 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
     const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, { boardUrl });
     if (success) {
       yield put(getBoardSuccessAction(result));
-      yield put(getColumnsAction({ mainBoardId: result?._id }));
+      yield put(getColumnsByBoardIAction({ mainBoardId: result?._id }));
       yield put(getTasksByBoardIdAction({ mainBoardId: result?._id }));
     }
   } catch (error) {

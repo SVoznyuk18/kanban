@@ -19,15 +19,15 @@ const columnsSlice = createSlice({
   name: 'columns',
   initialState: culumnsInitialState,
   reducers: {
-    getColumnsLoading: (state: IColumnsState) => {
+    getColumnsByBoardILoading: (state: IColumnsState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    getColumnsSuccess: (state: IColumnsState, { payload }: PayloadAction<IColumn[]>) => {
+    getColumnsByBoardISuccess: (state: IColumnsState, { payload }: PayloadAction<IColumn[]>) => {
       state.isLoading = false;
       state.columns = payload;
     },
-    getColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
+    getColumnsByBoardIFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
     }
