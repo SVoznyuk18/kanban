@@ -54,7 +54,7 @@ const Header = () => {
 					</EditBoardControl>
 				</ControlsSection>
 			</HeaderMainSection>
-			<MobileMenu isShow={toggleMobileMenu} />
+			{/* <MobileMenu isShow={toggleMobileMenu} /> */}
 		</HeaderSection>
 	)
 }
