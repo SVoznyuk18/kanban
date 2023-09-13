@@ -18,15 +18,15 @@ const subtasksSlice = createSlice({
   name: 'subtasks',
   initialState: subtasksInitialState,
   reducers: {
-    addSubtaskLoading: (state: ISubtasksState) => {
+    addNewSubtaskLoading: (state: ISubtasksState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    addSubtaskSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
+    addNewSubtaskSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
       state.isLoading = false;
       state.subtasks = [...state.subtasks, ...payload];
     },
-    addSubtaskFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
+    addNewSubtaskFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
     }
