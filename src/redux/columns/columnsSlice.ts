@@ -27,9 +27,9 @@ const columnsSlice = createSlice({
       state.isLoading = false;
       state.columns = payload;
     },
-    getColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<{ error: string }>) => {
+    getColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
-      state.errors = payload?.error;
+      state.errors = payload;
     }
   }
 });

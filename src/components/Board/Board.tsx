@@ -18,14 +18,14 @@ interface IProps {
   }
 }
 
-
-
 const Board: React.FC<IProps> = ({ params }) => {
 
   const dispatch = useDispatch();
 
   const columns = useTypedSelector(state => state?.columns?.columns);
+  const tasks = useTypedSelector(state => state?.tasks?.tasks);
 
+  console.log('tasks', tasks)
   useEffect(() => {
     if (params?.url) dispatch(getBoardAction({ boardUrl: params?.url }));
 
