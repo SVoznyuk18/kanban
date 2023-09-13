@@ -9,7 +9,7 @@ import { NavWrapper, Title, NavList, NavItem } from './Nav.styled';
 import { SVGPath } from '@/ConstantsRoot';
 
 interface INavProps {
-  boards: Array<IBoard>
+  boards: Array<IBoard> | undefined
 }
 
 const Nav: React.FC<INavProps> = ({ boards }) => {
