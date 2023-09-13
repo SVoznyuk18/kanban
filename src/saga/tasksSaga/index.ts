@@ -7,7 +7,8 @@ import {
   addNewTaskFailureAction,
   getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
-  getTasksByBoardIdFailureAction
+  getTasksByBoardIdFailureAction,
+  addNewSubtasksAction
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams } from '@/ApiRoot';
@@ -41,6 +42,7 @@ function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
     // console.log('taskResponse', taskResponse)
     if (success) {
       yield put(addNewTaskSuccessAction(result));
+      //addNewSubtasksAction
       //result?._id  id task
       // mainBoardId
       //create subtusk  ()

@@ -4,6 +4,7 @@ import { watchBoard } from './boardSaga';
 import { watchBoards } from './boardsSaga';
 import { watchColumns } from './columnsSaga';
 import { watchTasks } from "./tasksSaga";
+import { watchSubtasks } from "./subtasksSaga";
 
 const rootSagas = function* () {
   yield all([
@@ -11,6 +12,7 @@ const rootSagas = function* () {
     fork(watchBoards),
     fork(watchColumns),
     fork(watchTasks),
+    fork(watchSubtasks),
   ]);
 };
 
