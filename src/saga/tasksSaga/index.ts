@@ -33,13 +33,17 @@ interface IResponseTasks {
 
 function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
   const { taskName, description, status, mainBoardId, subTasks } = action?.payload;
+  console.log('subTasks', subTasks);
   try {
     yield put(addNewTaskLoadingAction());
 
-    const taskResponse: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId });
-
-    if (taskResponse?.success) {
-      yield put(addNewTaskSuccessAction(taskResponse?.result));
+    const { success, result }: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId });
+    // console.log('taskResponse', taskResponse)
+    if (success) {
+      yield put(addNewTaskSuccessAction(result));
+      //result?._id  id task
+      // mainBoardId
+      //create subtusk  ()
     }
 
   } catch (error) {

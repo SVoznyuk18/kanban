@@ -2,6 +2,7 @@ export interface ISubtask {
   _id: string,
   title: string,
   isCompleted: boolean,
+  mainBoardId: string,
   mainTaskId: string,
   createdAt: Date,
   updatedAt: Date
