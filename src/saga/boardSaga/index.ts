@@ -6,7 +6,8 @@ import {
   getBoardSuccessAction,
   getBoardFailureAction,
   getColumnsByBoardIAction,
-  getTasksByBoardIdAction
+  getTasksByBoardIdAction,
+  getSubtasksByBoardIdAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams } from '@/ApiRoot';
@@ -29,6 +30,7 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
       yield put(getBoardSuccessAction(result));
       yield put(getColumnsByBoardIAction({ mainBoardId: result?._id }));
       yield put(getTasksByBoardIdAction({ mainBoardId: result?._id }));
+      yield put(getSubtasksByBoardIdAction({ mainBoardId: result?._id }));
     }
   } catch (error) {
     yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));

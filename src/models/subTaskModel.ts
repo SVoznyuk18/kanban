@@ -6,9 +6,10 @@ interface ISchemaSubtask extends Omit<ISubtask, '_id'>, Document { };
 
 export const subtaskSchema = new Schema<ISchemaSubtask>(
   {
-    title: { type: String, required: true },
+    subtaskName: { type: String, required: true },
     isCompleted: { type: Boolean, default: false },
-    mainTaskId: { type: String, required: true }
+    mainTaskId: { type: String, required: true },
+    mainBoardId: { type: String, required: true },
   },
   {
     timestamps: true,

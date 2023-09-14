@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
+import { isEmpty } from 'lodash';
 import { PayloadAction } from "@reduxjs/toolkit";
 
 import {
@@ -7,7 +8,8 @@ import {
   addNewTaskFailureAction,
   getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
-  getTasksByBoardIdFailureAction
+  getTasksByBoardIdFailureAction,
+  addNewSubtasksAction
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams } from '@/ApiRoot';
@@ -26,22 +28,30 @@ interface IResponseTask {
   result: ITask;
 }
 
-interface IResponseTasks {
+interface IResponseAllTasks {
   success: boolean;
   result: ITask[];
 }
 
 function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
   const { taskName, description, status, mainBoardId, subTasks } = action?.payload;
+  const subtasksArray = Object.values(subTasks);
+
   try {
     yield put(addNewTaskLoadingAction());
+    const { success, result }: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId });
+    if (success) {
+      yield put(addNewTaskSuccessAction(result));
 
-    const taskResponse: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId });
-
-    if (taskResponse?.success) {
-      yield put(addNewTaskSuccessAction(taskResponse?.result));
+      if (!isEmpty(subTasks)) {
+        const subtasksConfigure = {
+          mainBoardId,
+          subTasks: subtasksArray,
+          mainTaskId: result?._id
+        }
+        yield put(addNewSubtasksAction(subtasksConfigure));
+      }
     }
-
   } catch (error) {
     yield put(addNewTaskFailureAction(`Failed add task ${taskName}`));
   }
@@ -51,7 +61,7 @@ function* workGetTasksByBoardId(action: PayloadAction<{ mainBoardId: string }>) 
   const { mainBoardId } = action?.payload;
   try {
     yield put(getTasksByBoardIdLoadingAction());
-    const { success, result }: IResponseTasks = yield call(getDataByParams, `/tasks`, { mainBoardId });
+    const { success, result }: IResponseAllTasks = yield call(getDataByParams, `/tasks`, { mainBoardId });
     if (success) yield put(getTasksByBoardIdSuccessAction(result));
   } catch (error) {
     yield put(getTasksByBoardIdFailureAction(`Failed to fetch tasks by mainBoardId ${mainBoardId}`));

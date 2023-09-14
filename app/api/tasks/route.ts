@@ -38,10 +38,3 @@ export async function POST(req: NextRequest) {
     }
   })
 }
-
-
-
-// create getTasksByBoardId
-// save task in redux
-
-// make response getTasksByBoardId  when choice board

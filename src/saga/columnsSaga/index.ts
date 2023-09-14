@@ -9,7 +9,6 @@ import { IBoard, IColumn } from '@/TypesRoot';
 import { getDataByParams } from '@/ApiRoot';
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
-
   const { mainBoardId } = action.payload;
   try {
     yield put(getColumnsByBoardILoadingAction());

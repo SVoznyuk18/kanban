@@ -35,33 +35,61 @@ import {
   getTasksByBoardIdFailureAction
 } from './tasks/tasks.action';
 
+import {
+  addNewSubtasksAction,
+  addNewSubtaskLoadingAction,
+  addNewSubtaskSuccessAction,
+  addNewSubtaskFailureAction,
+  getSubtasksByBoardIdAction,
+  getSubtasksByBoardIdLoadingAction,
+  getSubtasksByBoardIdSuccessAction,
+  getSubtasksByBoardIdFailureAction
+} from './subtasks/subtasks.actions';
+
 import RootState from './root-reducer';
 
 export {
   store,
+
   getBoardAction,
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
+
   addNewBoardsAction,
   addNewBoardsSuccessAction,
   addNewBoardsFailureAction,
   addNewBoardsLoadingAction,
+
   getAllBoardsAction,
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
   getAllBoardsFailureAction,
+
   getColumnsByBoardIAction,
   getColumnsByBoardILoadingAction,
   getColumnsByBoardISuccessAction,
   getColumnsByBoardIFailureAction,
+
   addNewTaskAction,
   addNewTaskLoadingAction,
   addNewTaskSuccessAction,
   addNewTaskFailureAction,
+
   getTasksByBoardIdAction,
   getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
   getTasksByBoardIdFailureAction,
+
+  addNewSubtasksAction,
+  addNewSubtaskLoadingAction,
+  addNewSubtaskSuccessAction,
+  addNewSubtaskFailureAction,
+
+  getSubtasksByBoardIdAction,
+  getSubtasksByBoardIdLoadingAction,
+  getSubtasksByBoardIdSuccessAction,
+  getSubtasksByBoardIdFailureAction,
+
   RootState
 };
