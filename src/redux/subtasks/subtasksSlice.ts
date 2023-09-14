@@ -29,6 +29,18 @@ const subtasksSlice = createSlice({
     addNewSubtaskFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
+    },
+    getAllSubtasksByBoardIdLoading: (state: ISubtasksState) => {
+      state.isLoading = true;
+      state.errors = '';
+    },
+    getAllSubtasksByBoardIdSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
+      state.isLoading = false;
+      state.subtasks = payload;
+    },
+    getAllSubtasksByBoardIdFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.errors = payload;
     }
   }
 });
