@@ -6,15 +6,28 @@ import {
   addNewSubtaskFailureAction,
 } from '@/ReduxRoot';
 
-function* workAddNewSubtasks(action: PayloadAction<any>) {
-  console.log('action', action);
+import { postData, getDataByParams } from '@/ApiRoot';
 
+import { ISubtask } from '@/TypesRoot';
+
+interface ISubtasksPayload {
+  mainBoardId: string;
+  mainTaskId: string;
+  subTasks: string[];
+}
+
+interface IResponseSubtasks {
+  success: boolean;
+  result: ISubtask[];
+}
+
+function* workAddNewSubtasks(action: PayloadAction<ISubtasksPayload>) {
   try {
     yield put(addNewSubtaskLoadingAction());
-    // const {success, result}: IResponseColumns = yield call(postData, '/subtasks', { mainBoardId: boardResponse?.result?._id, columns });
-    // if (success) {
-    //   yield put(addNewSubtaskSuccessAction(result));
-    // }
+    const { success, result }: IResponseSubtasks = yield call(postData, '/subtasks', { ...action?.payload });
+    if (success) {
+      yield put(addNewSubtaskSuccessAction(result));
+    }
   } catch (error) {
     yield put(addNewSubtaskFailureAction('Failed to add subtasks'));
   }
