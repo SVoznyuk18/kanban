@@ -4,6 +4,9 @@ import {
   addNewSubtaskLoadingAction,
   addNewSubtaskSuccessAction,
   addNewSubtaskFailureAction,
+  getSubtasksByBoardIdLoadingAction,
+  getSubtasksByBoardIdSuccessAction,
+  getSubtasksByBoardIdFailureAction,
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams } from '@/ApiRoot';
@@ -33,6 +36,20 @@ function* workAddNewSubtasks(action: PayloadAction<ISubtasksPayload>) {
   }
 }
 
+function* workGetSubtasks(action: PayloadAction<{ mainBoardId: string }>) {
+  const { mainBoardId } = action.payload;
+  try {
+    yield put(getSubtasksByBoardIdLoadingAction());
+    const { success, result } = yield call(getDataByParams, `/subtasks`, { mainBoardId });
+    if (success) {
+      yield put(getSubtasksByBoardIdSuccessAction(result))
+    }
+  } catch (error) {
+    yield put(getSubtasksByBoardIdFailureAction(`Failed to fetch subrasks by mainBoardId ${mainBoardId}`));
+  }
+}
+
 export function* watchSubtasks() {
   yield takeLatest('ADD_NEW_SUBTASKS', workAddNewSubtasks);
+  yield takeLatest('GET_SUBTASKS_BY_BOARD_ID', workGetSubtasks)
 }

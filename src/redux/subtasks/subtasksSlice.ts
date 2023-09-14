@@ -30,15 +30,15 @@ const subtasksSlice = createSlice({
       state.isLoading = false;
       state.errors = payload;
     },
-    getAllSubtasksByBoardIdLoading: (state: ISubtasksState) => {
+    getSubtasksByBoardIdLoading: (state: ISubtasksState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    getAllSubtasksByBoardIdSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
+    getSubtasksByBoardIdSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
       state.isLoading = false;
       state.subtasks = payload;
     },
-    getAllSubtasksByBoardIdFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
+    getSubtasksByBoardIdFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
     }

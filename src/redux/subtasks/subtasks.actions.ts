@@ -10,3 +10,11 @@ export const addNewSubtaskSuccessAction = createAction('subtasks/addNewSubtaskSu
 
 export const addNewSubtaskFailureAction = createAction('subtasks/addNewSubtaskFailure', (error: string) => ({ payload: error }));
 
+export const getSubtasksByBoardIdAction = createAction('GET_SUBTASKS_BY_BOARD_ID', <T>(mainBoardId: T) => ({ payload: mainBoardId }));
+
+export const getSubtasksByBoardIdLoadingAction = createAction('subtasks/getSubtasksByBoardIdLoading');
+
+export const getSubtasksByBoardIdSuccessAction = createAction('subtasks/getSubtasksByBoardIdSuccess', (subTasks: ISubtask[]) => ({ payload: subTasks }));
+
+export const getSubtasksByBoardIdFailureAction = createAction('subtasks/getSubtasksByBoardIdFailure', (error: string) => ({ payload: error }));
+

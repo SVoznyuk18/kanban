@@ -39,7 +39,11 @@ import {
   addNewSubtasksAction,
   addNewSubtaskLoadingAction,
   addNewSubtaskSuccessAction,
-  addNewSubtaskFailureAction
+  addNewSubtaskFailureAction,
+  getSubtasksByBoardIdAction,
+  getSubtasksByBoardIdLoadingAction,
+  getSubtasksByBoardIdSuccessAction,
+  getSubtasksByBoardIdFailureAction
 } from './subtasks/subtasks.actions';
 
 import RootState from './root-reducer';
@@ -81,6 +85,11 @@ export {
   addNewSubtaskLoadingAction,
   addNewSubtaskSuccessAction,
   addNewSubtaskFailureAction,
+
+  getSubtasksByBoardIdAction,
+  getSubtasksByBoardIdLoadingAction,
+  getSubtasksByBoardIdSuccessAction,
+  getSubtasksByBoardIdFailureAction,
 
   RootState
 };
