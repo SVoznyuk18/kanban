@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 
 
+import { ClassicButton } from "@/ComponentsRoot";
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction } from '@/ReduxRoot';
@@ -39,7 +40,15 @@ const Board: React.FC<IProps> = ({ params }) => {
         // @ts-ignore
         <Column key={column?._id} column={column} />
       ))}
-
+      <ClassicButton
+        style={{ minWidth: '280px' }}
+        width='280px'
+        height='100%'
+        variant='column'
+        onClick={() => console.log('test')}
+      >
+        + New Column
+      </ClassicButton>
     </BoardWrapper>
   )
 }

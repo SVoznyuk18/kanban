@@ -9,6 +9,7 @@ export const darkTheme = {
 	disabledBtn: '#635fc740',
 	lightBtn: '#FFF',
 	lightHoverBtn: '#F4F7FD',
+	largeBtn: 'linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.13) 100%)'
 }
 
 export const lightTheme = {
@@ -20,4 +21,6 @@ export const lightTheme = {
 	disabledBtn: '#E4EBFA',
 	lightBtn: 'rgba(99, 95, 199, 0.10)',
 	lightHoverBtn: 'rgba(99, 95, 199, 0.25)',
+	largeBtn: 'linear-gradient(180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.50) 100%)'
+
 }

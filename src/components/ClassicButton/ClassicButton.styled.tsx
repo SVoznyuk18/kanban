@@ -2,7 +2,7 @@
 import styled, { css } from 'styled-components';
 
 interface IProps {
-	variant?: 'confirm' | 'light' | 'delete' | 'default',
+	variant?: 'confirm' | 'light' | 'delete' | 'default' | 'column',
 	width?: string,
 	height?: string,
 	disabled?: boolean,
@@ -54,4 +54,19 @@ export const Button = styled.button<IProps>`
 			cursor: inherit;
 		} */
 	`}
+
+	${({ variant }) => variant === 'column' && css`
+		font-size: 24px;
+		background-color: ${({ theme }) => theme.secondaryBgColor};
+		color: #828FA3;
+		&:hover {
+			color: #635FC7;
+		}
+		/* &:disabled {
+			background-color: ${({ theme }) => theme.disabledBtn};
+			cursor: inherit;
+		} */
+	`}
+
+	
 `;

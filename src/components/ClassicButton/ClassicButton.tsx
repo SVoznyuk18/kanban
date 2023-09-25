@@ -4,16 +4,19 @@ import { Button } from './ClassicButton.styled';
 
 interface IClassicButton {
 	children: React.ReactNode,
-	variant?: 'confirm' | 'light' | 'delete' | 'default',
+	style?: object,
+	variant?: 'confirm' | 'light' | 'delete' | 'default' | 'column',
 	width?: string,
+
 	height?: string,
 	disabled?: boolean,
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ClassicButton = ({ children, variant, width, height, disabled, onClick }: IClassicButton) => {
+const ClassicButton = ({ children, style, variant, width, height, disabled, onClick }: IClassicButton) => {
 	return (
 		<Button
+			style={style}
 			variant={variant}
 			width={width}
 			height={height}
