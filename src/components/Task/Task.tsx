@@ -2,6 +2,7 @@ import React, { DragEvent } from 'react'
 
 import { ISubtask, ITask, IColumn } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
+import { useTypedSelector } from '@/UtilsRoot';
 
 interface ITaskProps {
   task: ITask,
@@ -16,14 +17,25 @@ interface ITaskProps {
 
 const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
 
-  const countDoneSubTasks = (subTasks: Array<ISubtask>): number => {
+  const subtasks = useTypedSelector(state => state?.subtasks?.subtasks);
+
+  // console.log('subTasks', subtasks)
+
+  const countDoneSubTasks = (subtasks: ISubtask[]): number => {
     let count: number = 0;
 
-    subTasks.forEach((subTask: ISubtask) => {
-      if (subTask?.isCompleted) count + 1;
+    subtasks.forEach((subtask: ISubtask) => {
+      if (subtask?.isCompleted) count + 1;
     });
     return count;
   }
+
+  const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
+
+  console.log('task?._id', task?._id)
+  // console.log('subTasks', subtasks)
+  console.log('filteredSubtasksByTaskId', filteredSubtasksByTaskId)
+  console.log('length', filteredSubtasksByTaskId.length)
 
   return (
     <TaskWrapper
@@ -33,8 +45,8 @@ const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, 
       onDrop={(e) => dropHandler(e, column, task)}
       draggable={draggable}
     >
-      <Title>{task?.title}</Title>
-      <SubTitle>{`${countDoneSubTasks(task?.subtasks)} of ${task?.subtasks?.length} subtasks`}</SubTitle>
+      <Title>{task?.taskName}</Title>
+      <SubTitle>{`${countDoneSubTasks(filteredSubtasksByTaskId)} of ${filteredSubtasksByTaskId.length} subtasks`}</SubTitle>
     </TaskWrapper>
   )
 }

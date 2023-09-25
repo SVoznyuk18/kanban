@@ -2,7 +2,9 @@
 import React, { useState, DragEvent } from 'react';
 
 import { ITask, IColumn } from '@/TypesRoot';
+import { useTypedSelector } from '@/UtilsRoot';
 import { Task } from '@/ComponentsRoot'
+
 import { ColumnWrapper, Title, TasksList } from './Column.styled';
 
 interface IColumnProps {
@@ -11,8 +13,14 @@ interface IColumnProps {
 
 const Column: React.FC<IColumnProps> = ({ column }) => {
 
+  const tasks = useTypedSelector(state => state?.tasks?.tasks);
+
   const [currentColumn, setCurrentColumn] = useState<IColumn | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
+
+  console.log('tasks', tasks)
+
+  const filteredTasksByColumnStatus: ITask[] = tasks.filter((task: ITask) => task?.status === column?.columnName);
 
   const dragOverHandler = (e: DragEvent<HTMLUListElement | HTMLLIElement>) => {
     e.preventDefault();
@@ -31,7 +39,6 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
     console.log('dragStartHandler');
     console.log('currentColumn', currentColumn);
     console.log('currentTask', currentTask);
-
   }
 
   const dragEndHandler = (e: DragEvent<HTMLUListElement | HTMLLIElement>) => {
@@ -57,13 +64,13 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
 
   return (
     <ColumnWrapper>
-      <Title>{column?.columnName}</Title>
-      {/* <TasksList
+      <Title>{column?.columnName} ({filteredTasksByColumnStatus.length})</Title>
+      <TasksList
         // onDragOver={(e) => dragOverHandler(e)} 
         onDrop={(e) => dropTaskHandler(e)}
       >
         {
-          column?.tasks.length > 0 && column?.tasks.map(task => (
+          filteredTasksByColumnStatus.length > 0 && filteredTasksByColumnStatus.map(task => (
             // @ts-ignore
             <Task
               draggable={true}
@@ -73,12 +80,12 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
               dragEndHandler={dragEndHandler}
               dropHandler={dropHandler}
               key={task?._id}
-              column={column}
+              // column={column}
               task={task}
             />
           ))
         }
-      </TasksList> */}
+      </TasksList>
     </ColumnWrapper>
   )
 }
