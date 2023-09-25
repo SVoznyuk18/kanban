@@ -19,8 +19,6 @@ const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, 
 
   const subtasks = useTypedSelector(state => state?.subtasks?.subtasks);
 
-  // console.log('subTasks', subtasks)
-
   const countDoneSubTasks = (subtasks: ISubtask[]): number => {
     let count: number = 0;
 
@@ -31,11 +29,6 @@ const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, 
   }
 
   const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
-
-  console.log('task?._id', task?._id)
-  // console.log('subTasks', subtasks)
-  console.log('filteredSubtasksByTaskId', filteredSubtasksByTaskId)
-  console.log('length', filteredSubtasksByTaskId.length)
 
   return (
     <TaskWrapper

@@ -31,7 +31,8 @@ interface IProps<T extends FieldValues> {
   validation: IValidation,
   unregister: UseFormUnregister<T>,
   errorMessage?: string,
-  errors: FieldErrors
+  errors: FieldErrors,
+  buttonName: string
 }
 
 const AdditionalInput = <T extends FieldValues>({
@@ -50,7 +51,8 @@ const AdditionalInput = <T extends FieldValues>({
   register,
   unregister,
   validation,
-  errors
+  errors,
+  buttonName
 }: IProps<T>) => {
 
   const [additionalInputs, setAdditionalsInputs] = useState<Array<number>>([]);
@@ -96,9 +98,10 @@ const AdditionalInput = <T extends FieldValues>({
       <ClassicButton
         width='100%'
         height="40px"
+        variant="default"
         onClick={(e) => handleAddInput(e)}
       >
-        + Add New Column
+        {buttonName}
       </ClassicButton>
     </Wrapper>
   )

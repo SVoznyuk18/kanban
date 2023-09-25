@@ -60,11 +60,13 @@ const AddNewBoard = () => {
           unregister={unregister}
           validation={{ required: 'Required field' }}
           errors={errors}
+          buttonName='Add new column'
         />
       </Form>
       <ClassicButton
         width='100%'
         height="40px"
+        variant="default"
         onClick={handleSubmit(onSubmit)}
       >
         Create New Board

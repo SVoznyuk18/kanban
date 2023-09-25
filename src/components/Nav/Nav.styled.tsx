@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface IProps {
+  active: boolean
+}
 
 export const NavWrapper = styled.nav`
   position: relative;
@@ -26,15 +30,14 @@ export const NavList = styled.ul`
   align-self: start;
   width: 100%;
 `;
+
 export const NavItem = styled.li`
- 
   width: 100%;
   height: 48px;
   padding-left: 35px;
   cursor: pointer;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
-
   a {
     width: 100%;
     height: 100%;
@@ -43,16 +46,17 @@ export const NavItem = styled.li`
     column-gap: 15px;
     text-decoration: none;
   }
- 
   p {
     font-size: 15px;
     font-weight: 700;
     color: #828FA3;
   }
+`;
 
-  &: hover {
+
+export const NavItemHover = styled(NavItem)`
+  &:hover {
     background-color: #E4EBFA;
-    color: #fff;
     p {
       color: #635FC7;
     }
@@ -62,3 +66,12 @@ export const NavItem = styled.li`
   }
 `;
 
+export const NavItemActive = styled(NavItem)`
+  background-color: #635FC7;
+  p {
+    color: #fff;
+  }
+  svg {
+    fill: #fff;
+  }
+`;
