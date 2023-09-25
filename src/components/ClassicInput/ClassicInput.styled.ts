@@ -27,8 +27,9 @@ export const Input = styled.input<IStyleProps>`
   border-radius: ${({ borderRadius }) => borderRadius || '8px'};
   font-size: ${({ fontSize }) => fontSize || '13px'};
   font-weight: 500;
-  color: #000112;
+  color: ${({ theme }) => theme.textColor};
   outline: none;
+  background-color: transparent;
 `;
 
 export const Label = styled.label<IStyleProps>`

@@ -18,7 +18,6 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
   const [currentColumn, setCurrentColumn] = useState<IColumn | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
 
-  console.log('tasks', tasks)
 
   const filteredTasksByColumnStatus: ITask[] = tasks.filter((task: ITask) => task?.status === column?.columnName);
 

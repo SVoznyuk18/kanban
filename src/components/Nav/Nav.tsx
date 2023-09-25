@@ -4,32 +4,51 @@ import Link from 'next/link';
 import { IBoard } from '@/TypesRoot';
 import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
 
-import { NavWrapper, Title, NavList, NavItem } from './Nav.styled';
+import { NavWrapper, Title, NavList, NavItemHover, NavItemActive } from './Nav.styled';
 
 import { SVGPath } from '@/ConstantsRoot';
 
 interface INavProps {
   boards: Array<IBoard>
+  board: IBoard
 }
 
-const Nav: React.FC<INavProps> = ({ boards }) => {
+const Nav: React.FC<INavProps> = ({ boards, board }) => {
   return (
     <NavWrapper>
       <Title>{`ALL BOARDS (${boards && boards.length})`}</Title>
       <NavList>
-        {boards && boards.map(board => (
-          <NavItem key={board?._id}>
-            <Link href={`/${board?.url}`}>
-              <CustomSVG
-                width='16px'
-                height='16px'
-                fill='#828FA3'
-                path={SVGPath.board}
-              />
-              <p>{board?.boardName}</p>
-            </Link>
-          </NavItem>
-        ))}
+        {boards && boards.map(boardItem => {
+          if (boardItem?._id === board?._id) {
+            return (
+              <NavItemActive key={boardItem?._id}>
+                <Link href={`/${boardItem?.url}`}>
+                  <CustomSVG
+                    width='16px'
+                    height='16px'
+                    fill='#828FA3'
+                    path={SVGPath.board}
+                  />
+                  <p>{boardItem?.boardName}</p>
+                </Link>
+              </NavItemActive>
+            )
+          } else {
+            return (
+              <NavItemHover key={boardItem?._id}>
+                <Link href={`/${boardItem?.url}`}>
+                  <CustomSVG
+                    width='16px'
+                    height='16px'
+                    fill='#828FA3'
+                    path={SVGPath.board}
+                  />
+                  <p>{boardItem?.boardName}</p>
+                </Link>
+              </NavItemHover>
+            )
+          }
+        })}
       </NavList>
       <ThemeSwitcher />
     </NavWrapper>

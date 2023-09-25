@@ -29,9 +29,10 @@ export const TextArea = styled.textarea<ITextarea>`
   border-radius: ${({ borderRadius }) => borderRadius || '8px'};
   font-size: ${({ fontSize }) => fontSize || '13px'};
   font-weight: 500;
-  color: #000112;
+  color: ${({ theme }) => theme.textColor};
   outline: none;
-  resize: ${({ resize }) => resize}
+  resize: ${({ resize }) => resize};
+  background-color: transparent;
 `;
 
 export const Label = styled.label<IStyleProps>`

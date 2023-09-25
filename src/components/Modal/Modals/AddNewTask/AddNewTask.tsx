@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 
 import { IColumn } from '@/TypesRoot';
-import {addNewTaskAction} from '@/ReduxRoot';
+import { addNewTaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
@@ -33,7 +33,7 @@ const AddNewTask: React.FC = () => {
   const statuses = columns.map((column: IColumn) => column.columnName);
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
-    const {taskName, description, status, ...subTasks} = data;
+    const { taskName, description, status, ...subTasks } = data;
 
     const configureTaskData = {
       mainBoardId: board?._id,
@@ -80,6 +80,7 @@ const AddNewTask: React.FC = () => {
           unregister={unregister}
           validation={{ required: 'Required field' }}
           errors={errors}
+          buttonName='Add new subtask'
         />
 
         <CustomSelect
@@ -98,6 +99,7 @@ const AddNewTask: React.FC = () => {
       <ClassicButton
         width='100%'
         height="40px"
+        variant="default"
         onClick={handleSubmit(onSubmit)}
       >
         Create New Task

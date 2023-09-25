@@ -1,5 +1,5 @@
 'use client'
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface IProps {
 	variant?: 'confirm' | 'light' | 'delete' | 'default',
@@ -9,8 +9,9 @@ interface IProps {
 }
 
 export const Button = styled.button<IProps>`
-	width: ${({ width }) => width || '48px'};
-	height: ${({ height }) => height || '32px'};
+	width: ${({ width }) => width || "auto"};
+	height: ${({ height }) => height || '40px'};
+	padding: 0px 25px;
 	border-radius: 24px;
 	background-color: #635FC7;
 	cursor: pointer;
@@ -19,7 +20,38 @@ export const Button = styled.button<IProps>`
 	font-size: 15px;
 	font-weight: 700;
 
-	&:hover {
-		background-color: #A8A4FF;
-	}
+	${({ variant }) => variant === 'default' && css`
+		background-color: #635FC7;
+		color: #FFFF;
+		&:hover {
+			background-color: #A8A4FF;
+		}
+		&:disabled {
+			background-color: ${({ theme }) => theme.disabledBtn};
+			cursor: inherit;
+		}
+	`}
+	${({ variant }) => variant === 'light' && css`
+		background-color: ${({ theme }) => theme.lightBtn};
+		color: #635FC7;
+		&:hover {
+			background-color: ${({ theme }) => theme.lightHoverBtn};
+		}
+		/* &:disabled {
+			background-color: ${({ theme }) => theme.disabledBtn};
+			cursor: inherit;
+		} */
+	`}
+
+	${({ variant }) => variant === 'delete' && css`
+		background-color: #EA5555;
+		color: #FFFF;
+		&:hover {
+			background-color: #FF9898;
+		}
+		/* &:disabled {
+			background-color: ${({ theme }) => theme.disabledBtn};
+			cursor: inherit;
+		} */
+	`}
 `;

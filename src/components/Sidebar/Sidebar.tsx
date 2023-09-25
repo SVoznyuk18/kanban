@@ -14,6 +14,7 @@ const Sidebar: React.FC = () => {
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
   const dispatch = useDispatch();
   const boards = useTypedSelector(state => state?.boards?.boards);
+  const board = useTypedSelector(state => state?.board?.board);
 
   useEffect(() => {
     dispatch(getAllBoardsAction())
@@ -32,7 +33,7 @@ const Sidebar: React.FC = () => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <Nav boards={boards} />
+      <Nav boards={boards} board={board} />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'

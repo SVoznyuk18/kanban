@@ -6,7 +6,9 @@ export const darkTheme = {
 	primaryBgColor: '#20212C',
 	secondaryBgColor: '#2B2C37',
 	borderColor: '#3E3F4E',
-	test: 'dark',
+	disabledBtn: '#635fc740',
+	lightBtn: '#FFF',
+	lightHoverBtn: '#F4F7FD',
 }
 
 export const lightTheme = {
@@ -15,5 +17,7 @@ export const lightTheme = {
 	primaryBgColor: '#F4F7FD',
 	secondaryBgColor: '#FFF',
 	borderColor: '#E4EBFA',
-	test: 'light',
+	disabledBtn: '#E4EBFA',
+	lightBtn: 'rgba(99, 95, 199, 0.10)',
+	lightHoverBtn: 'rgba(99, 95, 199, 0.25)',
 }

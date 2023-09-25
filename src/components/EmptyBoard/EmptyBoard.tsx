@@ -10,13 +10,12 @@ const EmptyBoard = () => {
 
   const { handleOpenModal, handleCloseModal, modalType, isOpenModal } = useContext(ModalContext);
 
-
   return (
     <Wrapper>
       <Title>This board is empty. Create a new column to get started.</Title>
       <ClassicButton
-        width='174px'
         height="48px"
+        variant="default"
         onClick={() => handleOpenModal('AddNewBoard')}
       >
         + Add New Column
