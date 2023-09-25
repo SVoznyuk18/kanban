@@ -17,7 +17,8 @@ export const Title = styled.h3`
   line-height: normal;
   letter-spacing: 2.4px;
   text-transform: uppercase;
-  background-color: #828FA3;
+  color: #828FA3;
+  /* background-color: #828FA3; */
 `;
 
 export const TasksList = styled.ul`
@@ -25,5 +26,6 @@ export const TasksList = styled.ul`
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  width: 100%;
   row-gap: 20px;
 `;

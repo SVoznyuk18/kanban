@@ -14,6 +14,7 @@ export const TaskWrapper = styled.li`
   list-style-type: none;
   background-color: ${({ theme }) => theme.secondaryBgColor};
   cursor: grab;
+  box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.10);
 `;
 
 export const Title = styled.h4`
@@ -28,4 +29,5 @@ export const SubTitle = styled.h5`
   font-size: 12px;
   font-weight: 700;
   line-height: normal;
+  
 `;
