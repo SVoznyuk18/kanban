@@ -11,3 +11,11 @@ export const getColumnsByBoardILoadingAction = createAction('columns/getColumnsB
 export const getColumnsByBoardISuccessAction = createAction('columns/getColumnsByBoardISuccess', (columns: IColumn[]) => ({ payload: columns }));
 
 export const getColumnsByBoardIFailureAction = createAction('columns/getColumnsByBoardIFailure', (error: string) => ({ payload: error }));
+
+export const addNewColumnsAction = createAction("ADD_NEW_COLUMNS", <T>(columns: T) => ({ payload: columns }));
+
+export const addNewColumnsLoadingAction = createAction("columns/addNewColumnsLoading");
+
+export const addNewColumnsSuccessAction = createAction("columns/addNewColumnsSuccess", (columns: IColumn[]) => ({ payload: columns }));
+
+export const addNewColumnsFailureAction = createAction("columns/addNewColumnsFailure", (error: string) => ({ payload: error }));

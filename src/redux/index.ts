@@ -21,7 +21,11 @@ import {
   getColumnsByBoardIAction,
   getColumnsByBoardILoadingAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction
+  getColumnsByBoardIFailureAction,
+  addNewColumnsAction,
+  addNewColumnsLoadingAction,
+  addNewColumnsSuccessAction,
+  addNewColumnsFailureAction
 } from './columns/columns.action';
 
 import {
@@ -70,6 +74,10 @@ export {
   getColumnsByBoardILoadingAction,
   getColumnsByBoardISuccessAction,
   getColumnsByBoardIFailureAction,
+  addNewColumnsAction,
+  addNewColumnsLoadingAction,
+  addNewColumnsSuccessAction,
+  addNewColumnsFailureAction,
 
   addNewTaskAction,
   addNewTaskLoadingAction,
