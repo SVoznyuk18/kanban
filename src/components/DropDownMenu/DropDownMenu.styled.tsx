@@ -17,6 +17,7 @@ export const Menu = styled.div<IProps>`
 	box-shadow: 0px 10px 20px 0px rgba(54, 78, 126, 0.25);
   cursor: auto;
   max-height: 0px;
+  overflow: hidden;
   ${({ isActive }) => isActive && css`
     max-height: 1000px;
   `}

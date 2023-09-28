@@ -102,19 +102,6 @@ position: relative;
 	}
 `;
 
-export const EditBoardMenu = styled.div`
-	position: absolute;
-	top: 50px;
-	right: 0;
-	padding: 16px;
-	width: 192px;
-	height: 94px;
-	background-color: ${({ theme }) => theme.primaryBgColor};
-	border-radius: 8px;
-	box-shadow: 0px 10px 20px 0px rgba(54, 78, 126, 0.25);
-	cursor: auto;
-`;
-
 export const MenuList = styled.ul`
 padding: 16px;
 width: 192px;

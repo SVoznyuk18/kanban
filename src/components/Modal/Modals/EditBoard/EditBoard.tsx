@@ -1,44 +1,49 @@
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from "react-redux";
-import { camelCase } from 'lodash';
-
-import { IBoard } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
+
+import { IBoard, IColumn } from '@/TypesRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
-import { ModalContent, Title, Form } from './AddNewBoard.styled';
+import { ModalContent, Title, Form } from './EditBoard.styled';
 
 interface IData {
   boardName: string
   [x: string]: string | undefined;
 }
 
-const AddNewBoard = () => {
+const EditBoard = () => {
 
   const dispatch = useDispatch();
-  const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
+  const boardFromStore = useTypedSelector(state => state?.board?.board);
+  const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
 
   const {
     register,
     unregister,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<IData>({ mode: "all" });
 
-
-  const matchBoardname = (value: string) => {  // check match boardName with Saved boardName
-    const isMatch = boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
-    if (isMatch) return 'Таке імя борду вже існує'
-  };
-
   const onSubmit: SubmitHandler<IData> = async (data) => {
-    dispatch(addNewBoardsAction(data));
+    console.log(data);
+    // dispatch(addNewBoardsAction(data));
   };
+
+  const arrFromColumns = (columns: IColumn[]) => {
+    return columns.map(column => column?.columnName);
+  }
+
+  useEffect(() => {
+    setValue('boardName', boardFromStore?.boardName)
+  }, []);
 
   return (
     <ModalContent>
-      <Title>Add New Board</Title>
+      <Title>Edit Board</Title>
       <Form>
         <ClassicInput
           label="Name"
@@ -48,7 +53,7 @@ const AddNewBoard = () => {
           name='boardName'
           placeholder='e.g. Web Design'
           register={register}
-          validation={{ required: 'Required field', validate: (value: string) => matchBoardname(value) }}
+          validation={{ required: 'Required field' }}
           errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
         <AdditionalInput
@@ -58,6 +63,8 @@ const AddNewBoard = () => {
           name='columnName'
           register={register}
           unregister={unregister}
+          columns={arrFromColumns(columnsFromStore)}
+          setValue={setValue}
           validation={{ required: 'Required field' }}
           errors={errors}
           buttonName='Add new column'
@@ -69,10 +76,10 @@ const AddNewBoard = () => {
         variant="default"
         onClick={handleSubmit(onSubmit)}
       >
-        Create New Board
+        Save Changes
       </ClassicButton>
     </ModalContent>
   )
 }
 
-export default AddNewBoard;
+export default EditBoard;

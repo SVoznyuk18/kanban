@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IColumn } from "@/TypesRoot";
-import { stat } from "fs";
 
 const culumnsInitialState = {
   columns: [],

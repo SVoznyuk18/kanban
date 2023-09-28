@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from "react";
-import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap, Path } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap, Path, UseFormSetValue } from "react-hook-form";
 
 import { ClassicButton, ClassicInput, CustomSVG } from "@/ComponentsRoot";
 import { SVGPath } from '@/ConstantsRoot';
@@ -12,62 +12,61 @@ interface IValidation {
   required: string
 }
 
+interface IData {
+  boardName: string
+  [x: string]: string | undefined;
+}
+
 type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
 
 interface IProps<T extends FieldValues> {
-  width?: string,
-  height?: string,
-  htmlFor?: string,
-  labelFontSize?: string,
+
   label?: string,
   id?: string,
   type?: string,
   name: Path<T> | string,
-  placeholder?: string,
-  padding?: string,
-  borderRadius?: string,
-  fontSize?: string,
   register: UseFormRegister<T>,
   validation: IValidation,
+  setValue?: UseFormSetValue<IData>;
   unregister: UseFormUnregister<T>,
+  columns?: string[] | undefined,
   errorMessage?: string,
   errors: FieldErrors,
   buttonName: string
 }
 
 const AdditionalInput = <T extends FieldValues>({
-  width,
-  height,
-  htmlFor,
-  labelFontSize,
   label,
   id,
   type,
   name,
-  placeholder,
-  padding,
-  borderRadius,
-  fontSize,
   register,
   unregister,
+  setValue,
+  columns,
   validation,
   errors,
   buttonName
 }: IProps<T>) => {
 
-  const [additionalInputs, setAdditionalsInputs] = useState<Array<number>>([]);
+  const [additionalInputs, setAdditionalsInputs] = useState<(number | string)[]>(columns || []);
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     setAdditionalsInputs([...additionalInputs, Date.now()]);
   }
 
-  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number) => {
+  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number | string) => {
     e.preventDefault();
     const filteredInputs = additionalInputs.filter(input => input !== elem);
     unregister(`${name}_${elem}` as any)
     setAdditionalsInputs(filteredInputs);
   }
+  useEffect(() => {
+    if (columns !== undefined && columns?.length > 0 && setValue !== undefined) {
+      columns.forEach(column => setValue(column, column))
+    }
+  }, [columns])
 
   return (
     <Wrapper>
@@ -78,7 +77,7 @@ const AdditionalInput = <T extends FieldValues>({
             id={`${id}_${aditionalInput}`}
             type={type}
             //@ts-ignore
-            name={`${name}_${aditionalInput}`}
+            name={`${aditionalInput}`}
             validation={validation}
             register={register}
             errorMessage={errors?.[`${name}_${aditionalInput}`] && errors?.[`${name}_${aditionalInput}`]?.message?.toString()}

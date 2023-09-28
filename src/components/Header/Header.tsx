@@ -10,7 +10,7 @@ import { MobileMenu, CustomSVG, ClassicButton, DropDownMenu } from '@/Components
 import { SVGPath } from '@/ConstantsRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 
-import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, EditBoardControl, EditBoardMenu, MenuList, MenuItem } from './Header.styled';
+import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, EditBoardControl, MenuList, MenuItem } from './Header.styled';
 
 const Header = () => {
 	const { isMobile } = useContext(WindowSizeContext);
@@ -64,17 +64,18 @@ const Header = () => {
 						<span></span>
 						<span></span>
 						<span></span>
-						<DropDownMenu
-							top="50px"
-							right="0"
-							isActive={toggleEditBoardMenu}
-						>
-							<MenuList>
-								<MenuItem>Edit Board</MenuItem>
-								<MenuItem>Delete Board</MenuItem>
-							</MenuList>
-						</DropDownMenu>
+
 					</EditBoardControl>
+					<DropDownMenu
+						top="50px"
+						right="0"
+						isActive={toggleEditBoardMenu}
+					>
+						<MenuList>
+							<MenuItem onClick={() => handleOpenModal('EditBoard')}>Edit Board</MenuItem>
+							<MenuItem>Delete Board</MenuItem>
+						</MenuList>
+					</DropDownMenu>
 				</ControlsSection>
 			</HeaderMainSection>
 			{/* <MobileMenu isShow={toggleMobileMenu} /> */}
