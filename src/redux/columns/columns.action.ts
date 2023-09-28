@@ -12,7 +12,7 @@ export const getColumnsByBoardISuccessAction = createAction('columns/getColumnsB
 
 export const getColumnsByBoardIFailureAction = createAction('columns/getColumnsByBoardIFailure', (error: string) => ({ payload: error }));
 
-export const addNewColumnsAction = createAction("ADD_NEW_COLUMNS", <T>(columns: T) => ({ payload: columns }));
+export const addNewColumnsAction = createAction("ADD_NEW_COLUMNS", (columns: { mainBoardId: string, columns: string[] }) => ({ payload: columns }));
 
 export const addNewColumnsLoadingAction = createAction("columns/addNewColumnsLoading");
 
