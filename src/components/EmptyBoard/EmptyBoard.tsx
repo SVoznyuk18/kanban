@@ -18,7 +18,7 @@ const EmptyBoard = () => {
         variant="default"
         onClick={() => handleOpenModal('AddNewBoard')}
       >
-        + Add New Column
+        + Add New Board
       </ClassicButton>
     </Wrapper>
   )

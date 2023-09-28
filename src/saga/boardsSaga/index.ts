@@ -6,9 +6,10 @@ import {
   addNewBoardsFailureAction,
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction
+  getAllBoardsFailureAction,
+  addNewColumnsAction
 } from '@/ReduxRoot';
-import { IBoard, IColumn } from '@/TypesRoot';
+import { IBoard } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
 interface IResponseBoard {
@@ -21,14 +22,9 @@ interface IResponseAllBoards {
   success: boolean
 }
 
-interface IResponseColumns {
-  result: Array<IColumn>
-  success: boolean
-}
-
 function* workAddNewBoards(action: PayloadAction<any>) {
   const { boardName, ...rest } = action?.payload;
-  const columns = Object.values(rest);
+  const columns: string[] = Object.values(rest);
 
   try {
     yield put(addNewBoardsLoadingAction());
@@ -37,7 +33,7 @@ function* workAddNewBoards(action: PayloadAction<any>) {
     yield put(addNewBoardsSuccessAction(allBoards?.result));
 
     if (boardResponse?.success && columns.length > 0) {
-      const columnResponse: IResponseColumns = yield call(postData, '/columns', { mainBoardId: boardResponse?.result?._id, columns });
+      yield put(addNewColumnsAction({ mainBoardId: boardResponse?.result?._id, columns }))
     } else {
       throw Error()
     }

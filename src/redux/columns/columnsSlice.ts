@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IColumn } from "@/TypesRoot";
+import { stat } from "fs";
 
 const culumnsInitialState = {
   columns: [],
@@ -28,6 +29,18 @@ const columnsSlice = createSlice({
       state.columns = payload;
     },
     getColumnsByBoardIFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.errors = payload;
+    },
+    addNewColumnsLoading: (state: IColumnsState) => {
+      state.isLoading = true;
+      state.errors = "";
+    },
+    addNewColumnsSuccess: (state: IColumnsState, { payload }: PayloadAction<IColumn[]>) => {
+      state.isLoading = false;
+      state.columns = [...state.columns, ...payload];
+    },
+    addNewColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
     }
