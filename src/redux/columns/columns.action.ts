@@ -4,6 +4,11 @@ import { IColumn } from "@/TypesRoot";
 
 type ColumnsPayload = { mainBoardId: string };
 
+interface IEditColumnsPayload {
+  boardId: string;
+  columns: { [x: string]: string | undefined };
+}
+
 export const getColumnsByBoardIAction = createAction('GET_COLUMNS_BY_BOARD_ID', <T>(mainBoardId: T) => ({ payload: mainBoardId }));
 
 export const getColumnsByBoardILoadingAction = createAction('columns/getColumnsByBoardILoading');
@@ -19,3 +24,5 @@ export const addNewColumnsLoadingAction = createAction("columns/addNewColumnsLoa
 export const addNewColumnsSuccessAction = createAction("columns/addNewColumnsSuccess", (columns: IColumn[]) => ({ payload: columns }));
 
 export const addNewColumnsFailureAction = createAction("columns/addNewColumnsFailure", (error: string) => ({ payload: error }));
+
+export const editColumnsAction = createAction("EDIT_COLUMNS", (editColumnPayload: IEditColumnsPayload) => ({ payload: editColumnPayload }));

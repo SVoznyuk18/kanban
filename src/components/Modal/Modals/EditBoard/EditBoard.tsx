@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useTypedSelector } from '@/UtilsRoot';
 
 import { IBoard, IColumn } from '@/TypesRoot';
-import { addNewBoardsAction, editBoardAction } from '@/ReduxRoot'
+import { addNewBoardsAction, editBoardAction, editColumnsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
@@ -12,12 +12,6 @@ import { ModalContent, Title, Form } from './EditBoard.styled';
 interface IData {
   boardName: string
   [x: string]: string | undefined;
-}
-
-interface IEditBoardPayload {
-  boardName: string;
-  boardId: string;
-  columnsName: { [x: string]: string | undefined };
 }
 
 const EditBoard = () => {
@@ -37,21 +31,26 @@ const EditBoard = () => {
   const onSubmit: SubmitHandler<IData> = async (data) => {
     const { boardName, ...columns } = data;
 
-    const editBoardConfigure: IEditBoardPayload = {
+    const editBoardConfigure = {
       boardName,
       boardId: boardFromStore?._id,
-      columnsName: columns
     };
 
-    dispatch(editBoardAction(editBoardConfigure));
+    const editColumnsConfigure = {
+      boardId: boardFromStore?._id,
+      columns
+    }
+
+    // dispatch(editBoardAction(editBoardConfigure));
+    dispatch(editColumnsAction(editColumnsConfigure));
   };
 
-  const arrFromColumns = (columns: IColumn[]) => {
-    return columns.map(column => column?.columnName);
+  const arrFromColumns = (columns: IColumn[]): { _id: string; columnName: string }[] => {
+    return columns.map(column => ({ _id: column?._id, columnName: column?.columnName }));
   }
 
   useEffect(() => {
-    setValue('boardName', boardFromStore?.boardName)
+    setValue('boardName', boardFromStore?.boardName);
   }, []);
 
   return (

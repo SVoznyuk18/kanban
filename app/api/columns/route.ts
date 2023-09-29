@@ -41,3 +41,34 @@ export async function POST(req: Request) {
   })
 }
 
+export async function PUT(req: NextRequest) {
+  const { boardId, columns } = await req.json();
+
+  const columnsArr = Object.entries(columns);
+  console.log('columnsArr', columnsArr)
+
+  // columnsArr [
+  //   [ '65114af467d63a9f70120069', 'Todo' ],
+  //   [ '65114af467d63a9f7012006a', 'inProgres' ],
+  //   [ '65114af467d63a9f7012006b', 'Done' ]
+  // ]
+
+  // await connectMongoDB();
+
+  // const updatedColumns = await Promise.all(columns.map(async (column: string) => {
+  //   const updatedColumn = await Column.findOneAndUpdate({ mainBoardId: boardId }, { column }, { new: true });
+  //   return updatedColumn
+  // }))
+
+  // if (!updatedColumns) {
+  //   return NextResponse.json({ success: false, msg: "Failed to update columns" }, {
+  //     status: 404
+  //   })
+  // }
+
+  return NextResponse.json({ success: true, result: updatedColumns }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}

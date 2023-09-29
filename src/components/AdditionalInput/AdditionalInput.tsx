@@ -21,18 +21,18 @@ type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFiel
 
 interface IProps<T extends FieldValues> {
 
-  label?: string,
-  id?: string,
-  type?: string,
-  name: Path<T> | string,
-  register: UseFormRegister<T>,
-  validation: IValidation,
+  label?: string;
+  id?: string;
+  type?: string;
+  name: Path<T> | string;
+  register: UseFormRegister<T>;
+  validation: IValidation;
   setValue?: UseFormSetValue<IData>;
-  unregister: UseFormUnregister<T>,
-  columns?: string[] | undefined,
-  errorMessage?: string,
-  errors: FieldErrors,
-  buttonName: string
+  unregister: UseFormUnregister<T>;
+  columns?: { _id: string; columnName: string }[] | undefined;
+  errorMessage?: string;
+  errors: FieldErrors;
+  buttonName: string;
 }
 
 const AdditionalInput = <T extends FieldValues>({
@@ -49,40 +49,40 @@ const AdditionalInput = <T extends FieldValues>({
   buttonName
 }: IProps<T>) => {
 
-  const [additionalInputs, setAdditionalsInputs] = useState<(number | string)[]>(columns || []);
+  const [additionalInputs, setAdditionalsInputs] = useState<{ _id: string; columnName: string }[]>(columns || []);
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    setAdditionalsInputs([...additionalInputs, Date.now()]);
+    setAdditionalsInputs([...additionalInputs, { _id: `${Date.now()}`, columnName: '' }]);
   }
 
   const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number | string) => {
     e.preventDefault();
-    const filteredInputs = additionalInputs.filter(input => input !== elem);
-    unregister(`${name}_${elem}` as any)
+    const filteredInputs = additionalInputs.filter(input => input?._id !== elem);
+    unregister(elem as any);
     setAdditionalsInputs(filteredInputs);
   }
   useEffect(() => {
     if (columns !== undefined && columns?.length > 0 && setValue !== undefined) {
-      columns.forEach(column => setValue(column, column))
+      columns.forEach(column => setValue(column?._id, column?.columnName))
     }
-  }, [columns])
+  }, [])
 
   return (
     <Wrapper>
       <Title>{additionalInputs.length > 0 && label}</Title>
       {additionalInputs && additionalInputs.map(aditionalInput => (
-        <InputWrapper key={aditionalInput}>
+        <InputWrapper key={aditionalInput?._id}>
           <ClassicInput
-            id={`${id}_${aditionalInput}`}
+            id={aditionalInput?._id}
             type={type}
             //@ts-ignore
-            name={`${aditionalInput}`}
+            name={`${aditionalInput?._id}`}
             validation={validation}
             register={register}
-            errorMessage={errors?.[`${name}_${aditionalInput}`] && errors?.[`${name}_${aditionalInput}`]?.message?.toString()}
+            errorMessage={errors?.[aditionalInput?._id] && errors?.[aditionalInput?._id]?.message?.toString()}
           />
-          <Button onClick={(e) => handleDeleteInput(e, name, aditionalInput)}>
+          <Button onClick={(e) => handleDeleteInput(e, name, aditionalInput?._id)}>
             <CustomSVG
               width='15px'
               height='15px'

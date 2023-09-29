@@ -9,11 +9,16 @@ import {
   addNewColumnsFailureAction
 } from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
-import { getDataByParams, postData } from '@/ApiRoot';
+import { getDataByParams, postData, putData } from '@/ApiRoot';
 
 interface IResponseColumns {
   result: Array<IColumn>
   success: boolean
+}
+
+interface IEditColumnsPayload {
+  boardId: string;
+  columns: { [x: string]: string | undefined };
 }
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
@@ -33,14 +38,23 @@ function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns
   const { mainBoardId, columns } = action.payload;
   try {
     yield put(addNewColumnsLoadingAction());
-    const { result, success }: IResponseColumns = yield call(postData, '/column', { mainBoardId, columns });
+    const { result, success }: IResponseColumns = yield call(postData, '/columns', { mainBoardId, columns });
     if (success) yield put(addNewColumnsSuccessAction(result));
   } catch (error) {
     yield put(addNewColumnsFailureAction(`Failed to create New columns to mainBoardId ${mainBoardId}`));
   }
 }
 
+function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
+  const { boardId, columns } = action.payload;
+
+  const { success, result }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns });
+
+  console.log('columns', columns)
+}
+
 export function* watchColumns() {
   yield takeLatest('GET_COLUMNS_BY_BOARD_ID', workGetColumns);
   yield takeLatest("ADD_NEW_COLUMNS", workAddNewColumns);
+  yield takeLatest("EDIT_COLUMNS", workEditColumns);
 }

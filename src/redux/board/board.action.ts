@@ -8,7 +8,6 @@ type BoardUrlPayload = {
 interface IEditBoardPayload {
   boardName: string;
   boardId: string;
-  columnsName: { [x: string]: string | undefined };
 }
 
 export const getBoardAction = createAction<BoardUrlPayload>('GET_BOARD');

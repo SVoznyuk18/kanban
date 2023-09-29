@@ -24,7 +24,6 @@ interface IResponseBoard {
 interface IEditBoardPayload {
   boardName: string;
   boardId: string;
-  columnsName: { [x: string]: string | undefined };
 }
 
 function* workGetBoard(action: PayloadAction<IBoardPayload>) {
@@ -45,13 +44,13 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
 }
 
 function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
-  const boardConfigure = {
-    boardId: action?.payload?.boardId,
-    boardName: action?.payload?.boardName,
-  }
+  // const boardConfigure = {
+  //   boardId: action?.payload?.boardId,
+  //   boardName: action?.payload?.boardName,
+  // }
   try {
     yield put(getBoardLoadingAction());
-    const { success, result }: IResponseBoard = yield call(putData, `/boards`, { ...boardConfigure });
+    const { success, result }: IResponseBoard = yield call(putData, `/boards`, { ...action?.payload });
     if (success) {
       yield put(getBoardSuccessAction(result));
       yield put(getAllBoardsAction());
