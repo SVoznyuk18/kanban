@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useTypedSelector } from '@/UtilsRoot';
 
 import { IBoard, IColumn } from '@/TypesRoot';
-import { addNewBoardsAction } from '@/ReduxRoot'
+import { addNewBoardsAction, editBoardAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
@@ -12,6 +12,12 @@ import { ModalContent, Title, Form } from './EditBoard.styled';
 interface IData {
   boardName: string
   [x: string]: string | undefined;
+}
+
+interface IEditBoardPayload {
+  boardName: string;
+  boardId: string;
+  columnsName: { [x: string]: string | undefined };
 }
 
 const EditBoard = () => {
@@ -29,8 +35,15 @@ const EditBoard = () => {
   } = useForm<IData>({ mode: "all" });
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
-    console.log(data);
-    // dispatch(addNewBoardsAction(data));
+    const { boardName, ...columns } = data;
+
+    const editBoardConfigure: IEditBoardPayload = {
+      boardName,
+      boardId: boardFromStore?._id,
+      columnsName: columns
+    };
+
+    dispatch(editBoardAction(editBoardConfigure));
   };
 
   const arrFromColumns = (columns: IColumn[]) => {

@@ -21,14 +21,15 @@ interface IProps {
 
 const Board: React.FC<IProps> = ({ params }) => {
 
+
   const dispatch = useDispatch();
 
   const columns = useTypedSelector(state => state?.columns?.columns);
 
-
+  const decodeURI = decodeURIComponent(params?.url);
 
   useEffect(() => {
-    if (params?.url) dispatch(getBoardAction({ boardUrl: params?.url }));
+    if (params?.url) dispatch(getBoardAction({ boardUrl: decodeURI }));
 
   }, [dispatch, params]);
 

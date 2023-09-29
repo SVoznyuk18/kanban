@@ -7,10 +7,12 @@ import {
   getBoardFailureAction,
   getColumnsByBoardIAction,
   getTasksByBoardIdAction,
-  getSubtasksByBoardIdAction
+  getSubtasksByBoardIdAction,
+  getAllBoardsAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
-import { getDataByParams } from '@/ApiRoot';
+import { getDataByParams, putData } from '@/ApiRoot';
+import { error } from 'console';
 
 interface IBoardPayload {
   boardUrl: string,
@@ -18,6 +20,11 @@ interface IBoardPayload {
 interface IResponseBoard {
   result: IBoard,
   success: boolean
+}
+interface IEditBoardPayload {
+  boardName: string;
+  boardId: string;
+  columnsName: { [x: string]: string | undefined };
 }
 
 function* workGetBoard(action: PayloadAction<IBoardPayload>) {
@@ -37,6 +44,25 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
   }
 }
 
+function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
+  const boardConfigure = {
+    boardId: action?.payload?.boardId,
+    boardName: action?.payload?.boardName,
+  }
+  try {
+    yield put(getBoardLoadingAction());
+    const { success, result }: IResponseBoard = yield call(putData, `/boards`, { ...boardConfigure });
+    if (success) {
+      yield put(getBoardSuccessAction(result));
+      yield put(getAllBoardsAction());
+    }
+
+  } catch (error) {
+    yield put(getBoardFailureAction(`Failed to fetch board`));
+  }
+}
+
 export function* watchBoard() {
   yield takeLatest('GET_BOARD', workGetBoard)
+  yield takeLatest("EDIT_BOARD", workerEditBoard);
 }

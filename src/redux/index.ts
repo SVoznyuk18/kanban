@@ -3,7 +3,8 @@ import {
   getBoardAction,
   getBoardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction
+  getBoardFailureAction,
+  editBoardAction
 } from './board/board.action';
 
 import {
@@ -59,6 +60,7 @@ export {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
+  editBoardAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,

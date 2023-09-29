@@ -23,10 +23,31 @@ export async function POST(req: NextRequest) {
   const addedBoard = await Board.create({ boardName, url })
 
   if (!addedBoard) {
-    throw Error("Failed to create partner");
+    return NextResponse.json({ success: false, msg: "Failed to Create board" }, {
+      status: 404
+    })
   }
 
   return NextResponse.json({ success: true, result: addedBoard }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}
+
+export async function PUT(req: NextRequest) {
+  const { boardId, boardName } = await req.json();
+  const url = camelCase(boardName);
+  await connectMongoDB();
+  const updatedBoard = await Board.findOneAndUpdate({ _id: boardId }, { boardName, url }, { new: true });
+
+  if (!updatedBoard) {
+    return NextResponse.json({ success: false, msg: "Failed to update board" }, {
+      status: 404
+    })
+  }
+
+  return NextResponse.json({ success: true, result: updatedBoard }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }
