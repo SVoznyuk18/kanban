@@ -10,7 +10,8 @@ import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
 
 interface IData {
-  boardName: string
+  boardName: string;
+  deletedColumnsId: string[];
   [x: string]: string | undefined;
 }
 
@@ -29,7 +30,7 @@ const EditBoard = () => {
   } = useForm<IData>({ mode: "all" });
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
-    const { boardName, ...columns } = data;
+    const { boardName, deletedColumnsId, ...columns } = data;
 
     const editBoardConfigure = {
       boardName,
@@ -38,7 +39,8 @@ const EditBoard = () => {
 
     const editColumnsConfigure = {
       boardId: boardFromStore?._id,
-      columns
+      columns,
+      deletedColumnsId
     }
 
     // dispatch(editBoardAction(editBoardConfigure));

@@ -18,6 +18,7 @@ interface IResponseColumns {
 
 interface IEditColumnsPayload {
   boardId: string;
+  deletedColumnsId: string[];
   columns: { [x: string]: string | undefined };
 }
 
@@ -46,11 +47,10 @@ function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns
 }
 
 function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
-  const { boardId, columns } = action.payload;
+  const { boardId, columns, deletedColumnsId } = action.payload;
 
-  const { success, result }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns });
-
-  console.log('columns', columns)
+  const { success, result }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
+  console.log('result', result)
 }
 
 export function* watchColumns() {

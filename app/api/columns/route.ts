@@ -1,5 +1,6 @@
 
 import { NextResponse, NextRequest } from "next/server"
+import mongoose from "mongoose";
 
 import { connectMongoDB } from "@/LibRoot";
 
@@ -45,16 +46,8 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: NextRequest) {
-  const { boardId, columns } = await req.json();
-
-  const updatedColumns: IColumn[] = [];
+  const { boardId, deletedColumnsId, columns }: { boardId: string; columns: string[], deletedColumnsId: string[] } = await req.json();
   const columnsArr: [string, string][] = Object.entries(columns);
-  const columnsFromDb: IColumn[] = await Column.find().where({ mainBoardId: boardId }).exec();
-  const columnsFromDbId = columnsFromDb.map(column => column?._id.toString());
-
-  const deletedColumnsId = findExtraElement(columnsFromDbId, Object.keys(columns));
-
-  console.log('deletedColumnsId', deletedColumnsId);
 
   if (deletedColumnsId) {
     const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
@@ -63,45 +56,28 @@ export async function PUT(req: NextRequest) {
     }))
   }
 
-  // const deletedColumns = columnsFromDb.map(columnfromDb => columnsArr.filter((column) => column[0] === columnfromDb?._id.toString()));
-  // console.log('deletedColumns', deletedColumns);
-  // console.log('columnsFromDb еуіе', columnsFromDb[0]._id.toString());
+  const updatedColumns: IColumn[] = await Promise.all(columnsArr.map(async (column: [string, string]) => {
+    const isValidObjectId = mongoose.isValidObjectId(column[0]);
+    try {
+      if (isValidObjectId) {
+        const updatedColumn = await Column.findOneAndUpdate({ _id: column[0] }, { columnName: column[1] }, { new: true });
+        return updatedColumn;
+      } else {
+        const newColumn = await Column.create({ columnName: column[1], mainBoardId: boardId });
+        return newColumn;
+      }
+    } catch (error) {
+      console.error('Помилка при оновленні або створенні стовпця:', error);
+    }
+  }));
 
-  // {
-  //   _id: new ObjectId("65114af467d63a9f70120069"),
-  //   columnName: 'Todo',
-  //   mainBoardId: '65114aec67d63a9f70120066',
-  //   createdAt: 2023-09-25T08:55:16.525Z,
-  //   updatedAt: 2023-09-29T18:33:37.530Z,
-  //   __v: 0
-  // },
+  if (!updatedColumns) {
+    throw Error("Failed to edit columns");
+  }
 
-  // columnsArr [
-  //   [ '65114af467d63a9f70120069', 'Todo' ],
-  //   [ '65114af467d63a9f7012006a', 'inProgres' ],
-  //   [ '65114af467d63a9f7012006b', 'Done' ]
-  // ]
-
-  // const deletedColumns = 
-
-  // const updatedColumns = await await Promise.all()
-
-  // await connectMongoDB();
-
-  // const updatedColumns = await Promise.all(columns.map(async (column: string) => {
-  //   const updatedColumn = await Column.findOneAndUpdate({ mainBoardId: boardId }, { column }, { new: true });
-  //   return updatedColumn
-  // }))
-
-  // if (!updatedColumns) {
-  //   return NextResponse.json({ success: false, msg: "Failed to update columns" }, {
-  //     status: 404
-  //   })
-  // }
-
-  // return NextResponse.json({ success: true, result: updatedColumns }, {
-  //   status: 200, headers: {
-  //     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  //   }
-  // })
+  return NextResponse.json({ success: true, result: updatedColumns }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
 }

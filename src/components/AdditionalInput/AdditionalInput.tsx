@@ -13,7 +13,8 @@ interface IValidation {
 }
 
 interface IData {
-  boardName: string
+  boardName: string;
+  deletedColumnsId: string[];
   [x: string]: string | undefined;
 }
 
@@ -50,16 +51,21 @@ const AdditionalInput = <T extends FieldValues>({
 }: IProps<T>) => {
 
   const [additionalInputs, setAdditionalsInputs] = useState<{ _id: string; columnName: string }[]>(columns || []);
+  const [deletedInputs, setDeletedInputs] = useState<string[]>([]);
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     setAdditionalsInputs([...additionalInputs, { _id: `${Date.now()}`, columnName: '' }]);
   }
 
-  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, name: string, elem: number | string) => {
+  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, elem: number | string) => {
     e.preventDefault();
     const filteredInputs = additionalInputs.filter(input => input?._id !== elem);
+    const deletedId = additionalInputs.filter(input => input?._id === elem).map(item => item?._id);
+    setDeletedInputs((prev) => [...prev, ...deletedId]);
+
     unregister(elem as any);
+    setValue('deletedColumnsId', [...deletedInputs, ...deletedId])
     setAdditionalsInputs(filteredInputs);
   }
   useEffect(() => {
@@ -82,7 +88,7 @@ const AdditionalInput = <T extends FieldValues>({
             register={register}
             errorMessage={errors?.[aditionalInput?._id] && errors?.[aditionalInput?._id]?.message?.toString()}
           />
-          <Button onClick={(e) => handleDeleteInput(e, name, aditionalInput?._id)}>
+          <Button onClick={(e) => handleDeleteInput(e, aditionalInput?._id)}>
             <CustomSVG
               width='15px'
               height='15px'
