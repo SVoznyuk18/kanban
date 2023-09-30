@@ -3,7 +3,10 @@ import { NextResponse, NextRequest } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 
+import { findExtraElement } from "@/UtilsRoot";
 import { Column } from '@/ModelsRoot'
+import { IBoard, IColumn } from '@/TypesRoot';
+
 // import { NextApiRequest, NextApiResponse } from "next";
 
 
@@ -44,14 +47,44 @@ export async function POST(req: Request) {
 export async function PUT(req: NextRequest) {
   const { boardId, columns } = await req.json();
 
-  const columnsArr = Object.entries(columns);
-  console.log('columnsArr', columnsArr)
+  const updatedColumns: IColumn[] = [];
+  const columnsArr: [string, string][] = Object.entries(columns);
+  const columnsFromDb: IColumn[] = await Column.find().where({ mainBoardId: boardId }).exec();
+  const columnsFromDbId = columnsFromDb.map(column => column?._id.toString());
+
+  const deletedColumnsId = findExtraElement(columnsFromDbId, Object.keys(columns));
+
+  console.log('deletedColumnsId', deletedColumnsId);
+
+  if (deletedColumnsId) {
+    const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
+      const deletedColumn = await Column.deleteOne({ _id: columnsId });
+      return deletedColumn
+    }))
+  }
+
+  // const deletedColumns = columnsFromDb.map(columnfromDb => columnsArr.filter((column) => column[0] === columnfromDb?._id.toString()));
+  // console.log('deletedColumns', deletedColumns);
+  // console.log('columnsFromDb еуіе', columnsFromDb[0]._id.toString());
+
+  // {
+  //   _id: new ObjectId("65114af467d63a9f70120069"),
+  //   columnName: 'Todo',
+  //   mainBoardId: '65114aec67d63a9f70120066',
+  //   createdAt: 2023-09-25T08:55:16.525Z,
+  //   updatedAt: 2023-09-29T18:33:37.530Z,
+  //   __v: 0
+  // },
 
   // columnsArr [
   //   [ '65114af467d63a9f70120069', 'Todo' ],
   //   [ '65114af467d63a9f7012006a', 'inProgres' ],
   //   [ '65114af467d63a9f7012006b', 'Done' ]
   // ]
+
+  // const deletedColumns = 
+
+  // const updatedColumns = await await Promise.all()
 
   // await connectMongoDB();
 
@@ -66,9 +99,9 @@ export async function PUT(req: NextRequest) {
   //   })
   // }
 
-  return NextResponse.json({ success: true, result: updatedColumns }, {
-    status: 200, headers: {
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    }
-  })
+  // return NextResponse.json({ success: true, result: updatedColumns }, {
+  //   status: 200, headers: {
+  //     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  //   }
+  // })
 }
