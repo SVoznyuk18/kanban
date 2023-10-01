@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const mongoURI: string | undefined = process.env.MONGODB_URI;
+const mongoURI: string = process.env.MONGODB_URI as string;
 
 export const connectMongoDB = async () => {
   try {
     if (!mongoose.connections[0].readyState) {
-      await mongoose.connect('mongodb+srv://svoznyuk18:eWWiCkoAn8itWpS0@cluster0.wauchy2.mongodb.net/kanban_db');
+      await mongoose.connect(mongoURI);
       console.log("MongoDB connected successfully");
     }
     return mongoose.connections[0];

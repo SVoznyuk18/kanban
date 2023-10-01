@@ -66,6 +66,7 @@ const AdditionalInput = <T extends FieldValues>({
     setDeletedInputs((prev) => [...prev, ...deletedId]);
 
     unregister(elem as any);
+    // @ts-ignore
     setValue('deletedColumnsId', [...deletedInputs, ...deletedId])
     setAdditionalsInputs(filteredInputs);
   }
