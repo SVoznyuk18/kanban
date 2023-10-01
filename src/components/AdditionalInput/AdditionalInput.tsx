@@ -14,7 +14,7 @@ interface IValidation {
 
 interface IData {
   boardName: string;
-  deletedColumnsId: string[];
+  deletedColumnsId?: string[];
   [x: string]: string | undefined;
 }
 

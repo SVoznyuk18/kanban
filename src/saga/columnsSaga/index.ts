@@ -6,7 +6,10 @@ import {
   getColumnsByBoardIFailureAction,
   addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction
+  addNewColumnsFailureAction,
+  editColumnsLoadingAction,
+  editColumnsSuccessAction,
+  editColumnsFailureAction,
 } from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
 import { getDataByParams, postData, putData } from '@/ApiRoot';
@@ -18,7 +21,7 @@ interface IResponseColumns {
 
 interface IEditColumnsPayload {
   boardId: string;
-  deletedColumnsId: string[];
+  deletedColumnsId?: string[];
   columns: { [x: string]: string | undefined };
 }
 
@@ -48,9 +51,13 @@ function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns
 
 function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
   const { boardId, columns, deletedColumnsId } = action.payload;
-
-  const { success, result }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
-  console.log('result', result)
+  yield put(editColumnsLoadingAction());
+  try {
+    const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
+    if (success) yield put(editColumnsSuccessAction(result));
+  } catch (error) {
+    yield put(editColumnsFailureAction('failed to edit columns'));
+  }
 }
 
 export function* watchColumns() {

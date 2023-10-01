@@ -11,8 +11,18 @@ import { ModalContent, Title, Form } from './EditBoard.styled';
 
 interface IData {
   boardName: string;
-  deletedColumnsId: string[];
+  deletedColumnsId?: string[];
   [x: string]: string | undefined;
+};
+
+interface IBoardComfigure {
+  boardName: string;
+  boardId: string
+}
+interface IColumnsComfigure {
+  boardId: string;
+  columns: { [x: string]: string | undefined };
+  deletedColumnsId: string[] | undefined;
 }
 
 const EditBoard = () => {
@@ -32,18 +42,17 @@ const EditBoard = () => {
   const onSubmit: SubmitHandler<IData> = async (data) => {
     const { boardName, deletedColumnsId, ...columns } = data;
 
-    const editBoardConfigure = {
+    const editBoardConfigure: IBoardComfigure = {
       boardName,
       boardId: boardFromStore?._id,
     };
 
-    const editColumnsConfigure = {
+    const editColumnsConfigure: IColumnsComfigure = {
       boardId: boardFromStore?._id,
       columns,
       deletedColumnsId
     }
-
-    // dispatch(editBoardAction(editBoardConfigure));
+    dispatch(editBoardAction(editBoardConfigure));
     dispatch(editColumnsAction(editColumnsConfigure));
   };
 

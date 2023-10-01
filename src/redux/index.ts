@@ -27,7 +27,10 @@ import {
   addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
   addNewColumnsFailureAction,
-  editColumnsAction
+  editColumnsAction,
+  editColumnsLoadingAction,
+  editColumnsSuccessAction,
+  editColumnsFailureAction,
 } from './columns/columns.action';
 
 import {
@@ -82,6 +85,9 @@ export {
   addNewColumnsSuccessAction,
   addNewColumnsFailureAction,
   editColumnsAction,
+  editColumnsLoadingAction,
+  editColumnsSuccessAction,
+  editColumnsFailureAction,
 
   addNewTaskAction,
   addNewTaskLoadingAction,

@@ -42,6 +42,18 @@ const columnsSlice = createSlice({
     addNewColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
+    },
+    editColumnsLoading: (state: IColumnsState) => {
+      state.isLoading = true;
+      state.errors = '';
+    },
+    editColumnsSuccess: (state: IColumnsState, { payload }: PayloadAction<IColumn[]>) => {
+      state.isLoading = false;
+      state.columns = payload;
+    },
+    editColumnsFailure: (state: IColumnsState, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.errors = payload;
     }
   }
 });
