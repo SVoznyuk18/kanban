@@ -23,10 +23,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
 
-  const { taskName, description, status, mainBoardId, subTasks } = await req.json();
+  const { taskName, description, status, mainBoardId, columnId, subTasks } = await req.json();
   await connectMongoDB();
-
-  const addedTask = await Task.create({ taskName, description, status, mainBoardId })
+  console.log('columnId', columnId)
+  const addedTask = await Task.create({ taskName, description, status, mainBoardId, columnId })
 
   if (!addedTask) {
     throw Error("Failed to create task");

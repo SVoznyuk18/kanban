@@ -11,7 +11,8 @@ export const taskSchema = new Schema<ISchemaTask>(
     taskName: { type: String, required: true },
     description: { type: String, required: true },
     status: { type: String, required: true },
-    mainBoardId: { type: String, required: true }
+    mainBoardId: { type: String, required: true },
+    columnId: { type: String, required: true },
   },
   {
     timestamps: true,

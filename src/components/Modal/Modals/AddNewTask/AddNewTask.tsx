@@ -34,9 +34,12 @@ const AddNewTask: React.FC = () => {
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
     const { taskName, description, status, ...subTasks } = data;
+    // @ts-ignore
+    const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
 
     const configureTaskData = {
       mainBoardId: board?._id,
+      columnId: filteredColumnBycolumnName[0]._id,
       taskName,
       description,
       status,

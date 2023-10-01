@@ -13,7 +13,8 @@ export interface ITask {
   taskName: string,
   description: string,
   status: string,
-  mainBoardId: string
+  mainBoardId: string,
+  columnId: string,
   createdAt: Date,
   updatedAt: Date
 }

@@ -5,8 +5,8 @@ import mongoose from "mongoose";
 import { connectMongoDB } from "@/LibRoot";
 
 import { findExtraElement } from "@/UtilsRoot";
-import { Column } from '@/ModelsRoot'
-import { IBoard, IColumn } from '@/TypesRoot';
+import { Column, Task } from '@/ModelsRoot'
+import { IBoard, IColumn, ITask } from '@/TypesRoot';
 
 // import { NextApiRequest, NextApiResponse } from "next";
 
@@ -50,10 +50,15 @@ export async function PUT(req: NextRequest) {
   const columnsArr: [string, string][] = Object.entries(columns);
 
   if (deletedColumnsId) {
-    const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
-      const deletedColumn = await Column.deleteOne({ _id: columnsId });
-      return deletedColumn
-    }))
+    try {
+      const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
+        const deletedColumn = await Column.deleteOne({ _id: columnsId });
+        await Task.deleteOne({ columnId: columnsId });
+        return deletedColumn
+      }))
+    } catch (error) {
+      console.error('Помилка при видаленні стовпців', error);
+    }
   }
 
   const updatedColumns: IColumn[] = await Promise.all(columnsArr.map(async (column: [string, string]) => {
@@ -70,6 +75,17 @@ export async function PUT(req: NextRequest) {
       console.error('Помилка при оновленні або створенні стовпця:', error);
     }
   }));
+
+  if (updatedColumns) {
+    const updateTasksPromises = updatedColumns.map(async (updatedColumn) => {
+      const tasks: ITask[] = await Task.find({ columnId: updatedColumn?._id });
+      return Promise.all(tasks.map(async (task) => {
+        await Task.findOneAndUpdate({ _id: task._id }, { status: updatedColumn?.columnName }, { new: true });
+      }));
+    });
+
+    await Promise.all(updateTasksPromises);
+  }
 
   if (!updatedColumns) {
     throw Error("Failed to edit columns");
