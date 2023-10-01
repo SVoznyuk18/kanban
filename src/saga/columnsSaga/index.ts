@@ -10,6 +10,7 @@ import {
   editColumnsLoadingAction,
   editColumnsSuccessAction,
   editColumnsFailureAction,
+  getTasksByBoardIdAction
 } from '@/ReduxRoot';
 import { IBoard, IColumn } from '@/TypesRoot';
 import { getDataByParams, postData, putData } from '@/ApiRoot';
@@ -54,7 +55,14 @@ function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
   yield put(editColumnsLoadingAction());
   try {
     const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
-    if (success) yield put(editColumnsSuccessAction(result));
+    if (success) {
+      yield put(editColumnsSuccessAction(result));
+
+      /////////
+      yield put(getTasksByBoardIdAction({ mainBoardId: boardId })); //get tasks aster apdate columns  
+      ///////////
+    }
+
   } catch (error) {
     yield put(editColumnsFailureAction('failed to edit columns'));
   }

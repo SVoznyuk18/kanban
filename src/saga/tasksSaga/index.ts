@@ -20,6 +20,7 @@ interface ITaskPayload {
   description: string;
   status: string;
   mainBoardId: string;
+  columnId: string;
   subTasks: { [x: string]: string | undefined }
 }
 
@@ -34,12 +35,12 @@ interface IResponseAllTasks {
 }
 
 function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
-  const { taskName, description, status, mainBoardId, subTasks } = action?.payload;
+  const { taskName, description, status, mainBoardId, columnId, subTasks } = action?.payload;
   const subtasksArray = Object.values(subTasks);
 
   try {
     yield put(addNewTaskLoadingAction());
-    const { success, result }: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId });
+    const { success, result }: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId, columnId });
     if (success) {
       yield put(addNewTaskSuccessAction(result));
 
