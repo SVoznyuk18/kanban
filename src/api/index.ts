@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const server = axios.create({
-  baseURL: `http://localhost:3000/api`,
+  baseURL: `${BASE_URL}/api`,
 });
 
 interface ErrorResponse {
