@@ -11,6 +11,7 @@ import { ModalContent, Title, Form } from './EditBoard.styled';
 
 interface IData {
   boardName: string;
+  // @ts-ignore
   deletedColumnsId?: string[];
   [x: string]: string | undefined;
 };
