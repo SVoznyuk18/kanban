@@ -14,5 +14,6 @@ import ClassicInput from './ClassicInput/ClassicInput';
 import AdditionalInput from './AdditionalInput/AdditionalInput';
 import Teaxtarea from './Teaxtarea/Textarea';
 import CustomSelect from './CustomSelect/CustomSelect';
+import DropDownMenu from './DropDownMenu/DropDownMenu';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect };
+export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DropDownMenu };

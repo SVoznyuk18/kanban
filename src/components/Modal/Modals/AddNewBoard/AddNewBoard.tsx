@@ -40,7 +40,7 @@ const AddNewBoard = () => {
     <ModalContent>
       <Title>Add New Board</Title>
       <Form>
-        <ClassicInput<IData>
+        <ClassicInput
           label="Name"
           htmlFor='boardName'
           id='boardName'
@@ -51,7 +51,7 @@ const AddNewBoard = () => {
           validation={{ required: 'Required field', validate: (value: string) => matchBoardname(value) }}
           errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
         />
-        <AdditionalInput<IData>
+        <AdditionalInput
           label="Columns"
           id='columnName'
           type='text'

@@ -83,6 +83,7 @@ export const ControlsSection = styled.div`
 `;
 
 export const EditBoardControl = styled.div`
+position: relative;
 	margin-left: 24px;
 	min-width: 10px;
 	min-height: 21px;
@@ -98,5 +99,30 @@ export const EditBoardControl = styled.div`
 		border: none;
 		border-radius: 100%;
 		background-color: #828FA3;
+	}
+`;
+
+export const MenuList = styled.ul`
+padding: 16px;
+width: 192px;
+	height: 94px;
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: start;
+	row-gap: 16px;
+`;
+
+export const MenuItem = styled.li`
+	width: 100%;
+	color: #828FA3;
+	font-size: 13px;
+	font-weight: 500;
+	list-style-type: none;
+	line-height: 23px;
+	cursor: pointer;
+	&:hover {
+	
+		background-color: #E4EBFA;
 	}
 `;

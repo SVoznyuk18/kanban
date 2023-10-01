@@ -3,7 +3,8 @@ import {
   getBoardAction,
   getBoardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction
+  getBoardFailureAction,
+  editBoardAction
 } from './board/board.action';
 
 import {
@@ -25,7 +26,11 @@ import {
   addNewColumnsAction,
   addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction
+  addNewColumnsFailureAction,
+  editColumnsAction,
+  editColumnsLoadingAction,
+  editColumnsSuccessAction,
+  editColumnsFailureAction,
 } from './columns/columns.action';
 
 import {
@@ -59,6 +64,7 @@ export {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
+  editBoardAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,
@@ -78,6 +84,10 @@ export {
   addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
   addNewColumnsFailureAction,
+  editColumnsAction,
+  editColumnsLoadingAction,
+  editColumnsSuccessAction,
+  editColumnsFailureAction,
 
   addNewTaskAction,
   addNewTaskLoadingAction,
