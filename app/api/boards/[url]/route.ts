@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectMongoDB } from "@/LibRoot";
 
-import { Board } from '@/ModelsRoot';
+import { Board, Subtask, Task, Column } from '@/ModelsRoot';
 
 export async function GET(req: NextRequest) {
 
@@ -24,6 +24,13 @@ export async function DELETE(req: NextRequest) {
   await connectMongoDB();
 
   const deletedBoard = await Board.deleteOne({ _id: boardId });
+
+
+  if (deletedBoard?.deletedCount > 0) {
+    await Column.deleteMany({ mainBoardId: boardId });
+    await Task.deleteMany({ mainBoardId: boardId });
+    await Subtask.deleteMany({ mainBoardId: boardId });
+  }
 
   if (deletedBoard?.deletedCount === 0) {
     return NextResponse.json({ success: false, msg: "Failed to get boards" }, {
