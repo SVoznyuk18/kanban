@@ -21,3 +21,5 @@ export const getAllBoardsLoadingAction = createAction('boards/getAllBoardsLoadin
 export const getAllBoardsSuccessAction = createAction('boards/getAllBoardsSuccess', (boards: Array<IBoard>) => ({ payload: boards }));
 
 export const getAllBoardsFailureAction = createAction('boards/getAllBoardsFailure', (error: string) => ({ payload: { error } }));
+
+export const deletBoardByIdSuccesAction = createAction('boards/deletBoardByIdSucces', (boardId: string) => ({ payload: boardId }));

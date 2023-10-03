@@ -8,7 +8,11 @@ import {
   getColumnsByBoardIAction,
   getTasksByBoardIdAction,
   getSubtasksByBoardIdAction,
-  getAllBoardsAction
+  getAllBoardsAction,
+  deleteBoardLoadingAction,
+  deleteBoardSuccessAction,
+  deleteBoardFailureAction,
+  deletBoardByIdSuccesAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams, putData } from '@/ApiRoot';
@@ -61,7 +65,27 @@ function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
   }
 }
 
-export function* watchBoard() {
-  yield takeLatest('GET_BOARD', workGetBoard)
-  yield takeLatest("EDIT_BOARD", workerEditBoard);
+function* workerDeleteBoard(action: PayloadAction<string>) {
+  const boardId = action?.payload;
+  try {
+    yield put(deleteBoardLoadingAction());
+    // yield call()
+    // if (success) {
+    //   yield put(deleteBoardSuccessAction(result));
+    //   yield put(deletBoardByIdSuccesAction(result));
+    // }
+
+  } catch (error) {
+    yield put(deleteBoardFailureAction(`Failed to delete board`));
+  }
 }
+
+export function* watchBoard() {
+  yield takeLatest('GET_BOARD', workGetBoard);
+  yield takeLatest("EDIT_BOARD", workerEditBoard);
+  yield takeLatest("DELETE_BOARD", workerDeleteBoard);
+}
+
+// deleteBoardLoadingAction,
+// deleteBoardSuccessAction,
+// deleteBoardFailureAction

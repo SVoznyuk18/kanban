@@ -4,7 +4,11 @@ import {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
-  editBoardAction
+  editBoardAction,
+  deleteBoardAction,
+  deleteBoardLoadingAction,
+  deleteBoardSuccessAction,
+  deleteBoardFailureAction
 } from './board/board.action';
 
 import {
@@ -15,7 +19,8 @@ import {
   getAllBoardsAction,
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction
+  getAllBoardsFailureAction,
+  deletBoardByIdSuccesAction
 } from './boards/boards.actions';
 
 import {
@@ -65,6 +70,10 @@ export {
   getBoardSuccessAction,
   getBoardFailureAction,
   editBoardAction,
+  deleteBoardAction,
+  deleteBoardLoadingAction,
+  deleteBoardSuccessAction,
+  deleteBoardFailureAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,
@@ -75,6 +84,7 @@ export {
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
   getAllBoardsFailureAction,
+  deletBoardByIdSuccesAction,
 
   getColumnsByBoardIAction,
   getColumnsByBoardILoadingAction,

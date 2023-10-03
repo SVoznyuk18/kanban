@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { ModalContext } from '@/LibRoot';
+import { deleteBoardAction } from '@/ReduxRoot';
 import { ClassicButton } from "@/ComponentsRoot";
 import { ModalContent, Title, Description, ButtonsWrapper } from './DeleteBoard.styled';
 
@@ -13,14 +14,14 @@ const DeleteBoard: React.FC = () => {
   const board = useTypedSelector(state => state?.board?.board);
 
   const handleDeleteBoard = () => {
-    // dispatch()
+    dispatch(deleteBoardAction(board?._id));
   }
 
   return (
     <ModalContent>
       <Title>Add New Task</Title>
       <Description>
-        Are you sure you want to delete the ‘Platform Launch’ board? This action will remove all columns and tasks and cannot be reversed.
+        `Are you sure you want to delete the &lsquo;${board?.boardName}&lsquo; This action will remove all columns and tasks and cannot be reversed.`
       </Description>
       <ButtonsWrapper>
         <ClassicButton
