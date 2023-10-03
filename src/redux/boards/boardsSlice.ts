@@ -40,13 +40,7 @@ const boardsSlice = createSlice({
     getAllBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
-    },
-    deletBoardByIdSucces: (state: IBoardsState, { payload }: PayloadAction<string>) => {
-      state.isLoading = false;
-      const deletedBoardId = payload;
-      const filteredBoards = state.boards.filter(board => board?._id !== deletedBoardId);
-      state.boards = filteredBoards;
-    },
+    }
   }
 });
 

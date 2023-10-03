@@ -24,7 +24,6 @@ export const deleteBoardAction = createAction("DELETE_BOARD", (boardId: string) 
 
 export const deleteBoardLoadingAction = createAction('board/deleteBoardLoading');
 
-export const deleteBoardSuccessAction = createAction("board/deleteBoardSuccess", (boardId: string) => ({ payload: boardId }));
+export const deleteBoardSuccessAction = createAction("board/deleteBoardSuccess");
 
 export const deleteBoardFailureAction = createAction('board/deleteBoardFailure', (error: string) => ({ payload: error }));
-

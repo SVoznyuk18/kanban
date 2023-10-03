@@ -12,11 +12,9 @@ import {
   deleteBoardLoadingAction,
   deleteBoardSuccessAction,
   deleteBoardFailureAction,
-  deletBoardByIdSuccesAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
-import { getDataByParams, putData } from '@/ApiRoot';
-import { error } from 'console';
+import { getDataByParams, putData, deleteData } from '@/ApiRoot';
 
 interface IBoardPayload {
   boardUrl: string,
@@ -48,10 +46,6 @@ function* workGetBoard(action: PayloadAction<IBoardPayload>) {
 }
 
 function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
-  // const boardConfigure = {
-  //   boardId: action?.payload?.boardId,
-  //   boardName: action?.payload?.boardName,
-  // }
   try {
     yield put(getBoardLoadingAction());
     const { success, result }: IResponseBoard = yield call(putData, `/boards`, { ...action?.payload });
@@ -69,12 +63,10 @@ function* workerDeleteBoard(action: PayloadAction<string>) {
   const boardId = action?.payload;
   try {
     yield put(deleteBoardLoadingAction());
-    // yield call()
-    // if (success) {
-    //   yield put(deleteBoardSuccessAction(result));
-    //   yield put(deletBoardByIdSuccesAction(result));
-    // }
-
+    const { success, result }: { success: boolean, result: string } = yield call(deleteData, `/boards/${boardId}`, boardId);
+    if (success) {
+      yield put(deleteBoardSuccessAction());
+    }
   } catch (error) {
     yield put(deleteBoardFailureAction(`Failed to delete board`));
   }
@@ -85,7 +77,3 @@ export function* watchBoard() {
   yield takeLatest("EDIT_BOARD", workerEditBoard);
   yield takeLatest("DELETE_BOARD", workerDeleteBoard);
 }
-
-// deleteBoardLoadingAction,
-// deleteBoardSuccessAction,
-// deleteBoardFailureAction

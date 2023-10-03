@@ -1,5 +1,6 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useDispatch } from "react-redux";
+import { redirect } from 'next/navigation'
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { ModalContext } from '@/LibRoot';
@@ -15,7 +16,13 @@ const DeleteBoard: React.FC = () => {
 
   const handleDeleteBoard = () => {
     dispatch(deleteBoardAction(board?._id));
-  }
+  };
+
+  useEffect(() => {
+    if (board?._id === undefined) {
+      redirect('/');
+    }
+  }, [board])
 
   return (
     <ModalContent>

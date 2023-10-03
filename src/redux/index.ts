@@ -19,8 +19,7 @@ import {
   getAllBoardsAction,
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction,
-  deletBoardByIdSuccesAction
+  getAllBoardsFailureAction
 } from './boards/boards.actions';
 
 import {
@@ -84,7 +83,6 @@ export {
   getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
   getAllBoardsFailureAction,
-  deletBoardByIdSuccesAction,
 
   getColumnsByBoardIAction,
   getColumnsByBoardILoadingAction,
