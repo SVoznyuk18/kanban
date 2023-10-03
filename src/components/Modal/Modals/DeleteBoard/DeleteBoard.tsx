@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { useDispatch } from "react-redux";
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { ModalContext } from '@/LibRoot';
@@ -12,6 +12,7 @@ const DeleteBoard: React.FC = () => {
 
   const { handleCloseModal } = useContext(ModalContext);
   const dispatch = useDispatch();
+  const { push } = useRouter();
   const board = useTypedSelector(state => state?.board?.board);
 
   const handleDeleteBoard = () => {
@@ -20,7 +21,8 @@ const DeleteBoard: React.FC = () => {
 
   useEffect(() => {
     if (board?._id === undefined) {
-      redirect('/');
+      push('/');
+      handleCloseModal();
     }
   }, [board])
 

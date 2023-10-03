@@ -12,6 +12,7 @@ import {
   deleteBoardLoadingAction,
   deleteBoardSuccessAction,
   deleteBoardFailureAction,
+  deletBoardByIdSuccesAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams, putData, deleteData } from '@/ApiRoot';
@@ -66,6 +67,7 @@ function* workerDeleteBoard(action: PayloadAction<string>) {
     const { success, result }: { success: boolean, result: string } = yield call(deleteData, `/boards/${boardId}`, boardId);
     if (success) {
       yield put(deleteBoardSuccessAction());
+      yield put(deletBoardByIdSuccesAction(boardId));
     }
   } catch (error) {
     yield put(deleteBoardFailureAction(`Failed to delete board`));
