@@ -19,3 +19,11 @@ export const getBoardSuccessAction = createAction('board/getBoardSuccess', (boar
 export const getBoardFailureAction = createAction('board/getBoardFailure', (error: string) => ({ payload: error }));
 
 export const editBoardAction = createAction("EDIT_BOARD", (boardPayload: IEditBoardPayload) => ({ payload: boardPayload }));
+
+export const deleteBoardAction = createAction("DELETE_BOARD", (boardId: string) => ({ payload: boardId }));
+
+export const deleteBoardLoadingAction = createAction('board/deleteBoardLoading');
+
+export const deleteBoardSuccessAction = createAction("board/deleteBoardSuccess");
+
+export const deleteBoardFailureAction = createAction('board/deleteBoardFailure', (error: string) => ({ payload: error }));

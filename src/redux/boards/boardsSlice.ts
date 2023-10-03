@@ -40,7 +40,7 @@ const boardsSlice = createSlice({
     getAllBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errors = payload;
-    },
+    }
   }
 });
 

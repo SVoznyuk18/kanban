@@ -11,11 +11,11 @@ export const SVGPath = {
 interface IBrakePoints {
 	MOBILE: 576,
 	TABLET: 992,
-	DESKTOP: 1024
+	DESKTOP: 1200
 }
 
 export const brakePoints: IBrakePoints = {
 	MOBILE: 576,
 	TABLET: 992,
-	DESKTOP: 1024
+	DESKTOP: 1200
 }

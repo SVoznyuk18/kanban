@@ -54,9 +54,9 @@ export const putData = async<T>(url: string, post): Promise<T | undefined> => {
   }
 }
 
-export const deleteData = async<T>(url: string): Promise<T | undefined> => {
+export const deleteData = async<T>(url: string, id: string): Promise<T | undefined> => {
   try {
-    const response: AxiosResponse<T> = await server.delete(url);
+    const response: AxiosResponse<T> = await server.delete(url, { params: { id } });
     return response.data;
     //@ts-ignore
 

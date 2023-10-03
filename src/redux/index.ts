@@ -4,7 +4,11 @@ import {
   getBoardLoadingAction,
   getBoardSuccessAction,
   getBoardFailureAction,
-  editBoardAction
+  editBoardAction,
+  deleteBoardAction,
+  deleteBoardLoadingAction,
+  deleteBoardSuccessAction,
+  deleteBoardFailureAction
 } from './board/board.action';
 
 import {
@@ -65,6 +69,10 @@ export {
   getBoardSuccessAction,
   getBoardFailureAction,
   editBoardAction,
+  deleteBoardAction,
+  deleteBoardLoadingAction,
+  deleteBoardSuccessAction,
+  deleteBoardFailureAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,
