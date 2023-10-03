@@ -1,6 +1,6 @@
 import { brakePoints } from "@/ConstantsRoot";
 
-type TypeWidth = 576 | 992 | 1024;
+type TypeWidth = 576 | 992 | 1200;
 
 const mediaQueryMax = (width: TypeWidth): string => `@media screen and (max-width: ${width - 1}px)`;
 

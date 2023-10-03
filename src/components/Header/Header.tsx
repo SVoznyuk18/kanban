@@ -73,7 +73,7 @@ const Header = () => {
 					>
 						<MenuList>
 							<MenuItem onClick={() => handleOpenModal('EditBoard')}>Edit Board</MenuItem>
-							<MenuItem>Delete Board</MenuItem>
+							<MenuItem onClick={() => handleOpenModal('DeleteBoard')}>Delete Board</MenuItem>
 						</MenuList>
 					</DropDownMenu>
 				</ControlsSection>
