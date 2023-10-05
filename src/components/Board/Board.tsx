@@ -2,16 +2,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 
-
-import { ClassicButton } from "@/ComponentsRoot";
-
 import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction } from '@/ReduxRoot';
 import { IColumn } from '@/TypesRoot';
-
+import { ClassicButton, Column } from "@/ComponentsRoot";
 import { BoardWrapper } from './Board.styled';
-
-import { Column } from '@/ComponentsRoot';
 
 interface IProps {
   params: {
@@ -20,19 +15,13 @@ interface IProps {
 }
 
 const Board: React.FC<IProps> = ({ params }) => {
-
-
   const dispatch = useDispatch();
-
   const columns = useTypedSelector(state => state?.columns?.columns);
-
   const decodeURI = decodeURIComponent(params?.url);
 
   useEffect(() => {
     if (params?.url) dispatch(getBoardAction({ boardUrl: decodeURI }));
-
   }, [dispatch, params]);
-
 
   return (
     <BoardWrapper>

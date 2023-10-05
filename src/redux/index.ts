@@ -1,14 +1,12 @@
 import store from "./store";
 import {
   getBoardAction,
-  getBoardLoadingAction,
+  boardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction,
+  boardFailureAction,
   editBoardAction,
   deleteBoardAction,
-  deleteBoardLoadingAction,
   deleteBoardSuccessAction,
-  deleteBoardFailureAction
 } from './board/board.action';
 
 import {
@@ -66,14 +64,12 @@ export {
   store,
 
   getBoardAction,
-  getBoardLoadingAction,
+  boardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction,
+  boardFailureAction,
   editBoardAction,
   deleteBoardAction,
-  deleteBoardLoadingAction,
   deleteBoardSuccessAction,
-  deleteBoardFailureAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,

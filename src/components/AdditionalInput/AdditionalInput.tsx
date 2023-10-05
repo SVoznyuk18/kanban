@@ -15,23 +15,22 @@ interface IValidation {
 interface IData {
   boardName: string;
   // @ts-ignore
-  deletedColumnsId?: string[];
+  deletedColumnsId: string[];
   [x: string]: string | undefined;
 }
 
 type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
 
 interface IProps<T extends FieldValues> {
-
   label?: string;
   id?: string;
-  type?: string;
+  type: string;
   name: Path<T> | string;
   register: UseFormRegister<T>;
   validation: IValidation;
-  setValue?: UseFormSetValue<IData>;
+  setValue: UseFormSetValue<IData>;
   unregister: UseFormUnregister<T>;
-  columns?: { _id: string; columnName: string }[] | undefined;
+  columns: { _id: string; columnName: string }[];
   errorMessage?: string;
   errors: FieldErrors;
   buttonName: string;
@@ -53,6 +52,7 @@ const AdditionalInput = <T extends FieldValues>({
 
   const [additionalInputs, setAdditionalsInputs] = useState<{ _id: string; columnName: string }[]>(columns || []);
   const [deletedInputs, setDeletedInputs] = useState<string[]>([]);
+  console.log('additionalInputs', additionalInputs)
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -66,8 +66,7 @@ const AdditionalInput = <T extends FieldValues>({
     setDeletedInputs((prev) => [...prev, ...deletedId]);
 
     unregister(elem as any);
-    // @ts-ignore
-    setValue('deletedColumnsId', [...deletedInputs, ...deletedId])
+    setValue('deletedColumnsId', [...deletedInputs, ...deletedId]);
     setAdditionalsInputs(filteredInputs);
   }
   useEffect(() => {

@@ -17,28 +17,21 @@ const boardSlice = createSlice({
   name: 'board',
   initialState: boardInitialState,
   reducers: {
-    getBoardLoading: (state: IBoartState) => {
+    boardLoading: (state: IBoartState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    getBoardSuccess: (state: IBoartState, { payload: board }: PayloadAction<IBoard>) => {
+    boardFailure: (state: IBoartState, { payload }: PayloadAction<{ errorMessage: string }>) => {
+      state.errors = payload?.errorMessage;
+    },
+    getBoardSuccess: (state: IBoartState, { payload }: PayloadAction<{ board: IBoard }>) => {
       state.isLoading = false;
-      state.board = board
-    },
-    getBoardFailure: (state: IBoartState, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
-    },
-    deleteBoardLoading: (state: IBoartState) => {
-      state.isLoading = true;
-      state.errors = '';
+      state.board = payload?.board;
     },
     deleteBoardSuccess: (state: IBoartState) => {
       state.isLoading = false;
       state.board = {}
-    },
-    deleteBoardFailure: (state: IBoartState, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
-    },
+    }
   }
 });
 
