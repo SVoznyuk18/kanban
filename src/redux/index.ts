@@ -21,17 +21,13 @@ import {
 
 import {
   getColumnsByBoardIAction,
-  getColumnsByBoardILoadingAction,
+  columnsLoadingAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction,
+  columnsFailureAction,
   addNewColumnsAction,
-  addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction,
   editColumnsAction,
-  editColumnsLoadingAction,
   editColumnsSuccessAction,
-  editColumnsFailureAction,
 } from './columns/columns.action';
 
 import {
@@ -78,17 +74,13 @@ export {
   deletBoardByIdSuccesAction,
 
   getColumnsByBoardIAction,
-  getColumnsByBoardILoadingAction,
+  columnsLoadingAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction,
+  columnsFailureAction,
   addNewColumnsAction,
-  addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction,
   editColumnsAction,
-  editColumnsLoadingAction,
   editColumnsSuccessAction,
-  editColumnsFailureAction,
 
   addNewTaskAction,
   addNewTaskLoadingAction,

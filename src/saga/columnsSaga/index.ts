@@ -1,18 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
-  getColumnsByBoardILoadingAction,
+  columnsLoadingAction,
+  columnsFailureAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction,
-  addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction,
-  editColumnsLoadingAction,
   editColumnsSuccessAction,
-  editColumnsFailureAction,
   getTasksByBoardIdAction
 } from '@/ReduxRoot';
-import { IBoard, IColumn } from '@/TypesRoot';
+import { IColumn } from '@/TypesRoot';
 import { getDataByParams, postData, putData } from '@/ApiRoot';
 
 interface IResponseColumns {
@@ -29,30 +25,30 @@ interface IEditColumnsPayload {
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
   const { mainBoardId } = action.payload;
   try {
-    yield put(getColumnsByBoardILoadingAction());
+    yield put(columnsLoadingAction());
     const { success, result } = yield call(getDataByParams, `/columns`, { mainBoardId });
     if (success) {
       yield put(getColumnsByBoardISuccessAction(result));
     }
   } catch (error) {
-    yield put(getColumnsByBoardIFailureAction(`Failed to fetch columns by mainBoardId ${mainBoardId}`));
+    yield put(columnsFailureAction({ errorMessage: `Failed to fetch columns by mainBoardId ${mainBoardId}` }));
   }
 }
 
 function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns: string[] }>) {
   const { mainBoardId, columns } = action.payload;
   try {
-    yield put(addNewColumnsLoadingAction());
+    yield put(columnsLoadingAction());
     const { result, success }: IResponseColumns = yield call(postData, '/columns', { mainBoardId, columns });
     if (success) yield put(addNewColumnsSuccessAction(result));
   } catch (error) {
-    yield put(addNewColumnsFailureAction(`Failed to create New columns to mainBoardId ${mainBoardId}`));
+    yield put(columnsFailureAction({ errorMessage: `Failed to create New columns to mainBoardId ${mainBoardId}` }));
   }
 }
 
 function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
   const { boardId, columns, deletedColumnsId } = action.payload;
-  yield put(editColumnsLoadingAction());
+  yield put(columnsLoadingAction());
   try {
     const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
     if (success) {
@@ -64,7 +60,7 @@ function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
     }
 
   } catch (error) {
-    yield put(editColumnsFailureAction('failed to edit columns'));
+    yield put(columnsFailureAction({ errorMessage: `failed to edit columns` }));
   }
 }
 

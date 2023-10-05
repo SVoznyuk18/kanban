@@ -17,7 +17,6 @@ interface IFailure {
   errorMessage: string
 }
 
-
 const boardsSlice = createSlice({
   name: 'boards',
   initialState: boardsInitialState,
