@@ -3,8 +3,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from '@/UtilsRoot';
 
-import { IBoard, IColumn } from '@/TypesRoot';
-import { addNewBoardsAction, editBoardAction, editColumnsAction } from '@/ReduxRoot'
+import { IColumn } from '@/TypesRoot';
+import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
@@ -12,8 +12,8 @@ import { ModalContent, Title, Form } from './EditBoard.styled';
 interface IData {
   boardName: string;
   // @ts-ignore
-  deletedColumnsId?: string[];
-  [x: string]: string | undefined;
+  deletedColumnsId: string[];
+  [x: string]: string;
 };
 
 interface IBoardComfigure {
@@ -22,12 +22,11 @@ interface IBoardComfigure {
 }
 interface IColumnsComfigure {
   boardId: string;
-  columns: { [x: string]: string | undefined };
-  deletedColumnsId: string[] | undefined;
+  columns: { [x: string]: string };
+  deletedColumnsId: string[];
 }
 
 const EditBoard = () => {
-
   const dispatch = useDispatch();
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
@@ -37,7 +36,7 @@ const EditBoard = () => {
     unregister,
     handleSubmit,
     setValue,
-    formState: { errors }
+    formState: { errors },
   } = useForm<IData>({ mode: "all" });
 
   const onSubmit: SubmitHandler<IData> = async (data) => {
@@ -53,7 +52,7 @@ const EditBoard = () => {
       columns,
       deletedColumnsId
     }
-    dispatch(editBoardAction(editBoardConfigure));
+    dispatch(editBoardAction({ editBoardConfigure }));
     dispatch(editColumnsAction(editColumnsConfigure));
   };
 
@@ -88,6 +87,7 @@ const EditBoard = () => {
           register={register}
           unregister={unregister}
           columns={arrFromColumns(columnsFromStore)}
+          // @ts-ignore
           setValue={setValue}
           validation={{ required: 'Required field' }}
           errors={errors}

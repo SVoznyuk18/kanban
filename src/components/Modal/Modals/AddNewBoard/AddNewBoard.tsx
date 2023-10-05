@@ -11,7 +11,7 @@ import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 interface IData {
   boardName: string
-  [x: string]: string | undefined;
+  [x: string]: string;
 }
 
 const AddNewBoard = () => {
@@ -23,6 +23,7 @@ const AddNewBoard = () => {
     register,
     unregister,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<IData>({ mode: "all" });
 
@@ -59,6 +60,8 @@ const AddNewBoard = () => {
           register={register}
           unregister={unregister}
           validation={{ required: 'Required field' }}
+          // @ts-ignore
+          setValue={setValue}
           errors={errors}
           buttonName='Add new column'
         />

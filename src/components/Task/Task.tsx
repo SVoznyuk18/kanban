@@ -17,7 +17,7 @@ interface ITaskProps {
 
 const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
 
-  const subtasks = useTypedSelector(state => state?.subtasks?.subtasks);
+  const { subtasks } = useTypedSelector(state => state?.subtasks);
 
   const countDoneSubTasks = (subtasks: ISubtask[]): number => {
     let count: number = 0;

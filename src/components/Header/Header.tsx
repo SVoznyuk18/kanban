@@ -20,8 +20,8 @@ const Header = () => {
 
 	const pathname = usePathname()
 
-	const board = useTypedSelector(state => state?.board?.board);
-	const columns = useTypedSelector(state => state?.columns?.columns);
+	const { board } = useTypedSelector(state => state?.board);
+	const { columns } = useTypedSelector(state => state?.columns);
 
 	return (
 		<HeaderSection>

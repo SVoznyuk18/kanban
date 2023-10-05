@@ -3,12 +3,10 @@ import { isEmpty } from 'lodash';
 import { PayloadAction } from "@reduxjs/toolkit";
 
 import {
-  addNewTaskLoadingAction,
+  taskLoadingAction,
+  taskFailureAction,
   addNewTaskSuccessAction,
-  addNewTaskFailureAction,
-  getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
-  getTasksByBoardIdFailureAction,
   addNewSubtasksAction
 } from '@/ReduxRoot';
 
@@ -21,7 +19,7 @@ interface ITaskPayload {
   status: string;
   mainBoardId: string;
   columnId: string;
-  subTasks: { [x: string]: string | undefined }
+  subTasks: { [x: string]: string }
 }
 
 interface IResponseTask {
@@ -39,7 +37,7 @@ function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
   const subtasksArray = Object.values(subTasks);
 
   try {
-    yield put(addNewTaskLoadingAction());
+    yield put(taskLoadingAction());
     const { success, result }: IResponseTask = yield call(postData, '/tasks', { taskName, description, status, mainBoardId, columnId });
     if (success) {
       yield put(addNewTaskSuccessAction(result));
@@ -54,18 +52,18 @@ function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
       }
     }
   } catch (error) {
-    yield put(addNewTaskFailureAction(`Failed add task ${taskName}`));
+    yield put(taskFailureAction({ errorMessage: `Failed add task ${taskName}` }));
   }
 }
 
 function* workGetTasksByBoardId(action: PayloadAction<{ mainBoardId: string }>) {
   const { mainBoardId } = action?.payload;
   try {
-    yield put(getTasksByBoardIdLoadingAction());
+    yield put(taskLoadingAction());
     const { success, result }: IResponseAllTasks = yield call(getDataByParams, `/tasks`, { mainBoardId });
     if (success) yield put(getTasksByBoardIdSuccessAction(result));
   } catch (error) {
-    yield put(getTasksByBoardIdFailureAction(`Failed to fetch tasks by mainBoardId ${mainBoardId}`));
+    yield put(taskFailureAction({ errorMessage: `Failed to fetch tasks by mainBoardId ${mainBoardId}` }));
   }
 }
 

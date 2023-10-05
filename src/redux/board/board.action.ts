@@ -1,29 +1,22 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
-type BoardUrlPayload = {
-  boardUrl: string;
-};
-
 interface IEditBoardPayload {
   boardName: string;
   boardId: string;
 }
 
-export const getBoardAction = createAction<BoardUrlPayload>('GET_BOARD');
+interface IFailure {
+  errorMessage: string
+}
 
-export const getBoardLoadingAction = createAction('board/getBoardLoading');
 
-export const getBoardSuccessAction = createAction('board/getBoardSuccess', (board: IBoard) => ({ payload: board }));
+export const boardLoadingAction = createAction('board/boardLoading');
+export const boardFailureAction = createAction('board/boardFailure', (error: IFailure) => ({ payload: error }));
+export const getBoardAction = createAction('GET_BOARD', (boardUrl: { boardUrl: string }) => ({ payload: boardUrl }));
+export const getBoardSuccessAction = createAction('board/getBoardSuccess', (board: { board: IBoard }) => ({ payload: board }));
 
-export const getBoardFailureAction = createAction('board/getBoardFailure', (error: string) => ({ payload: error }));
+export const editBoardAction = createAction("EDIT_BOARD", (editBoardConfigure: { editBoardConfigure: IEditBoardPayload }) => ({ payload: editBoardConfigure }));
 
-export const editBoardAction = createAction("EDIT_BOARD", (boardPayload: IEditBoardPayload) => ({ payload: boardPayload }));
-
-export const deleteBoardAction = createAction("DELETE_BOARD", (boardId: string) => ({ payload: boardId }));
-
-export const deleteBoardLoadingAction = createAction('board/deleteBoardLoading');
-
+export const deleteBoardAction = createAction("DELETE_BOARD", (boardId: { boardId: string }) => ({ payload: boardId }));
 export const deleteBoardSuccessAction = createAction("board/deleteBoardSuccess");
-
-export const deleteBoardFailureAction = createAction('board/deleteBoardFailure', (error: string) => ({ payload: error }));

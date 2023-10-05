@@ -2,43 +2,40 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
 export interface IBoartState {
-  board: IBoard | {},
+  board: IBoard,
   isLoading: boolean,
   errors: string
 };
 
 const boardInitialState = {
-  board: {},
+  board: {} as IBoard,
   isLoading: false,
   errors: ''
 };
+
+interface IFailure {
+  errorMessage: string
+}
 
 const boardSlice = createSlice({
   name: 'board',
   initialState: boardInitialState,
   reducers: {
-    getBoardLoading: (state: IBoartState) => {
+    boardLoading: (state: IBoartState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    getBoardSuccess: (state: IBoartState, { payload: board }: PayloadAction<IBoard>) => {
+    boardFailure: (state: IBoartState, { payload }: PayloadAction<IFailure>) => {
+      state.errors = payload?.errorMessage;
+    },
+    getBoardSuccess: (state: IBoartState, { payload }: PayloadAction<{ board: IBoard }>) => {
       state.isLoading = false;
-      state.board = board
-    },
-    getBoardFailure: (state: IBoartState, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
-    },
-    deleteBoardLoading: (state: IBoartState) => {
-      state.isLoading = true;
-      state.errors = '';
+      state.board = payload?.board;
     },
     deleteBoardSuccess: (state: IBoartState) => {
       state.isLoading = false;
-      state.board = {}
-    },
-    deleteBoardFailure: (state: IBoartState, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
-    },
+      state.board = {} as IBoard
+    }
   }
 });
 

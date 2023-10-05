@@ -2,23 +2,19 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
 
 import {
-  getBoardLoadingAction,
+  boardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction,
+  boardFailureAction,
   getColumnsByBoardIAction,
   getTasksByBoardIdAction,
   getSubtasksByBoardIdAction,
   getAllBoardsAction,
-  deleteBoardLoadingAction,
   deleteBoardSuccessAction,
-  deleteBoardFailureAction,
+  deletBoardByIdSuccesAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { getDataByParams, putData, deleteData } from '@/ApiRoot';
 
-interface IBoardPayload {
-  boardUrl: string,
-}
 interface IResponseBoard {
   result: IBoard,
   success: boolean
@@ -28,47 +24,51 @@ interface IEditBoardPayload {
   boardId: string;
 }
 
-function* workGetBoard(action: PayloadAction<IBoardPayload>) {
+function* workGetBoard(action: PayloadAction<{ boardUrl: string }>) {
   const { boardUrl } = action?.payload;
 
   try {
-    yield put(getBoardLoadingAction());
+    yield put(boardLoadingAction());
     const { success, result }: IResponseBoard = yield call(getDataByParams, `/boards/${boardUrl}`, { boardUrl });
     if (success) {
-      yield put(getBoardSuccessAction(result));
+      yield put(getBoardSuccessAction({ board: result }));
       yield put(getColumnsByBoardIAction({ mainBoardId: result?._id }));
       yield put(getTasksByBoardIdAction({ mainBoardId: result?._id }));
       yield put(getSubtasksByBoardIdAction({ mainBoardId: result?._id }));
     }
   } catch (error) {
-    yield put(getBoardFailureAction(`Failed to fetch board ${boardUrl}`));
+    yield put(boardFailureAction({ errorMessage: `Failed to fetch board ${boardUrl}` }));
   }
 }
 
-function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
+function* workerEditBoard(action: PayloadAction<{ editBoardConfigure: IEditBoardPayload }>) {
+  const { editBoardConfigure } = action?.payload;
+
   try {
-    yield put(getBoardLoadingAction());
-    const { success, result }: IResponseBoard = yield call(putData, `/boards`, { ...action?.payload });
+    yield put(boardLoadingAction());
+    const { success, result }: IResponseBoard = yield call(putData, `/boards`, editBoardConfigure);
     if (success) {
-      yield put(getBoardSuccessAction(result));
+      yield put(getBoardSuccessAction({ board: result }));
       yield put(getAllBoardsAction());
     }
 
   } catch (error) {
-    yield put(getBoardFailureAction(`Failed to fetch board`));
+    yield put(boardFailureAction({ errorMessage: `Failed to fetch board` }));
   }
 }
 
-function* workerDeleteBoard(action: PayloadAction<string>) {
-  const boardId = action?.payload;
+function* workerDeleteBoard(action: PayloadAction<{ boardId: string }>) {
+  const { boardId } = action?.payload;
+
   try {
-    yield put(deleteBoardLoadingAction());
+    yield put(boardLoadingAction());
     const { success, result }: { success: boolean, result: string } = yield call(deleteData, `/boards/${boardId}`, boardId);
     if (success) {
       yield put(deleteBoardSuccessAction());
+      yield put(deletBoardByIdSuccesAction(boardId));
     }
   } catch (error) {
-    yield put(deleteBoardFailureAction(`Failed to delete board`));
+    yield put(boardFailureAction({ errorMessage: `Failed to delete board` }));
   }
 }
 

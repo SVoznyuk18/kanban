@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
 
   const { taskName, description, status, mainBoardId, columnId, subTasks } = await req.json();
   await connectMongoDB();
-  console.log('columnId', columnId)
   const addedTask = await Task.create({ taskName, description, status, mainBoardId, columnId })
 
   if (!addedTask) {

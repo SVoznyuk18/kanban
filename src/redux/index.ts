@@ -1,121 +1,95 @@
-import store from "./store";
 import {
   getBoardAction,
-  getBoardLoadingAction,
+  boardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction,
+  boardFailureAction,
   editBoardAction,
   deleteBoardAction,
-  deleteBoardLoadingAction,
   deleteBoardSuccessAction,
-  deleteBoardFailureAction
 } from './board/board.action';
 
 import {
   addNewBoardsAction,
-  addNewBoardsLoadingAction,
+  boardsLoadingAction,
   addNewBoardsSuccessAction,
-  addNewBoardsFailureAction,
   getAllBoardsAction,
-  getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction
+  boardsFailureAction,
+  deletBoardByIdSuccesAction
 } from './boards/boards.actions';
 
 import {
   getColumnsByBoardIAction,
-  getColumnsByBoardILoadingAction,
+  columnsLoadingAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction,
+  columnsFailureAction,
   addNewColumnsAction,
-  addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction,
   editColumnsAction,
-  editColumnsLoadingAction,
   editColumnsSuccessAction,
-  editColumnsFailureAction,
 } from './columns/columns.action';
 
 import {
   addNewTaskAction,
-  addNewTaskLoadingAction,
+  taskLoadingAction,
   addNewTaskSuccessAction,
-  addNewTaskFailureAction,
   getTasksByBoardIdAction,
-  getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
-  getTasksByBoardIdFailureAction
+  taskFailureAction
 } from './tasks/tasks.action';
 
 import {
   addNewSubtasksAction,
-  addNewSubtaskLoadingAction,
+  subtaskLoadingAction,
   addNewSubtaskSuccessAction,
-  addNewSubtaskFailureAction,
+  subtaskFailureAction,
   getSubtasksByBoardIdAction,
-  getSubtasksByBoardIdLoadingAction,
   getSubtasksByBoardIdSuccessAction,
-  getSubtasksByBoardIdFailureAction
 } from './subtasks/subtasks.actions';
 
-import RootState from './root-reducer';
+import { store } from './store';
 
 export {
   store,
 
   getBoardAction,
-  getBoardLoadingAction,
+  boardLoadingAction,
   getBoardSuccessAction,
-  getBoardFailureAction,
+  boardFailureAction,
   editBoardAction,
   deleteBoardAction,
-  deleteBoardLoadingAction,
   deleteBoardSuccessAction,
-  deleteBoardFailureAction,
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,
-  addNewBoardsFailureAction,
-  addNewBoardsLoadingAction,
-
+  boardsFailureAction,
+  boardsLoadingAction,
   getAllBoardsAction,
-  getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction,
+  deletBoardByIdSuccesAction,
 
   getColumnsByBoardIAction,
-  getColumnsByBoardILoadingAction,
+  columnsLoadingAction,
   getColumnsByBoardISuccessAction,
-  getColumnsByBoardIFailureAction,
+  columnsFailureAction,
   addNewColumnsAction,
-  addNewColumnsLoadingAction,
   addNewColumnsSuccessAction,
-  addNewColumnsFailureAction,
   editColumnsAction,
-  editColumnsLoadingAction,
   editColumnsSuccessAction,
-  editColumnsFailureAction,
 
   addNewTaskAction,
-  addNewTaskLoadingAction,
+  taskLoadingAction,
   addNewTaskSuccessAction,
-  addNewTaskFailureAction,
 
   getTasksByBoardIdAction,
-  getTasksByBoardIdLoadingAction,
   getTasksByBoardIdSuccessAction,
-  getTasksByBoardIdFailureAction,
+  taskFailureAction,
 
   addNewSubtasksAction,
-  addNewSubtaskLoadingAction,
+  subtaskLoadingAction,
   addNewSubtaskSuccessAction,
-  addNewSubtaskFailureAction,
+  subtaskFailureAction,
 
   getSubtasksByBoardIdAction,
-  getSubtasksByBoardIdLoadingAction,
   getSubtasksByBoardIdSuccessAction,
-  getSubtasksByBoardIdFailureAction,
-
-  RootState
 };

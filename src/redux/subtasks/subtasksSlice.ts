@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISubtask } from "@/TypesRoot";
 
 const subtasksInitialState = {
-  subtasks: [],
+  subtasks: [] as ISubtask[],
   isLoading: false,
   errors: ''
 };
@@ -12,13 +12,18 @@ interface ISubtasksState {
   subtasks: ISubtask[];
   isLoading: boolean;
   errors: string;
-}
+};
+
+interface IFailure {
+  errorMessage: string
+};
+
 
 const subtasksSlice = createSlice({
   name: 'subtasks',
   initialState: subtasksInitialState,
   reducers: {
-    addNewSubtaskLoading: (state: ISubtasksState) => {
+    subtaskLoading: (state: ISubtasksState) => {
       state.isLoading = true;
       state.errors = '';
     },
@@ -26,21 +31,13 @@ const subtasksSlice = createSlice({
       state.isLoading = false;
       state.subtasks = [...state.subtasks, ...payload];
     },
-    addNewSubtaskFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
+    subtaskFailure: (state: ISubtasksState, { payload }: PayloadAction<IFailure>) => {
       state.isLoading = false;
-      state.errors = payload;
-    },
-    getSubtasksByBoardIdLoading: (state: ISubtasksState) => {
-      state.isLoading = true;
-      state.errors = '';
+      state.errors = payload?.errorMessage;
     },
     getSubtasksByBoardIdSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
       state.isLoading = false;
       state.subtasks = payload;
-    },
-    getSubtasksByBoardIdFailure: (state: ISubtasksState, { payload }: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.errors = payload;
     }
   }
 });

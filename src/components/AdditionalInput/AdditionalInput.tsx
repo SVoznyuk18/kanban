@@ -15,23 +15,22 @@ interface IValidation {
 interface IData {
   boardName: string;
   // @ts-ignore
-  deletedColumnsId?: string[];
+  deletedColumnsId: string[];
   [x: string]: string | undefined;
 }
 
 type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
 
 interface IProps<T extends FieldValues> {
-
   label?: string;
   id?: string;
-  type?: string;
+  type: string;
   name: Path<T> | string;
   register: UseFormRegister<T>;
   validation: IValidation;
-  setValue?: UseFormSetValue<IData>;
+  setValue: UseFormSetValue<IData>;
   unregister: UseFormUnregister<T>;
-  columns?: { _id: string; columnName: string }[] | undefined;
+  columns: { _id: string; columnName: string }[];
   errorMessage?: string;
   errors: FieldErrors;
   buttonName: string;
@@ -64,12 +63,11 @@ const AdditionalInput = <T extends FieldValues>({
     const filteredInputs = additionalInputs.filter(input => input?._id !== elem);
     const deletedId = additionalInputs.filter(input => input?._id === elem).map(item => item?._id);
     setDeletedInputs((prev) => [...prev, ...deletedId]);
-
     unregister(elem as any);
-    // @ts-ignore
-    setValue('deletedColumnsId', [...deletedInputs, ...deletedId])
+    setValue('deletedColumnsId', [...deletedInputs, ...deletedId]);
     setAdditionalsInputs(filteredInputs);
   }
+
   useEffect(() => {
     if (columns !== undefined && columns?.length > 0 && setValue !== undefined) {
       columns.forEach(column => setValue(column?._id, column?.columnName))

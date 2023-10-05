@@ -1,16 +1,19 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
-  addNewBoardsLoadingAction,
+  boardsLoadingAction,
+  boardsFailureAction,
   addNewBoardsSuccessAction,
-  addNewBoardsFailureAction,
-  getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction,
   addNewColumnsAction
 } from '@/ReduxRoot';
 import { IBoard } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
+
+interface INewBoard {
+  boardName: string
+  [x: string]: string;
+}
 
 interface IResponseBoard {
   result: IBoard,
@@ -22,12 +25,12 @@ interface IResponseAllBoards {
   success: boolean
 }
 
-function* workAddNewBoards(action: PayloadAction<any>) {
+function* workAddNewBoards(action: PayloadAction<INewBoard>) {
   const { boardName, ...rest } = action?.payload;
   const columns: string[] = Object.values(rest);
 
   try {
-    yield put(addNewBoardsLoadingAction());
+    yield put(boardsLoadingAction());
     const boardResponse: IResponseBoard | undefined = yield call(postData, '/boards', { boardName });
     const allBoards: IResponseAllBoards = yield call(getData, '/boards');
     yield put(addNewBoardsSuccessAction(allBoards?.result));
@@ -37,23 +40,22 @@ function* workAddNewBoards(action: PayloadAction<any>) {
     } else {
       throw Error()
     }
-
   } catch (error) {
-    yield put(addNewBoardsFailureAction(`Failed to create board ${boardName}`));
+    yield put(boardsFailureAction({ errorMessage: `Failed to create board ${boardName}` }));
   }
 }
 
 function* workGetAllBoards() {
   try {
-    yield put(getAllBoardsLoadingAction());
+    yield put(boardsLoadingAction());
     const allBoards: IResponseAllBoards = yield call(getData, '/boards');
     yield put(getAllBoardsSuccessAction(allBoards?.result));
   } catch (error) {
-    yield put(getAllBoardsFailureAction(`Failed to fetched boards`));
+    yield put(boardsFailureAction({ errorMessage: `Failed to fetched boards` }));
   }
 }
 
 export function* watchBoards() {
-  yield takeLatest('ADD_NEW_BOARDS_ACTION', workAddNewBoards);
+  yield takeLatest('ADD_NEW_BOARDS', workAddNewBoards);
   yield takeLatest('GET_ALL_BOARDS', workGetAllBoards);
 }
