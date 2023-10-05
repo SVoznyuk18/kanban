@@ -57,8 +57,8 @@ function* workerEditBoard(action: PayloadAction<{ editBoardConfigure: IEditBoard
   }
 }
 
-function* workerDeleteBoard(action: PayloadAction<string>) {
-  const boardId = action?.payload;
+function* workerDeleteBoard(action: PayloadAction<{ boardId: string }>) {
+  const { boardId } = action?.payload;
 
   try {
     yield put(boardLoadingAction());

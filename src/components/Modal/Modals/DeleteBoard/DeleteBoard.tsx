@@ -16,7 +16,7 @@ const DeleteBoard: React.FC = () => {
   const board = useTypedSelector(state => state?.board?.board);
 
   const handleDeleteBoard = () => {
-    dispatch(deleteBoardAction(board?._id));
+    dispatch(deleteBoardAction({ boardId: board?._id }));
   };
 
   useEffect(() => {

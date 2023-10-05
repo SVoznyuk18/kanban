@@ -52,7 +52,6 @@ const EditBoard = () => {
       columns,
       deletedColumnsId
     }
-    console.log('editColumnsConfigure', editColumnsConfigure)
     dispatch(editBoardAction({ editBoardConfigure }));
     dispatch(editColumnsAction(editColumnsConfigure));
   };

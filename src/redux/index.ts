@@ -11,13 +11,11 @@ import {
 
 import {
   addNewBoardsAction,
-  addNewBoardsLoadingAction,
+  boardsLoadingAction,
   addNewBoardsSuccessAction,
-  addNewBoardsFailureAction,
   getAllBoardsAction,
-  getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction,
+  boardsFailureAction,
   deletBoardByIdSuccesAction
 } from './boards/boards.actions';
 
@@ -73,13 +71,10 @@ export {
 
   addNewBoardsAction,
   addNewBoardsSuccessAction,
-  addNewBoardsFailureAction,
-  addNewBoardsLoadingAction,
-
+  boardsFailureAction,
+  boardsLoadingAction,
   getAllBoardsAction,
-  getAllBoardsLoadingAction,
   getAllBoardsSuccessAction,
-  getAllBoardsFailureAction,
   deletBoardByIdSuccesAction,
 
   getColumnsByBoardIAction,

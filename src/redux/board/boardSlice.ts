@@ -13,6 +13,10 @@ const boardInitialState = {
   errors: ''
 };
 
+interface IFailure {
+  errorMessage: string
+}
+
 const boardSlice = createSlice({
   name: 'board',
   initialState: boardInitialState,
@@ -21,7 +25,7 @@ const boardSlice = createSlice({
       state.isLoading = true;
       state.errors = '';
     },
-    boardFailure: (state: IBoartState, { payload }: PayloadAction<{ errorMessage: string }>) => {
+    boardFailure: (state: IBoartState, { payload }: PayloadAction<IFailure>) => {
       state.errors = payload?.errorMessage;
     },
     getBoardSuccess: (state: IBoartState, { payload }: PayloadAction<{ board: IBoard }>) => {

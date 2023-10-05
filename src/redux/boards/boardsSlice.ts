@@ -13,33 +13,30 @@ interface IBoardsState {
   errors: string
 }
 
+interface IFailure {
+  errorMessage: string
+}
+
+
 const boardsSlice = createSlice({
   name: 'boards',
   initialState: boardsInitialState,
   reducers: {
-    addNewBoardsLoading: (state: IBoardsState) => {
+    boardsLoading: (state: IBoardsState) => {
       state.isLoading = true;
       state.errors = '';
     },
-    addNewBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<Array<IBoard>>) => {
+    boardsFailure: (state: IBoardsState, { payload }: PayloadAction<IFailure>) => {
+      state.isLoading = false;
+      state.errors = payload?.errorMessage;
+    },
+    addNewBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<IBoard[]>) => {
       state.isLoading = false;
       state.boards = payload;
     },
-    addNewBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<{ error: string }>) => {
-      state.isLoading = false;
-      state.errors = payload?.error;
-    },
-    getAllBoardsLoading: (state: IBoardsState) => {
-      state.isLoading = true;
-      state.errors = '';
-    },
-    getAllBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<Array<IBoard>>) => {
+    getAllBoardsSuccess: (state: IBoardsState, { payload }: PayloadAction<IBoard[]>) => {
       state.isLoading = false;
       state.boards = payload;
-    },
-    getAllBoardsFailure: (state: IBoardsState, { payload }: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.errors = payload;
     },
     deletBoardByIdSucces: (state: IBoardsState, { payload }: PayloadAction<string>) => {
       state.isLoading = false;

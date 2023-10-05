@@ -52,7 +52,6 @@ const AdditionalInput = <T extends FieldValues>({
 
   const [additionalInputs, setAdditionalsInputs] = useState<{ _id: string; columnName: string }[]>(columns || []);
   const [deletedInputs, setDeletedInputs] = useState<string[]>([]);
-  console.log('additionalInputs', additionalInputs)
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -64,11 +63,11 @@ const AdditionalInput = <T extends FieldValues>({
     const filteredInputs = additionalInputs.filter(input => input?._id !== elem);
     const deletedId = additionalInputs.filter(input => input?._id === elem).map(item => item?._id);
     setDeletedInputs((prev) => [...prev, ...deletedId]);
-
     unregister(elem as any);
     setValue('deletedColumnsId', [...deletedInputs, ...deletedId]);
     setAdditionalsInputs(filteredInputs);
   }
+
   useEffect(() => {
     if (columns !== undefined && columns?.length > 0 && setValue !== undefined) {
       columns.forEach(column => setValue(column?._id, column?.columnName))
