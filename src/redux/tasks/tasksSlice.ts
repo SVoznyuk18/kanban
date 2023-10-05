@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { ITask } from "@/TypesRoot";
 
-
 const tasksInitialState = {
 	tasks: [],
 	isLoading: false,
@@ -13,13 +12,17 @@ interface ITasksState {
 	tasks: ITask[];
 	isLoading: boolean;
 	errors: string
-}
+};
+
+interface IFailure {
+	errorMessage: string
+};
 
 const tasksSlice = createSlice({
 	name: 'tasks',
 	initialState: tasksInitialState,
 	reducers: {
-		addnewTaskLoading: (state: ITasksState) => {
+		taskLoading: (state: ITasksState) => {
 			state.isLoading = true;
 			state.errors = '';
 		},
@@ -27,25 +30,15 @@ const tasksSlice = createSlice({
 			state.tasks = [...state.tasks, payload];
 			state.isLoading = false;
 		},
-		addNewTaskError: (state: ITasksState, { payload }: PayloadAction<{ error: string }>) => {
+		taskFailure: (state: ITasksState, { payload }: PayloadAction<IFailure>) => {
 			state.isLoading = false;
-			state.errors = payload?.error;
-		},
-		getTasksByBoardIdLoading: (state: ITasksState) => {
-			state.isLoading = true;
-			state.errors = '';
+			state.errors = payload?.errorMessage;
 		},
 		getTasksByBoardIdSuccess: (state: ITasksState, { payload }: PayloadAction<ITask[]>) => {
 			state.tasks = payload;
 			state.isLoading = false;
-		},
-		getTasksByBoardIdFailure: (state: ITasksState, { payload }: PayloadAction<string>) => {
-			console.log('payload', payload)
-			state.isLoading = false;
-			state.errors = payload;
 		}
 	}
 });
-
 
 export const tasksReducer = tasksSlice.reducer;
