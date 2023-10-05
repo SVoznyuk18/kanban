@@ -47,7 +47,7 @@ import {
   getSubtasksByBoardIdSuccessAction,
 } from './subtasks/subtasks.actions';
 
-import { RootState, store } from './store';
+import { store } from './store';
 
 export {
   store,
@@ -92,6 +92,4 @@ export {
 
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
-  // @ts-ignore
-  RootState
 };

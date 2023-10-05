@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { TypedUseSelectorHook, useSelector, createSelectorHook } from 'react-redux';
 
-import { store, RootState } from '@/ReduxRoot';
+import { store } from '@/ReduxRoot';
 
 type themeType = 'dark' | 'light';
 
@@ -59,5 +59,6 @@ export function useThemeMode(themeMode: themeType): [themeType, (() => void)] {
   return [theme, toggleTheme];
 }
 
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useTypedSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
+
 
