@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
 export interface IBoartState {
-  board: IBoard | {},
+  board: IBoard,
   isLoading: boolean,
   errors: string
 };
 
 const boardInitialState = {
-  board: {},
+  board: {} as IBoard,
   isLoading: false,
   errors: ''
 };
@@ -34,7 +34,7 @@ const boardSlice = createSlice({
     },
     deleteBoardSuccess: (state: IBoartState) => {
       state.isLoading = false;
-      state.board = {}
+      state.board = {} as IBoard
     }
   }
 });

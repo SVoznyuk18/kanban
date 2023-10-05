@@ -7,12 +7,11 @@ import rootReducer from "./root-reducer";
 import rootSagas from "@/SagaRoot";
 const sagaMiddleware = createSagaMiddleware();
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSagas);
 
-
-export default store;
+export type RootState = ReturnType<typeof store.getState>;

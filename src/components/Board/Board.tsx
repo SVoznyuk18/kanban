@@ -16,7 +16,7 @@ interface IProps {
 
 const Board: React.FC<IProps> = ({ params }) => {
   const dispatch = useDispatch();
-  const columns = useTypedSelector(state => state?.columns?.columns);
+  const { columns } = useTypedSelector(state => state?.columns);
   const decodeURI = decodeURIComponent(params?.url);
 
   useEffect(() => {

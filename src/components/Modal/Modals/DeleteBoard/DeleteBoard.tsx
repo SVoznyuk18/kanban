@@ -13,7 +13,7 @@ const DeleteBoard: React.FC = () => {
   const { handleCloseModal } = useContext(ModalContext);
   const dispatch = useDispatch();
   const { push } = useRouter();
-  const board = useTypedSelector(state => state?.board?.board);
+  const { board } = useTypedSelector(state => state?.board);
 
   const handleDeleteBoard = () => {
     dispatch(deleteBoardAction({ boardId: board?._id }));

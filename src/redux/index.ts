@@ -1,4 +1,3 @@
-import store from "./store";
 import {
   getBoardAction,
   boardLoadingAction,
@@ -48,7 +47,7 @@ import {
   getSubtasksByBoardIdSuccessAction,
 } from './subtasks/subtasks.actions';
 
-import RootState from './root-reducer';
+import { RootState, store } from './store';
 
 export {
   store,
@@ -93,6 +92,6 @@ export {
 
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
-
+  // @ts-ignore
   RootState
 };

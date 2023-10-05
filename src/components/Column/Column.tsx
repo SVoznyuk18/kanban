@@ -13,7 +13,7 @@ interface IColumnProps {
 
 const Column: React.FC<IColumnProps> = ({ column }) => {
 
-  const tasks = useTypedSelector(state => state?.tasks?.tasks);
+  const { tasks } = useTypedSelector(state => state?.tasks);
 
   const [currentColumn, setCurrentColumn] = useState<IColumn | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);

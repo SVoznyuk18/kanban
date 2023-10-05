@@ -12,6 +12,4 @@ const rootReducer = {
   subtasks: subtasksReducer,
 }
 
-export type RootState = typeof rootReducer;
-
 export default rootReducer;

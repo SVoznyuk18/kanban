@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISubtask } from "@/TypesRoot";
 
 const subtasksInitialState = {
-  subtasks: [],
+  subtasks: [] as ISubtask[],
   isLoading: false,
   errors: ''
 };

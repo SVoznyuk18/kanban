@@ -13,8 +13,8 @@ const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const boards = useTypedSelector(state => state?.boards?.boards);
-  const board = useTypedSelector(state => state?.board?.board);
+  const { boards } = useTypedSelector(state => state?.boards);
+  const { board } = useTypedSelector(state => state?.board);
 
   useEffect(() => {
     dispatch(getAllBoardsAction())

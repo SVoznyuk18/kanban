@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IBoard } from '@/TypesRoot';
 
 const boardsInitialState = {
-  boards: [],
+  boards: [] as IBoard[],
   isLoading: false,
   errors: ''
 };
 
 interface IBoardsState {
-  boards: Array<IBoard>,
+  boards: IBoard[],
   isLoading: boolean,
   errors: string
 }

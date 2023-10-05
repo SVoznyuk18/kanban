@@ -27,8 +27,8 @@ const AddNewTask: React.FC = () => {
     formState: { errors }
   } = useForm<IData>({ mode: "all" });
 
-  const columns = useTypedSelector(state => state?.columns?.columns);
-  const board = useTypedSelector(state => state?.board?.board);
+  const { columns } = useTypedSelector(state => state?.columns);
+  const { board } = useTypedSelector(state => state?.board);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
@@ -74,13 +74,15 @@ const AddNewTask: React.FC = () => {
           validation={{ required: 'Required field' }}
           errorMessage={errors?.description && errors?.description?.message?.toString()}
         />
-        <AdditionalInput<IData>
+        <AdditionalInput
           label="Subtasks"
           id='subTaskName'
           type='text'
           name='subTaskName'
           register={register}
           unregister={unregister}
+          // @ts-ignore
+          setValue={setValue}
           validation={{ required: 'Required field' }}
           errors={errors}
           buttonName='Add new subtask'
