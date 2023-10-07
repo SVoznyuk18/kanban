@@ -16,3 +16,12 @@ export const createAddNewBoardValidationSchema = (isMatchBoardName: (value: stri
   });
 };
 
+export const editBoardValidationSchema = yup.object().shape({
+  boardName: yup.string().required("Required field"),
+  columns: yup.array().of(
+    yup.object().shape({
+      columnName: yup.string().required("Required field"),
+      // columnId: yup.string().required("Required field"),
+    })
+  ),
+});

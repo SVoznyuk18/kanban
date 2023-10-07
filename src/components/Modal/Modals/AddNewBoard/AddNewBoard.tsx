@@ -12,9 +12,10 @@ import { createAddNewBoardValidationSchema } from '@/LibRoot';
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
-interface IFormValue {
+interface IBoardFormValue {
   boardName: string
-  columns?: { columnName: string, columnId?: string }[]
+  columns?: { columnName: string, columnId?: string }[];
+  deletedColumns?: { columnName: string, columnId?: string }[];
 }
 
 const AddNewBoard = () => {
@@ -25,21 +26,20 @@ const AddNewBoard = () => {
   const matchBoardname = (value: string): boolean => {  // check match boardName with Saved boardName
     return boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
   };
-  // 
+
   const validationSchema = createAddNewBoardValidationSchema(matchBoardname);
 
-  const methods = useForm<IFormValue>({
+  const methods = useForm<IBoardFormValue>({
     mode: "all",
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      boardName: "",
-      // columns: [{ columnName: "column 2", columnId: '22' }]
+      boardName: ""
     }
   });
 
   const { formState: { errors } } = methods;
 
-  const onSubmit: SubmitHandler<IFormValue> = async (data) => {
+  const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
     dispatch(addNewBoardsAction(data));
   };
 

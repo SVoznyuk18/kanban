@@ -49,30 +49,34 @@ export async function POST(req: Request) {
   })
 }
 
-export async function PUT(req: NextRequest) {
-  const { boardId, deletedColumnsId, columns }: { boardId: string; columns: string[], deletedColumnsId: string[] } = await req.json();
-  const columnsArr: [string, string][] = Object.entries(columns);
+interface IColumnsComfigure {
+  boardId: string;
+  columns: { columnName: string, columnId?: string }[];
+  deletedColumns: { columnName: string, columnId?: string }[];
+}
 
-  if (deletedColumnsId) {
+export async function PUT(req: NextRequest) {
+  const { boardId, deletedColumns, columns }: IColumnsComfigure = await req.json();
+
+  if (Array.isArray(deletedColumns) && deletedColumns.length > 0) {
     try {
-      const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
-        const deletedColumn = await Column.deleteOne({ _id: columnsId });
-        await Task.deleteOne({ columnId: columnsId });
-        return deletedColumn
+      await Promise.all(deletedColumns.map(async (column) => {
+        await Column.deleteOne({ _id: column?.columnId });
+        await Task.deleteOne({ columnId: column });
       }))
     } catch (error) {
       console.error('Помилка при видаленні стовпців', error);
     }
   }
 
-  const updatedColumns: IColumn[] = await Promise.all(columnsArr.map(async (column: [string, string]) => {
-    const isValidObjectId = mongoose.isValidObjectId(column[0]);
+  const updatedColumns: IColumn[] = await Promise.all(columns.map(async (column) => {
+    const isValidObjectId = mongoose.isValidObjectId(column?.columnId);
     try {
       if (isValidObjectId) {
-        const updatedColumn = await Column.findOneAndUpdate({ _id: column[0] }, { columnName: column[1] }, { new: true });
+        const updatedColumn = await Column.findOneAndUpdate({ _id: column?.columnId }, { columnName: column?.columnName }, { new: true });
         return updatedColumn;
       } else {
-        const newColumn = await Column.create({ columnName: column[1], mainBoardId: boardId });
+        const newColumn = await Column.create({ columnName: column?.columnName, mainBoardId: boardId });
         return newColumn;
       }
     } catch (error) {

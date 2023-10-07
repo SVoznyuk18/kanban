@@ -20,10 +20,10 @@ interface IAddNewColumns {
   columns: { columnName: string, columnId: string }[]
 }
 
-interface IEditColumnsPayload {
+interface IColumnsComfigure {
   boardId: string;
-  deletedColumnsId?: string[];
-  columns: { [x: string]: string | undefined };
+  columns?: { columnName: string, columnId?: string }[];
+  deletedColumns?: { columnName: string, columnId?: string }[];
 }
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
@@ -51,11 +51,13 @@ function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
   }
 }
 
-function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
-  const { boardId, columns, deletedColumnsId } = action.payload;
+function* workEditColumns(action: PayloadAction<IColumnsComfigure>) {
+  const { boardId, columns, deletedColumns } = action.payload;
+
+
   yield put(columnsLoadingAction());
   try {
-    const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
+    const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumns });
     if (success) {
       yield put(editColumnsSuccessAction(result));
 
