@@ -1,17 +1,20 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+'use client'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 import { camelCase } from 'lodash';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { IBoard } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
+import { createAddNewBoardValidationSchema } from '@/LibRoot';
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
-interface IData {
+interface IFormValue {
   boardName: string
-  [x: string]: string;
+  columns?: { columnName: string, columnId?: string }[]
 }
 
 const AddNewBoard = () => {
@@ -19,61 +22,58 @@ const AddNewBoard = () => {
   const dispatch = useDispatch();
   const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
 
-  const {
-    register,
-    unregister,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<IData>({ mode: "all" });
-
-
-  const matchBoardname = (value: string) => {  // check match boardName with Saved boardName
-    const isMatch = boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
-    if (isMatch) return 'Таке імя борду вже існує'
+  const matchBoardname = (value: string): boolean => {  // check match boardName with Saved boardName
+    return boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
   };
+  // 
+  const validationSchema = createAddNewBoardValidationSchema(matchBoardname);
 
-  const onSubmit: SubmitHandler<IData> = async (data) => {
+  const methods = useForm<IFormValue>({
+    mode: "all",
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      boardName: "",
+      // columns: [{ columnName: "column 2", columnId: '22' }]
+    }
+  });
+
+  const { formState: { errors } } = methods;
+
+  const onSubmit: SubmitHandler<IFormValue> = async (data) => {
     dispatch(addNewBoardsAction(data));
   };
 
   return (
     <ModalContent>
       <Title>Add New Board</Title>
-      <Form>
-        <ClassicInput
-          label="Name"
-          htmlFor='boardName'
-          id='boardName'
-          type='text'
-          name='boardName'
-          placeholder='e.g. Web Design'
-          register={register}
-          validation={{ required: 'Required field', validate: (value: string) => matchBoardname(value) }}
-          errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
-        />
-        <AdditionalInput
-          label="Columns"
-          id='columnName'
-          type='text'
-          name='columnName'
-          register={register}
-          unregister={unregister}
-          validation={{ required: 'Required field' }}
-          // @ts-ignore
-          setValue={setValue}
-          errors={errors}
-          buttonName='Add new column'
-        />
-      </Form>
-      <ClassicButton
-        width='100%'
-        height="40px"
-        variant="default"
-        onClick={handleSubmit(onSubmit)}
-      >
-        Create New Board
-      </ClassicButton>
+      <FormProvider {...methods}>
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+          <ClassicInput
+            label="Name"
+            htmlFor='boardName'
+            id='boardName'
+            type='text'
+            name='boardName'
+            placeholder='e.g. Web Design'
+            errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
+          />
+          <AdditionalInput
+            label="Columns"
+            id='columnName'
+            type='text'
+            name='columnName'
+            buttonName='Add new column'
+          />
+          <ClassicButton
+            type='submit'
+            width='100%'
+            height="40px"
+            variant="default"
+          >
+            Create New Board
+          </ClassicButton>
+        </Form>
+      </FormProvider>
     </ModalContent>
   )
 }

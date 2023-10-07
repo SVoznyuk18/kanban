@@ -10,6 +10,10 @@ import { IBoard, IColumn, ITask } from '@/TypesRoot';
 
 // import { NextApiRequest, NextApiResponse } from "next";
 
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: { columnName: string, columnId: string }[]
+}
 
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
@@ -27,10 +31,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectMongoDB();
-  const { columns, mainBoardId } = await req.json();
+  const { columns, mainBoardId }: IAddNewColumns = await req.json();
 
-  const addedColumns = await Promise.all(columns.map(async (column: string) => {
-    const createdColumns = await Column.create({ columnName: column, mainBoardId });
+  const addedColumns = await Promise.all(columns.map(async (column) => {
+    const createdColumns = await Column.create({ columnName: column?.columnName, mainBoardId });
     return createdColumns
   }))
 

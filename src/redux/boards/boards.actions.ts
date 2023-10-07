@@ -3,7 +3,7 @@ import { IBoard } from '@/TypesRoot';
 
 interface INewBoard {
   boardName: string
-  [x: string]: string;
+  columns?: { columnName: string, columnId?: string }[]
 }
 
 interface IFailure {

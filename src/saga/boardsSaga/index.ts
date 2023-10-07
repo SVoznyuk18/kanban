@@ -11,8 +11,8 @@ import { IBoard } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
 interface INewBoard {
-  boardName: string
-  [x: string]: string;
+  boardName: string;
+  columns: { columnName: string, columnId: string }[];
 }
 
 interface IResponseBoard {
@@ -26,8 +26,10 @@ interface IResponseAllBoards {
 }
 
 function* workAddNewBoards(action: PayloadAction<INewBoard>) {
-  const { boardName, ...rest } = action?.payload;
-  const columns: string[] = Object.values(rest);
+  const { boardName, columns } = action?.payload;
+
+  console.log('action?.payload', action?.payload)
+  // const columns: string[] = Object.values(rest);
 
   try {
     yield put(boardsLoadingAction());

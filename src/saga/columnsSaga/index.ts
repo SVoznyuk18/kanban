@@ -14,6 +14,10 @@ import { getDataByParams, postData, putData } from '@/ApiRoot';
 interface IResponseColumns {
   result: Array<IColumn>
   success: boolean
+};
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: { columnName: string, columnId: string }[]
 }
 
 interface IEditColumnsPayload {
@@ -35,8 +39,9 @@ function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
   }
 }
 
-function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns: string[] }>) {
+function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
   const { mainBoardId, columns } = action.payload;
+
   try {
     yield put(columnsLoadingAction());
     const { result, success }: IResponseColumns = yield call(postData, '/columns', { mainBoardId, columns });
