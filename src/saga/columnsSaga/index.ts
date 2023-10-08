@@ -22,8 +22,8 @@ interface IAddNewColumns {
 
 interface IColumnsComfigure {
   boardId: string;
-  columns?: { columnName: string, columnId?: string }[];
-  deletedColumns?: { columnName: string, columnId?: string }[];
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {

@@ -9,7 +9,7 @@ export const createAddNewBoardValidationSchema = (isMatchBoardName: (value: stri
       }),
     columns: yup.array().of(
       yup.object().shape({
-        columnName: yup.string().required("Required field"),
+        name: yup.string().required("Required field"),
         // columnId: yup.string().required("Required field"),
       })
     ),
@@ -20,8 +20,20 @@ export const editBoardValidationSchema = yup.object().shape({
   boardName: yup.string().required("Required field"),
   columns: yup.array().of(
     yup.object().shape({
-      columnName: yup.string().required("Required field"),
+      name: yup.string().required("Required field"),
       // columnId: yup.string().required("Required field"),
     })
   ),
 });
+
+export const addNewTaskValidationSchema = yup.object().shape({
+  taskName: yup.string().required("Required field"),
+  description: yup.string().required("Required field"),
+  status: yup.string().required("Required field"),
+  subtasks: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required("Required field"),
+      // columnId: yup.string().required("Required field"),
+    })
+  ),
+})

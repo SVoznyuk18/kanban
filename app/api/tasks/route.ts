@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
 
-  const { taskName, description, status, mainBoardId, columnId, subTasks } = await req.json();
+  const { taskName, description, status, mainBoardId, columnId, subtasks } = await req.json();
   await connectMongoDB();
   const addedTask = await Task.create({ taskName, description, status, mainBoardId, columnId })
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { ClassicButton, CustomSVG } from "@/ComponentsRoot";
@@ -11,21 +11,27 @@ interface IProps {
   label?: string;
   id?: string;
   type: string;
-  name: string;
+  inputName: string;
   buttonName: string;
+  errorsMessage?: unknown
 }
 
 const AdditionalInput = ({
+  inputName,
   label,
   type,
-  buttonName
+  buttonName,
+  errorsMessage
 }: IProps) => {
+
+  const [deletedInputs, setDeletedInputs] = useState<{ id: string; name: string; _id: string }[]>([]);
 
   const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
     e.preventDefault();
     // @ts-ignore
-    const deletedColumns = fields.filter(field => field?.columnId === fields[index].columnId);
-    setValue('deletedColumns', deletedColumns)
+    const deletedColumns: { id: string; name: string; _id: string }[] = fields.filter(field => field?._id === fields[index]._id);
+    setDeletedInputs([...deletedInputs, ...deletedColumns]);
+    setValue(`deleted${name}`, [...deletedInputs, ...deletedColumns])
     remove(index);
   }
 
@@ -38,12 +44,12 @@ const AdditionalInput = ({
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "columns"
+    name: inputName
   });
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    append({ columnName: '', columnId: `${Date.now()}` });
+    append({ name: '', _id: `${Date.now()}` });
   }
 
   return (
@@ -53,10 +59,10 @@ const AdditionalInput = ({
         <InputWrapper key={field?.id}>
           <Input
             type={type}
-            {...register(`columns[${index}].columnName`)}
+            {...register(`${inputName}[${index}].name`)}
           />
           <ErrorMessage>
-            {(errors?.columns && Array.isArray(errors?.columns)) && errors?.columns[index]?.columnName?.message}
+            {(Array.isArray(errorsMessage)) && errorsMessage[index]?.name?.message}
           </ErrorMessage>
           <Button onClick={(e) => handleDeleteInput(e, index)}>
             <CustomSVG

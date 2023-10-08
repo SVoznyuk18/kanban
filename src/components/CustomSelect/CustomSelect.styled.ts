@@ -81,3 +81,9 @@ export const OptionItem = styled.li`
     background-color: ${({ theme }) => theme.secondaryBgColor};
   }
 `;
+
+export const ErrorMessage = styled.p`
+  font-size: 12px;
+  color: #EA5555;
+  font-weight: 500;
+`;

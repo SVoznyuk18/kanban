@@ -5,7 +5,7 @@ import { ISubtask } from "@/TypesRoot";
 interface ISubtasksPayload {
   mainBoardId: string;
   mainTaskId: string;
-  subTasks: string[];
+  subtasks?: { name: string, _id?: string }[];
 };
 
 interface IFailure {
@@ -16,7 +16,7 @@ export const subtaskLoadingAction = createAction('subtasks/subtaskLoading');
 export const subtaskFailureAction = createAction('subtasks/subtaskFailure', (error: IFailure) => ({ payload: error }));
 
 export const addNewSubtasksAction = createAction('ADD_NEW_SUBTASKS', (subtasks: ISubtasksPayload) => ({ payload: subtasks }));
-export const addNewSubtaskSuccessAction = createAction('subtasks/addNewSubtaskSuccess', (subTasks: ISubtask[]) => ({ payload: subTasks }));
+export const addNewSubtaskSuccessAction = createAction('subtasks/addNewSubtaskSuccess', (subtasks: ISubtask[]) => ({ payload: subtasks }));
 
 export const getSubtasksByBoardIdAction = createAction('GET_SUBTASKS_BY_BOARD_ID', (mainBoardId: { mainBoardId: string }) => ({ payload: mainBoardId }));
-export const getSubtasksByBoardIdSuccessAction = createAction('subtasks/getSubtasksByBoardIdSuccess', (subTasks: ISubtask[]) => ({ payload: subTasks }));
+export const getSubtasksByBoardIdSuccessAction = createAction('subtasks/getSubtasksByBoardIdSuccess', (subtasks: ISubtask[]) => ({ payload: subtasks }));

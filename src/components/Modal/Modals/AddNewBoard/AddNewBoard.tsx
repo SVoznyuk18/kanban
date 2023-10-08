@@ -14,8 +14,8 @@ import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 interface IBoardFormValue {
   boardName: string
-  columns?: { columnName: string, columnId?: string }[];
-  deletedColumns?: { columnName: string, columnId?: string }[];
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 const AddNewBoard = () => {
@@ -61,8 +61,9 @@ const AddNewBoard = () => {
             label="Columns"
             id='columnName'
             type='text'
-            name='columnName'
+            inputName='columns'
             buttonName='Add new column'
+            errorsMessage={errors?.columns && errors?.columns}
           />
           <ClassicButton
             type='submit'

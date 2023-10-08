@@ -1,7 +1,7 @@
 'use client'
 
-import React, { InputHTMLAttributes, forwardRef } from 'react';
-import { FieldValues, UseFormRegister, Path, Controller, useFormContext } from "react-hook-form";
+import React from 'react';
+import { Controller, useFormContext } from "react-hook-form";
 import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
 
 
@@ -30,8 +30,7 @@ export const ClassicInput = ({
 }: InputProps) => {
 
   const {
-    control,
-    formState: { errors }
+    control
   } = useFormContext();
 
   return (

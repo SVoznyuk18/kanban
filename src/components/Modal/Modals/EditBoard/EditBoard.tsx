@@ -17,14 +17,14 @@ interface IBoardComfigure {
 
 interface IColumnsComfigure {
   boardId: string;
-  columns?: { columnName: string, columnId?: string }[];
-  deletedColumns?: { columnName: string, columnId?: string }[];
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 interface IBoardFormValue {
   boardName: string
-  columns?: { columnName: string, columnId?: string }[];
-  deletedColumns?: { columnName: string, columnId?: string }[];
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 const EditBoard = () => {
@@ -32,7 +32,7 @@ const EditBoard = () => {
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
 
-  const currentColumns = columnsFromStore.map(column => ({ columnName: column?.columnName, columnId: column?._id }));
+  const currentColumns = columnsFromStore.map(column => ({ name: column?.columnName, _id: column?._id }));
 
   const methods = useForm<IBoardFormValue>({
     mode: "all",
@@ -78,10 +78,11 @@ const EditBoard = () => {
           />
           <AdditionalInput
             label="Columns"
-            id='columnName'
+            id='columns'
             type='text'
-            name='columnName'
+            inputName='columns'
             buttonName='Add new column'
+            errorsMessage={errors?.columns && errors?.columns}
           />
           <ClassicButton
             type='submit'

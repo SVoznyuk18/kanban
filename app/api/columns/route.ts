@@ -12,7 +12,7 @@ import { IBoard, IColumn, ITask } from '@/TypesRoot';
 
 interface IAddNewColumns {
   mainBoardId: string,
-  columns: { columnName: string, columnId: string }[]
+  columns: { name: string, _id: string }[]
 }
 
 export async function GET(req: NextRequest) {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   const { columns, mainBoardId }: IAddNewColumns = await req.json();
 
   const addedColumns = await Promise.all(columns.map(async (column) => {
-    const createdColumns = await Column.create({ columnName: column?.columnName, mainBoardId });
+    const createdColumns = await Column.create({ columnName: column?.name, mainBoardId });
     return createdColumns
   }))
 
@@ -51,8 +51,8 @@ export async function POST(req: Request) {
 
 interface IColumnsComfigure {
   boardId: string;
-  columns: { columnName: string, columnId?: string }[];
-  deletedColumns: { columnName: string, columnId?: string }[];
+  columns: { name: string, _id?: string }[];
+  deletedColumns: { name: string, _id?: string }[];
 }
 
 export async function PUT(req: NextRequest) {
@@ -61,7 +61,7 @@ export async function PUT(req: NextRequest) {
   if (Array.isArray(deletedColumns) && deletedColumns.length > 0) {
     try {
       await Promise.all(deletedColumns.map(async (column) => {
-        await Column.deleteOne({ _id: column?.columnId });
+        await Column.deleteOne({ _id: column?._id });
         await Task.deleteOne({ columnId: column });
       }))
     } catch (error) {
@@ -70,13 +70,13 @@ export async function PUT(req: NextRequest) {
   }
 
   const updatedColumns: IColumn[] = await Promise.all(columns.map(async (column) => {
-    const isValidObjectId = mongoose.isValidObjectId(column?.columnId);
+    const isValidObjectId = mongoose.isValidObjectId(column?._id);
     try {
       if (isValidObjectId) {
-        const updatedColumn = await Column.findOneAndUpdate({ _id: column?.columnId }, { columnName: column?.columnName }, { new: true });
+        const updatedColumn = await Column.findOneAndUpdate({ _id: column?._id }, { columnName: column?.name }, { new: true });
         return updatedColumn;
       } else {
-        const newColumn = await Column.create({ columnName: column?.columnName, mainBoardId: boardId });
+        const newColumn = await Column.create({ columnName: column?.name, mainBoardId: boardId });
         return newColumn;
       }
     } catch (error) {

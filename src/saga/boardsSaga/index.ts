@@ -28,9 +28,6 @@ interface IResponseAllBoards {
 function* workAddNewBoards(action: PayloadAction<INewBoard>) {
   const { boardName, columns } = action?.payload;
 
-  console.log('action?.payload', action?.payload)
-  // const columns: string[] = Object.values(rest);
-
   try {
     yield put(boardsLoadingAction());
     const boardResponse: IResponseBoard | undefined = yield call(postData, '/boards', { boardName });
