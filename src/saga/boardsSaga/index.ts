@@ -12,7 +12,7 @@ import { postData, getData } from '@/ApiRoot';
 
 interface INewBoard {
   boardName: string;
-  columns: { columnName: string, columnId: string }[];
+  columns: { name: string, _id: string }[];
 }
 
 interface IResponseBoard {
