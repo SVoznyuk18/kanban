@@ -35,6 +35,7 @@ const Board: React.FC<IProps> = ({ params }) => {
         width='280px'
         height='100%'
         variant='column'
+        type='button'
         onClick={() => console.log('test')}
       >
         + New Column
