@@ -19,18 +19,18 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectMongoDB();
-  const { mainBoardId, subTasks, mainTaskId } = await req.json();
+  const { mainBoardId, subtasks, mainTaskId } = await req.json();
 
-  const adedSubtasks = await Promise.all(subTasks.map(async (subtask: string) => {
+  const aadedSubtasks = await Promise.all(subtasks.map(async (subtask: string) => {
     const createdSubtasks = await Subtask.create({ subtaskName: subtask, mainBoardId, mainTaskId });
     return createdSubtasks;
   }))
 
-  if (!adedSubtasks) {
+  if (!aadedSubtasks) {
     throw Error("Failed to create subtasks");
   }
 
-  return NextResponse.json({ success: true, result: adedSubtasks }, {
+  return NextResponse.json({ success: true, result: aadedSubtasks }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }

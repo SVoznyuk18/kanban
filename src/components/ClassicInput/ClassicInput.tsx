@@ -1,76 +1,70 @@
-import React, { InputHTMLAttributes } from 'react';
-import { FieldValues, UseFormRegister, Path } from "react-hook-form";
+'use client'
+
+import React from 'react';
+import { Controller, useFormContext } from "react-hook-form";
 import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
 
-interface IValidation {
-  required: string,
-  validate?: (value: string) => string | undefined
-}
 
-interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
-  width?: string,
-  height?: string,
-  htmlFor?: string,
-  labelFontSize?: string,
-  label?: string,
-  id?: string,
-  type?: string,
-  name: Path<T>,
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  width?: string | undefined,
+  height?: string | undefined,
+  htmlFor: string,
+  label: string,
+  id: string,
+  type: string | undefined,
+  name: string,
   placeholder?: string,
-  padding?: string,
-  borderRadius?: string,
-  fontSize?: string,
-  register: UseFormRegister<T>,
-  validation: IValidation,
-  errorMessage?: string,
+  errorMessage: string | undefined
 }
 
-export const ClassicInput = <T extends FieldValues>({
+export const ClassicInput = ({
   width,
   height,
   htmlFor,
-  labelFontSize,
   label,
   id,
   type,
   name,
   placeholder,
-  padding,
-  borderRadius,
-  fontSize,
-  register,
-  validation,
-  errorMessage,
-}: IProps<T>) => {
+  errorMessage
+}: InputProps) => {
+
+  const {
+    control
+  } = useFormContext();
+
   return (
     <Wrapper width={width}>
       {
         label && (
           <Label
             htmlFor={htmlFor}
-            labelFontSize={labelFontSize}
           >
             {label}
           </Label>
         )
       }
-      <Input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        width={width}
-        height={height}
-        padding={padding}
-        borderRadius={borderRadius}
-        fontSize={fontSize}
-        {...register(name, validation)}
-
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <Input
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            width={width}
+            height={height}
+            {...field}
+          />
+        )}
       />
+
       <ErrorMessage>
         {errorMessage}
       </ErrorMessage>
     </Wrapper>
   )
 }
+
 
 export default ClassicInput;

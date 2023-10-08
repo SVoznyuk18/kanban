@@ -53,6 +53,7 @@ const Header = () => {
 				</TitleSection>
 				<ControlsSection>
 					<ClassicButton
+						type='button'
 						height={isMobile ? "32px" : "48px"}
 						variant="default"
 						disabled={columns.length < 1 || pathname === '/'}

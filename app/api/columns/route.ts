@@ -10,6 +10,10 @@ import { IBoard, IColumn, ITask } from '@/TypesRoot';
 
 // import { NextApiRequest, NextApiResponse } from "next";
 
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: { name: string, _id: string }[]
+}
 
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
@@ -27,10 +31,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectMongoDB();
-  const { columns, mainBoardId } = await req.json();
+  const { columns, mainBoardId }: IAddNewColumns = await req.json();
 
-  const addedColumns = await Promise.all(columns.map(async (column: string) => {
-    const createdColumns = await Column.create({ columnName: column, mainBoardId });
+  const addedColumns = await Promise.all(columns.map(async (column) => {
+    const createdColumns = await Column.create({ columnName: column?.name, mainBoardId });
     return createdColumns
   }))
 
@@ -45,30 +49,34 @@ export async function POST(req: Request) {
   })
 }
 
-export async function PUT(req: NextRequest) {
-  const { boardId, deletedColumnsId, columns }: { boardId: string; columns: string[], deletedColumnsId: string[] } = await req.json();
-  const columnsArr: [string, string][] = Object.entries(columns);
+interface IColumnsComfigure {
+  boardId: string;
+  columns: { name: string, _id?: string }[];
+  deletedColumns: { name: string, _id?: string }[];
+}
 
-  if (deletedColumnsId) {
+export async function PUT(req: NextRequest) {
+  const { boardId, deletedColumns, columns }: IColumnsComfigure = await req.json();
+
+  if (Array.isArray(deletedColumns) && deletedColumns.length > 0) {
     try {
-      const deletedColumns = await Promise.all(deletedColumnsId.map(async (columnsId) => {
-        const deletedColumn = await Column.deleteOne({ _id: columnsId });
-        await Task.deleteOne({ columnId: columnsId });
-        return deletedColumn
+      await Promise.all(deletedColumns.map(async (column) => {
+        await Column.deleteOne({ _id: column?._id });
+        await Task.deleteOne({ columnId: column });
       }))
     } catch (error) {
       console.error('Помилка при видаленні стовпців', error);
     }
   }
 
-  const updatedColumns: IColumn[] = await Promise.all(columnsArr.map(async (column: [string, string]) => {
-    const isValidObjectId = mongoose.isValidObjectId(column[0]);
+  const updatedColumns: IColumn[] = await Promise.all(columns.map(async (column) => {
+    const isValidObjectId = mongoose.isValidObjectId(column?._id);
     try {
       if (isValidObjectId) {
-        const updatedColumn = await Column.findOneAndUpdate({ _id: column[0] }, { columnName: column[1] }, { new: true });
+        const updatedColumn = await Column.findOneAndUpdate({ _id: column?._id }, { columnName: column?.name }, { new: true });
         return updatedColumn;
       } else {
-        const newColumn = await Column.create({ columnName: column[1], mainBoardId: boardId });
+        const newColumn = await Column.create({ columnName: column?.name, mainBoardId: boardId });
         return newColumn;
       }
     } catch (error) {

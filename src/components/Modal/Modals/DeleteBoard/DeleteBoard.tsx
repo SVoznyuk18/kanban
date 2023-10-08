@@ -34,6 +34,7 @@ const DeleteBoard: React.FC = () => {
       </Description>
       <ButtonsWrapper>
         <ClassicButton
+          type='button'
           width='100%'
           height="40px"
           variant="delete"
@@ -42,6 +43,7 @@ const DeleteBoard: React.FC = () => {
           Delete
         </ClassicButton>
         <ClassicButton
+          type='button'
           width='100%'
           height="40px"
           variant="light"

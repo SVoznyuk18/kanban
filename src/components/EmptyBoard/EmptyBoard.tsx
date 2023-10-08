@@ -14,6 +14,7 @@ const EmptyBoard = () => {
     <Wrapper>
       <Title>This board is empty. Create a new column to get started.</Title>
       <ClassicButton
+        type='button'
         height="48px"
         variant="default"
         onClick={() => handleOpenModal('AddNewBoard')}

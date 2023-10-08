@@ -41,12 +41,12 @@ function* workGetBoard(action: PayloadAction<{ boardUrl: string }>) {
   }
 }
 
-function* workerEditBoard(action: PayloadAction<{ editBoardConfigure: IEditBoardPayload }>) {
-  const { editBoardConfigure } = action?.payload;
+function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
+  const { boardId, boardName } = action?.payload;
 
   try {
     yield put(boardLoadingAction());
-    const { success, result }: IResponseBoard = yield call(putData, `/boards`, editBoardConfigure);
+    const { success, result }: IResponseBoard = yield call(putData, `/boards`, { boardId, boardName });
     if (success) {
       yield put(getBoardSuccessAction({ board: result }));
       yield put(getAllBoardsAction());

@@ -1,69 +1,61 @@
-import React, { TextareaHTMLAttributes } from 'react';
-import { FieldValues, UseFormRegister, Path } from "react-hook-form";
+'use client'
+
+import React from 'react';
+import { Controller, useFormContext } from "react-hook-form";
 import { Wrapper, TextArea, ErrorMessage, Label } from './Textarea.styled';
 
-interface IValidation {
-  required: string,
-  validate?: (value: string) => string | undefined
-}
-
-interface IProps<T extends FieldValues> extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface ITextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   width?: string,
   height?: string,
   resize: 'both' | 'horizontal' | 'vertical' | 'none',
   htmlFor?: string,
-  labelFontSize?: string,
   label?: string,
   id?: string,
-  name: Path<T>,
+  name: string,
   placeholder?: string,
-  padding?: string,
-  borderRadius?: string,
-  fontSize?: string,
-  register: UseFormRegister<T>,
-  validation: IValidation,
-  errorMessage?: string,
+  errorMessage?: string | undefined
 }
 
-export const Teaxtarea = <T extends FieldValues>({
+export const Teaxtarea = ({
   width,
   height,
   resize,
   htmlFor,
-  labelFontSize,
   label,
   id,
   name,
   placeholder,
-  padding,
-  borderRadius,
-  fontSize,
-  register,
-  validation,
   errorMessage,
-}: IProps<T>) => {
+}: ITextareaProps) => {
+
+  const {
+    control
+  } = useFormContext();
+
   return (
     <Wrapper width={width}>
       {
         label && (
           <Label
             htmlFor={htmlFor}
-            labelFontSize={labelFontSize}
           >
             {label}
           </Label>
         )
       }
-      <TextArea
-        id={id}
-        placeholder={placeholder}
-        width={width}
-        height={height}
-        padding={padding}
-        borderRadius={borderRadius}
-        resize={resize}
-        fontSize={fontSize}
-        {...register(name, validation)}
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <TextArea
+            id={id}
+            placeholder={placeholder}
+            width={width}
+            height={height}
+            resize={resize}
+            {...field}
+          />
+        )}
       />
       <ErrorMessage>
         {errorMessage}

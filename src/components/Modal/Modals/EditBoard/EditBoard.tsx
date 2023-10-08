@@ -1,29 +1,30 @@
-import { useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from '@/UtilsRoot';
 
-import { IColumn } from '@/TypesRoot';
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { useTypedSelector } from '@/UtilsRoot';
+import { editBoardValidationSchema } from '@/LibRoot';
 import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
 
 import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
 
-interface IData {
-  boardName: string;
-  // @ts-ignore
-  deletedColumnsId: string[];
-  [x: string]: string;
-};
-
 interface IBoardComfigure {
   boardName: string;
   boardId: string
 }
+
 interface IColumnsComfigure {
   boardId: string;
-  columns: { [x: string]: string };
-  deletedColumnsId: string[];
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
+}
+
+interface IBoardFormValue {
+  boardName: string
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 const EditBoard = () => {
@@ -31,78 +32,69 @@ const EditBoard = () => {
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
 
-  const {
-    register,
-    unregister,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<IData>({ mode: "all" });
+  const currentColumns = columnsFromStore.map(column => ({ name: column?.columnName, _id: column?._id }));
 
-  const onSubmit: SubmitHandler<IData> = async (data) => {
-    const { boardName, deletedColumnsId, ...columns } = data;
+  const methods = useForm<IBoardFormValue>({
+    mode: "all",
+    resolver: yupResolver(editBoardValidationSchema),
+    defaultValues: {
+      boardName: boardFromStore?.boardName,
+      columns: currentColumns
+    }
+  });
 
+  const { formState: { errors } } = methods;
+
+  const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
     const editBoardConfigure: IBoardComfigure = {
-      boardName,
+      boardName: data?.boardName,
       boardId: boardFromStore?._id,
     };
 
     const editColumnsConfigure: IColumnsComfigure = {
       boardId: boardFromStore?._id,
-      columns,
-      deletedColumnsId
-    }
-    dispatch(editBoardAction({ editBoardConfigure }));
+      columns: data?.columns,
+      deletedColumns: data?.deletedColumns,
+    };
+
+    if (data?.boardName !== boardFromStore?.boardName) dispatch(editBoardAction(editBoardConfigure));
     dispatch(editColumnsAction(editColumnsConfigure));
   };
-
-  const arrFromColumns = (columns: IColumn[]): { _id: string; columnName: string }[] => {
-    return columns.map(column => ({ _id: column?._id, columnName: column?.columnName }));
-  }
-
-  useEffect(() => {
-    setValue('boardName', boardFromStore?.boardName);
-  }, []);
 
   return (
     <ModalContent>
       <Title>Edit Board</Title>
-      <Form>
-        <ClassicInput
-          label="Name"
-          htmlFor='boardName'
-          id='boardName'
-          type='text'
-          name='boardName'
-          placeholder='e.g. Web Design'
-          register={register}
-          validation={{ required: 'Required field' }}
-          errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
-        />
-        <AdditionalInput
-          label="Columns"
-          id='columnName'
-          type='text'
-          name='columnName'
-          register={register}
-          unregister={unregister}
-          columns={arrFromColumns(columnsFromStore)}
-          // @ts-ignore
-          setValue={setValue}
-          validation={{ required: 'Required field' }}
-          errors={errors}
-          buttonName='Add new column'
-        />
-      </Form>
-      <ClassicButton
-        width='100%'
-        height="40px"
-        variant="default"
-        onClick={handleSubmit(onSubmit)}
-      >
-        Save Changes
-      </ClassicButton>
-    </ModalContent>
+      <FormProvider {...methods}>
+
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+          <ClassicInput
+            label="Name"
+            htmlFor='boardName'
+            id='boardName'
+            type='text'
+            name='boardName'
+            placeholder='e.g. Web Design'
+            errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
+          />
+          <AdditionalInput
+            label="Columns"
+            id='columns'
+            type='text'
+            inputName='columns'
+            buttonName='Add new column'
+            errorsMessage={errors?.columns && errors?.columns}
+          />
+          <ClassicButton
+            type='submit'
+            width='100%'
+            height="40px"
+            variant="default"
+          >
+            Save Changes
+          </ClassicButton>
+        </Form>
+      </FormProvider>
+    </ModalContent >
   )
 }
 

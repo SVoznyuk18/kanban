@@ -14,12 +14,16 @@ import { getDataByParams, postData, putData } from '@/ApiRoot';
 interface IResponseColumns {
   result: Array<IColumn>
   success: boolean
+};
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: { columnName: string, columnId: string }[]
 }
 
-interface IEditColumnsPayload {
+interface IColumnsComfigure {
   boardId: string;
-  deletedColumnsId?: string[];
-  columns: { [x: string]: string | undefined };
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
@@ -35,8 +39,9 @@ function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
   }
 }
 
-function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns: string[] }>) {
+function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
   const { mainBoardId, columns } = action.payload;
+
   try {
     yield put(columnsLoadingAction());
     const { result, success }: IResponseColumns = yield call(postData, '/columns', { mainBoardId, columns });
@@ -46,11 +51,13 @@ function* workAddNewColumns(action: PayloadAction<{ mainBoardId: string; columns
   }
 }
 
-function* workEditColumns(action: PayloadAction<IEditColumnsPayload>) {
-  const { boardId, columns, deletedColumnsId } = action.payload;
+function* workEditColumns(action: PayloadAction<IColumnsComfigure>) {
+  const { boardId, columns, deletedColumns } = action.payload;
+
+
   yield put(columnsLoadingAction());
   try {
-    const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumnsId });
+    const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumns });
     if (success) {
       yield put(editColumnsSuccessAction(result));
 

@@ -1,59 +1,44 @@
 'use client'
 
-import React, { useState, InputHTMLAttributes, } from "react"
-import { FieldValues, UseFormRegister, Path, UseFormSetValue } from "react-hook-form";
+import React, { useState } from "react"
+import { Controller, useFormContext } from "react-hook-form";
 
-import { Wrapper, Input, Label, DropDownMenu, OptionsList, OptionItem } from './CustomSelect.styled';
+import { Wrapper, Input, Label, DropDownMenu, OptionsList, OptionItem, ErrorMessage } from './CustomSelect.styled';
 
-interface IValidation {
-  required: string,
-  validate?: (value: string) => string | undefined
-}
-
-interface IProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
+interface ICustomSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options: string[];
   width?: string;
   height?: string;
   htmlFor?: string;
-  labelFontSize?: string;
   label?: string;
   id?: string;
-  type?: string;
-  name: Path<T>;
-  padding?: string;
-  fontSize?: string;
-  borderRadius?: string;
-  register: UseFormRegister<T>;
-  validation: IValidation;
-  setValue: UseFormSetValue<T>;
+  name: string;
+  type: string;
+  errorMessage: string | undefined
 }
 
-const CustomSelect = <T extends FieldValues>({
+const CustomSelect = ({
   options,
   width,
   height,
   htmlFor,
-  labelFontSize,
   label,
   id,
   type,
+  errorMessage,
   name,
-  padding,
-  fontSize,
-  borderRadius,
-  register,
-  validation,
-  setValue
-}: IProps<T>) => {
+}: ICustomSelectProps) => {
 
   const [isShowOptions, setIsShowOptions] = useState<boolean>(false);
 
-
-  const handleSelectValue = (value: string) => {
+  const handleSelectValue = (onChangeCb: (val: string) => void, option: string): void => {
     setIsShowOptions(!isShowOptions);
-    //@ts-ignore
-    setValue(name, value);
-  }
+    onChangeCb(option);
+  };
+
+  const {
+    control
+  } = useFormContext();
 
   return (
     <Wrapper>
@@ -61,32 +46,39 @@ const CustomSelect = <T extends FieldValues>({
         label && (
           <Label
             htmlFor={htmlFor}
-            labelFontSize={labelFontSize}
           >
             {label}
           </Label>
         )
       }
-      <Input
-        id={id}
-        type={type}
-        width={width}
-        height={height}
-        padding={padding}
-        fontSize={fontSize}
-        borderRadius={borderRadius}
-        {...register(name, validation)}
-        onClick={() => setIsShowOptions(!isShowOptions)}
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <>
+            <Input
+              id={id}
+              type={type}
+              width={width}
+              height={height}
+              {...field}
+              onClick={() => setIsShowOptions(!isShowOptions)}
+            />
+            <ErrorMessage>
+              {errorMessage}
+            </ErrorMessage>
+            {options.length > 0 && (
+              <DropDownMenu isShow={isShowOptions}>
+                <OptionsList >
+                  {options.length > 0 && options.map((option: string) => {
+                    return <OptionItem key={option} onClick={() => handleSelectValue(field.onChange, option)}>{option}</OptionItem>
+                  })}
+                </OptionsList>
+              </DropDownMenu>
+            )}
+          </>
+        )}
       />
-      {options.length > 0 && (
-        <DropDownMenu isShow={isShowOptions}>
-          <OptionsList >
-            {options.length > 0 && options.map((option: string) => {
-              return <OptionItem key={option} onClick={() => handleSelectValue(option)}>{option}</OptionItem>
-            })}
-          </OptionsList>
-        </DropDownMenu>
-      )}
     </Wrapper>
   )
 }

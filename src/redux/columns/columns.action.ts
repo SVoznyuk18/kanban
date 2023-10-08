@@ -2,10 +2,15 @@ import { createAction } from "@reduxjs/toolkit";
 
 import { IColumn } from "@/TypesRoot";
 
-interface IEditColumnsPayload {
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: { name: string, _id?: string }[]
+};
+
+interface IColumnsComfigure {
   boardId: string;
-  columns: { [x: string]: string | undefined };
-  deletedColumnsId: string[] | undefined;
+  columns?: { name: string, _id?: string }[];
+  deletedColumns?: { name: string, _id?: string }[];
 }
 
 interface IFailure {
@@ -18,8 +23,8 @@ export const columnsFailureAction = createAction('columns/columnsFailure', (erro
 export const getColumnsByBoardIAction = createAction('GET_COLUMNS_BY_BOARD_ID', <T>(mainBoardId: T) => ({ payload: mainBoardId }));
 export const getColumnsByBoardISuccessAction = createAction('columns/getColumnsByBoardISuccess', (columns: IColumn[]) => ({ payload: columns }));
 
-export const addNewColumnsAction = createAction("ADD_NEW_COLUMNS", (columns: { mainBoardId: string, columns: string[] }) => ({ payload: columns }));
+export const addNewColumnsAction = createAction("ADD_NEW_COLUMNS", (addNewColumnsPayload: IAddNewColumns) => ({ payload: addNewColumnsPayload }));
 export const addNewColumnsSuccessAction = createAction("columns/addNewColumnsSuccess", (columns: IColumn[]) => ({ payload: columns }));
 
-export const editColumnsAction = createAction("EDIT_COLUMNS", (editColumnPayload: IEditColumnsPayload) => ({ payload: editColumnPayload }));
+export const editColumnsAction = createAction("EDIT_COLUMNS", (editColumnPayload: IColumnsComfigure) => ({ payload: editColumnPayload }));
 export const editColumnsSuccessAction = createAction('columns/editColumnsSuccess', (columns: IColumn[]) => ({ payload: columns }));

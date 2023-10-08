@@ -4,4 +4,18 @@ import { WindowSizeProvider, WindowSizeContext } from './providers/WindowSizePro
 import { ReduxProvider } from './providers/ReduxProvider';
 import { connectMongoDB } from './mongodb';
 
-export { ModalProvider, ModalContext, RootLayoutThemeProvider, ThemeContext, WindowSizeProvider, WindowSizeContext, ReduxProvider, connectMongoDB };
+import { createAddNewBoardValidationSchema, editBoardValidationSchema, addNewTaskValidationSchema } from './validationSchemas';
+
+export {
+  ModalProvider,
+  ModalContext,
+  RootLayoutThemeProvider,
+  ThemeContext,
+  WindowSizeProvider,
+  WindowSizeContext,
+  ReduxProvider,
+  connectMongoDB,
+  createAddNewBoardValidationSchema,
+  editBoardValidationSchema,
+  addNewTaskValidationSchema
+};

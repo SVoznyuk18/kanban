@@ -1,106 +1,84 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
-import { FieldValues, UseFormRegister, UseFormUnregister, FieldError, DeepMap, Path, UseFormSetValue } from "react-hook-form";
+import React, { useState } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { ClassicButton, ClassicInput, CustomSVG } from "@/ComponentsRoot";
+import { ClassicButton, CustomSVG } from "@/ComponentsRoot";
 import { SVGPath } from '@/ConstantsRoot';
+import { Wrapper, Title, InputWrapper, Button, Input, ErrorMessage } from './AdditionalInput.styled';
 
-import { Wrapper, Title, InputWrapper, Button } from './AdditionalInput.styled';
-
-interface IValidation {
-  required: string
-}
-
-interface IData {
-  boardName: string;
-  // @ts-ignore
-  deletedColumnsId: string[];
-  [x: string]: string | undefined;
-}
-
-type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<TFieldValues, FieldError>
-
-interface IProps<T extends FieldValues> {
+interface IProps {
   label?: string;
   id?: string;
   type: string;
-  name: Path<T> | string;
-  register: UseFormRegister<T>;
-  validation: IValidation;
-  setValue: UseFormSetValue<IData>;
-  unregister: UseFormUnregister<T>;
-  columns: { _id: string; columnName: string }[];
-  errorMessage?: string;
-  errors: FieldErrors;
+  inputName: string;
   buttonName: string;
+  errorsMessage?: unknown
 }
 
-const AdditionalInput = <T extends FieldValues>({
+const AdditionalInput = ({
+  inputName,
   label,
-  id,
   type,
-  name,
-  register,
-  unregister,
-  setValue,
-  columns,
-  validation,
-  errors,
-  buttonName
-}: IProps<T>) => {
+  buttonName,
+  errorsMessage
+}: IProps) => {
 
-  const [additionalInputs, setAdditionalsInputs] = useState<{ _id: string; columnName: string }[]>(columns || []);
-  const [deletedInputs, setDeletedInputs] = useState<string[]>([]);
+  const [deletedInputs, setDeletedInputs] = useState<{ id: string; name: string; _id: string }[]>([]);
+
+  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    e.preventDefault();
+    // @ts-ignore
+    const deletedColumns: { id: string; name: string; _id: string }[] = fields.filter(field => field?._id === fields[index]._id);
+    setDeletedInputs([...deletedInputs, ...deletedColumns]);
+    setValue(`deleted${name}`, [...deletedInputs, ...deletedColumns])
+    remove(index);
+  }
+
+  const {
+    control,
+    register,
+    setValue,
+    formState: { errors }
+  } = useFormContext();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: inputName
+  });
 
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    setAdditionalsInputs([...additionalInputs, { _id: `${Date.now()}`, columnName: '' }]);
+    append({ name: '', _id: `${Date.now()}` });
   }
-
-  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, elem: number | string) => {
-    e.preventDefault();
-    const filteredInputs = additionalInputs.filter(input => input?._id !== elem);
-    const deletedId = additionalInputs.filter(input => input?._id === elem).map(item => item?._id);
-    setDeletedInputs((prev) => [...prev, ...deletedId]);
-    unregister(elem as any);
-    setValue('deletedColumnsId', [...deletedInputs, ...deletedId]);
-    setAdditionalsInputs(filteredInputs);
-  }
-
-  useEffect(() => {
-    if (columns !== undefined && columns?.length > 0 && setValue !== undefined) {
-      columns.forEach(column => setValue(column?._id, column?.columnName))
-    }
-  }, [])
 
   return (
     <Wrapper>
-      <Title>{additionalInputs.length > 0 && label}</Title>
-      {additionalInputs && additionalInputs.map(aditionalInput => (
-        <InputWrapper key={aditionalInput?._id}>
-          <ClassicInput
-            id={aditionalInput?._id}
+      <Title>{fields.length > 0 && label}</Title>
+      {fields && fields.map((field, index) => (
+        <InputWrapper key={field?.id}>
+          <Input
             type={type}
-            //@ts-ignore
-            name={`${aditionalInput?._id}`}
-            validation={validation}
-            register={register}
-            errorMessage={errors?.[aditionalInput?._id] && errors?.[aditionalInput?._id]?.message?.toString()}
+            {...register(`${inputName}[${index}].name`)}
           />
-          <Button onClick={(e) => handleDeleteInput(e, aditionalInput?._id)}>
+          <ErrorMessage>
+            {(Array.isArray(errorsMessage)) && errorsMessage[index]?.name?.message}
+          </ErrorMessage>
+          <Button onClick={(e) => handleDeleteInput(e, index)}>
             <CustomSVG
               width='15px'
               height='15px'
               path={SVGPath.close}
               fill='#828FA3'
               stroke='#828FA3'
+              viewBox='0 -4 15 15'
             // strokeWidth="2"
             />
           </Button>
         </InputWrapper>
       ))}
       <ClassicButton
+        type='button'
         width='100%'
         height="40px"
         variant="default"
