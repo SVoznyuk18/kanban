@@ -54,6 +54,17 @@ export const putData = async<T>(url: string, post): Promise<T | undefined> => {
   }
 }
 
+//@ts-ignore
+export const patchData = async<T>(url: string, post): Promise<T | undefined> => {
+  try {
+    const response: AxiosResponse<T> = await server.patch(url, post);
+    return response.data;
+    //@ts-ignore
+  } catch (error: AxiosError<ErrorResponse>) {
+    console.error(`Error putting data to ${url}:`, error.message);
+  }
+}
+
 export const deleteData = async<T>(url: string, id: string): Promise<T | undefined> => {
   try {
     const response: AxiosResponse<T> = await server.delete(url, { params: { id } });

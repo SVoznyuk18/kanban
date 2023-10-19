@@ -35,7 +35,10 @@ import {
   addNewTaskSuccessAction,
   getTasksByBoardIdAction,
   getTasksByBoardIdSuccessAction,
-  taskFailureAction
+  taskFailureAction,
+
+  editTaskAction,
+  editTaskSuccessAction
 } from './tasks/tasks.action';
 
 import {
@@ -84,6 +87,8 @@ export {
   getTasksByBoardIdAction,
   getTasksByBoardIdSuccessAction,
   taskFailureAction,
+  editTaskAction,
+  editTaskSuccessAction,
 
   addNewSubtasksAction,
   subtaskLoadingAction,

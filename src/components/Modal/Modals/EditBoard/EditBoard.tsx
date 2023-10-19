@@ -24,7 +24,7 @@ interface IColumnsComfigure {
 interface IBoardFormValue {
   boardName: string
   columns?: { name: string, _id?: string }[];
-  deletedColumns?: { name: string, _id?: string }[];
+  deleted?: { name: string, _id?: string }[];
 }
 
 const EditBoard = () => {
@@ -50,13 +50,12 @@ const EditBoard = () => {
       boardName: data?.boardName,
       boardId: boardFromStore?._id,
     };
-
     const editColumnsConfigure: IColumnsComfigure = {
       boardId: boardFromStore?._id,
       columns: data?.columns,
-      deletedColumns: data?.deletedColumns,
+      deletedColumns: data?.deleted,
     };
-
+    console.log(editColumnsConfigure)
     if (data?.boardName !== boardFromStore?.boardName) dispatch(editBoardAction(editBoardConfigure));
     dispatch(editColumnsAction(editColumnsConfigure));
   };

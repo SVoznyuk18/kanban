@@ -37,7 +37,14 @@ const tasksSlice = createSlice({
 		getTasksByBoardIdSuccess: (state: ITasksState, { payload }: PayloadAction<ITask[]>) => {
 			state.tasks = payload;
 			state.isLoading = false;
-		}
+		},
+		editTaskSuccess: (state: ITasksState, { payload }: PayloadAction<ITask>) => {
+			const indexUpdatedTask = state.tasks.findIndex(task => task?._id === payload?._id);
+			const newTasks = [...state.tasks];
+			newTasks[indexUpdatedTask] = payload;
+			state.tasks = newTasks;
+			state.isLoading = false;
+		},
 	}
 });
 

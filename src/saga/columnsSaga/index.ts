@@ -54,7 +54,6 @@ function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
 function* workEditColumns(action: PayloadAction<IColumnsComfigure>) {
   const { boardId, columns, deletedColumns } = action.payload;
 
-
   yield put(columnsLoadingAction());
   try {
     const { result, success }: IResponseColumns = yield call(putData, `/columns`, { boardId, columns, deletedColumns });

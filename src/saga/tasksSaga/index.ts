@@ -7,10 +7,11 @@ import {
   taskFailureAction,
   addNewTaskSuccessAction,
   getTasksByBoardIdSuccessAction,
-  addNewSubtasksAction
+  addNewSubtasksAction,
+  editTaskSuccessAction
 } from '@/ReduxRoot';
 
-import { postData, getDataByParams } from '@/ApiRoot';
+import { postData, getDataByParams, patchData } from '@/ApiRoot';
 import { ITask } from '@/TypesRoot';
 
 interface ITaskPayload {
@@ -66,7 +67,19 @@ function* workGetTasksByBoardId(action: PayloadAction<{ mainBoardId: string }>) 
   }
 }
 
+function* workEditTask(action: PayloadAction<ITask>) {
+  const task = action?.payload;
+  try {
+    const { success, result }: IResponseTask = yield call(patchData, `/tasks`, task);
+    console.log("action", action);
+    if (success) yield put(editTaskSuccessAction(result))
+  } catch (error) {
+    yield put(taskFailureAction({ errorMessage: `Failed to edit task` }));
+  }
+}
+
 export function* watchTasks() {
   yield takeLatest('ADD_NEW_TASK_ACTION', workAddNewTask);
   yield takeLatest('GET_TASKS_BY_BOARD_ID', workGetTasksByBoardId);
+  yield takeLatest("EDIT_TASK", workEditTask);
 }

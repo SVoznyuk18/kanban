@@ -2,10 +2,12 @@
 
 import { useContext } from "react";
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { IColumn } from '@/TypesRoot';
+import { IColumn, ITask } from '@/TypesRoot';
 
 import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
+import { useDispatch } from "react-redux";
+import { editTaskAction } from '@/ReduxRoot';
 
 
 import { Checkbox, ClassicButton, CustomSelect } from "@/ComponentsRoot"
@@ -23,6 +25,9 @@ const ChangeTask = ({ }) => {
   const { columns } = useTypedSelector(state => state?.columns);
   // const { subtasks } = useTypedSelector(state => state?.subtasks);
 
+  const dispatch = useDispatch();
+
+
   const statuses = columns.map((column: IColumn) => column.columnName);
 
   const methods = useForm({
@@ -34,8 +39,15 @@ const ChangeTask = ({ }) => {
 
   const { formState: { errors } } = methods;
 
+  const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
+
   const onSubmit = async (data: IDataForm) => {
-    console.log(data);
+
+    const configureTask = { ...task, status: data?.status };
+    if (isChangedTask(task, data?.status)) {
+      dispatch(editTaskAction(configureTask));
+    }
+
   };
   return (
     <ModalContent>
