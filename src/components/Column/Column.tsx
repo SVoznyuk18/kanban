@@ -14,6 +14,7 @@ interface IColumnProps {
 const Column: React.FC<IColumnProps> = ({ column }) => {
 
   const { tasks } = useTypedSelector(state => state?.tasks);
+  const { subtasks } = useTypedSelector(state => state?.subtasks);
 
   const [currentColumn, setCurrentColumn] = useState<IColumn | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
@@ -79,8 +80,9 @@ const Column: React.FC<IColumnProps> = ({ column }) => {
               dragEndHandler={dragEndHandler}
               dropHandler={dropHandler}
               key={task?._id}
-              // column={column}
+              column={column}
               task={task}
+              subtasks={subtasks}
             />
           ))
         }

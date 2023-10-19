@@ -2,21 +2,39 @@
 
 import { useContext } from "react";
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { IColumn } from '@/TypesRoot';
 
 import { ModalContext } from '@/LibRoot';
+import { useTypedSelector } from '@/UtilsRoot';
 
-import { Checkbox, ClassicButton } from "@/ComponentsRoot"
+
+import { Checkbox, ClassicButton, CustomSelect } from "@/ComponentsRoot"
 
 import { ModalContent, Title, Form, GroupCheckbox } from './ChangeTask.styled';
 
+
+interface IDataForm {
+  status: string;
+  [key: string]: string;
+}
+
 const ChangeTask = ({ }) => {
-  const { payload: { subtasks, task } } = useContext(ModalContext);
+  const { payload: { subtasks, task, column } } = useContext(ModalContext);
+  const { columns } = useTypedSelector(state => state?.columns);
+  // const { subtasks } = useTypedSelector(state => state?.subtasks);
+
+  const statuses = columns.map((column: IColumn) => column.columnName);
 
   const methods = useForm({
-    mode: "all"
+    mode: "all",
+    defaultValues: {
+      status: column?.columnName
+    }
   });
 
-  const onSubmit = async (data) => {
+  const { formState: { errors } } = methods;
+
+  const onSubmit = async (data: IDataForm) => {
     console.log(data);
   };
   return (
@@ -37,6 +55,15 @@ const ChangeTask = ({ }) => {
               />
             ))}
           </GroupCheckbox>
+          <CustomSelect
+            label="Status"
+            htmlFor='status'
+            id='status'
+            type='text'
+            name='status'
+            errorMessage={errors?.status && errors?.status?.message?.toString()}
+            options={statuses}
+          />
           <ClassicButton
             type='submit'
             width='100%'

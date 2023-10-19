@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useState, createContext, PropsWithChildren, Dispatch, SetStateAction, useCallback } from "react";
-
+import { ISubtask, ITask, IColumn } from '@/TypesRoot';
 interface IModalContext {
   handleOpenModal: (T: string) => void;
   handleCloseModal: () => void;
   setPayload: Dispatch<SetStateAction<any>>;
-  payload: any;
+  payload: {
+    subtasks: ISubtask[];
+    task: ITask;
+    column: IColumn;
+  };
   isOpenModal: boolean;
   modalType: string;
 }
