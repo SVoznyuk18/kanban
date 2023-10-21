@@ -1,13 +1,14 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
   subtaskLoadingAction,
   addNewSubtaskSuccessAction,
   subtaskFailureAction,
   getSubtasksByBoardIdSuccessAction,
+  editSubtasksSuccessAction
 } from '@/ReduxRoot';
 
-import { postData, getDataByParams } from '@/ApiRoot';
+import { postData, getDataByParams, patchData } from '@/ApiRoot';
 
 import { ISubtask } from '@/TypesRoot';
 
@@ -47,7 +48,20 @@ function* workGetSubtasks(action: PayloadAction<{ mainBoardId: string }>) {
   }
 }
 
+function* workEditSubtasks(action: PayloadAction<ISubtask[]>) {
+  try {
+    yield put(subtaskLoadingAction());
+    const { success, result }: IResponseSubtasks = yield call(patchData, `/subtasks`, action.payload);
+    if (success) {
+      yield put(editSubtasksSuccessAction(result))
+    }
+  } catch (error) {
+    yield put(subtaskFailureAction({ errorMessage: `Failed to PATCH subtasks` }));
+  }
+}
+
 export function* watchSubtasks() {
   yield takeLatest('ADD_NEW_SUBTASKS', workAddNewSubtasks);
-  yield takeLatest('GET_SUBTASKS_BY_BOARD_ID', workGetSubtasks)
+  yield takeLatest('GET_SUBTASKS_BY_BOARD_ID', workGetSubtasks);
+  yield takeLatest('EDIT_SUBTASKS', workEditSubtasks);
 }

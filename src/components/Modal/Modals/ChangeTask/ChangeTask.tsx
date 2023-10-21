@@ -2,23 +2,35 @@
 
 import { useContext } from "react";
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { IColumn, ITask } from '@/TypesRoot';
+import { IColumn, ITask, ISubtask } from '@/TypesRoot';
 
 import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { useDispatch } from "react-redux";
-import { editTaskAction } from '@/ReduxRoot';
-
+import { editTaskAction, editSubtasksAction } from '@/ReduxRoot';
 
 import { Checkbox, ClassicButton, CustomSelect } from "@/ComponentsRoot"
 
 import { ModalContent, Title, Form, GroupCheckbox } from './ChangeTask.styled';
 
-
 interface IDataForm {
   status: string;
-  [key: string]: string;
+  [key: string]: boolean;
 }
+
+const findChangedSubtasks = (subtasks: ISubtask[], changedSubtasks: { [key: string]: boolean }): ISubtask[] => {
+  const result: ISubtask[] = [];
+  subtasks.forEach(subtask => {
+    for (let key in changedSubtasks) {
+      if (subtask?._id === key && subtask?.isCompleted !== changedSubtasks[key]) {
+        result.push({ ...subtask, isCompleted: changedSubtasks[key] })
+      }
+    }
+  });
+  return result;
+}
+
+const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
 
 const ChangeTask = ({ }) => {
   const { payload: { subtasks, task, column } } = useContext(ModalContext);
@@ -26,7 +38,6 @@ const ChangeTask = ({ }) => {
   // const { subtasks } = useTypedSelector(state => state?.subtasks);
 
   const dispatch = useDispatch();
-
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
@@ -39,16 +50,14 @@ const ChangeTask = ({ }) => {
 
   const { formState: { errors } } = methods;
 
-  const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
-
   const onSubmit = async (data: IDataForm) => {
-
+    const { status, ...changedSubtasks } = data;
+    const changedSubtasksArray = findChangedSubtasks(subtasks, changedSubtasks);
     const configureTask = { ...task, status: data?.status };
-    if (isChangedTask(task, data?.status)) {
-      dispatch(editTaskAction(configureTask));
-    }
-
+    if (changedSubtasksArray.length > 0) dispatch(editSubtasksAction(changedSubtasksArray));
+    if (isChangedTask(task, data?.status)) dispatch(editTaskAction(configureTask));
   };
+
   return (
     <ModalContent>
       <Title>{task?.taskName}</Title>

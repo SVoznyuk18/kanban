@@ -48,6 +48,8 @@ import {
   subtaskFailureAction,
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
+  editSubtasksAction,
+  editSubtasksSuccessAction
 } from './subtasks/subtasks.actions';
 
 import { store } from './store';
@@ -94,6 +96,8 @@ export {
   subtaskLoadingAction,
   addNewSubtaskSuccessAction,
   subtaskFailureAction,
+  editSubtasksAction,
+  editSubtasksSuccessAction,
 
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
