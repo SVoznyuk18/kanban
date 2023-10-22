@@ -9,7 +9,7 @@ export const createAddNewBoardValidationSchema = (isMatchBoardName: (value: stri
       }),
     columns: yup.array().of(
       yup.object().shape({
-        name: yup.string().required("Required field"),
+        columnName: yup.string().required("Required field"),
         // columnId: yup.string().required("Required field"),
       })
     ),
@@ -20,7 +20,7 @@ export const editBoardValidationSchema = yup.object().shape({
   boardName: yup.string().required("Required field"),
   columns: yup.array().of(
     yup.object().shape({
-      name: yup.string().required("Required field"),
+      columnName: yup.string().required("Required field"),
       // columnId: yup.string().required("Required field"),
     })
   ),
@@ -32,8 +32,42 @@ export const addNewTaskValidationSchema = yup.object().shape({
   status: yup.string().required("Required field"),
   subtasks: yup.array().of(
     yup.object().shape({
-      name: yup.string().required("Required field"),
+      subtaskName: yup.string().required("Required field"),
       // columnId: yup.string().required("Required field"),
     })
   ),
 })
+
+
+// subtasks: yup.array().of(
+//   yup.object().shape({
+//     subtaskName: yup.string().required("Required field"),
+//     // columnId: yup.string().required("Required field"),
+//   })
+// ),
+
+// subtasks: yup.array().when('subtasks', (subtasks, schema) => {
+//   if (subtasks && subtasks.length > 0) {
+//     return schema.of(
+//       yup.object().shape({
+//         subtaskName: yup.string().required("Required field"),
+//         // columnId: yup.string().required("Required field"),
+//       })
+//     );
+//   } else {
+//     return schema; // No validation if subtasks is empty
+//   }
+// }),
+
+// subtasks: yup.lazy((value) => {
+//   if (Array.isArray(value) && value.length > 0) {
+//     return yup.array().of(
+//       yup.object().shape({
+//         subtaskName: yup.string().required("Required field"),
+//         // columnId: yup.string().required("Required field"),
+//       })
+//     );
+//   } else {
+//     return yup.mixed().notRequired(); // No validation if subtasks is empty
+//   }
+// }),

@@ -1,14 +1,14 @@
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { editBoardValidationSchema } from '@/LibRoot';
 import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
-
-import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, AdditionalInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
+
+import { IColumn, ISubtask } from '@/TypesRoot';
 
 interface IBoardComfigure {
   boardName: string;
@@ -17,43 +17,39 @@ interface IBoardComfigure {
 
 interface IColumnsComfigure {
   boardId: string;
-  columns?: { name: string, _id?: string }[];
-  deletedColumns?: { name: string, _id?: string }[];
+  columns: IColumn[];
+  deletedColumns: IColumn[];
 }
 
 interface IBoardFormValue {
   boardName: string
-  columns?: { name: string, _id?: string }[];
-  deleted?: { name: string, _id?: string }[];
+  columns?: Partial<IColumn>[];
+  deletedFields?: Partial<IColumn>[];
 }
 
 const EditBoard = () => {
   const dispatch = useDispatch();
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
-
-  const currentColumns = columnsFromStore.map(column => ({ name: column?.columnName, _id: column?._id }));
-
-  const methods = useForm<IBoardFormValue>({
+  const methods = useForm({
     mode: "all",
     resolver: yupResolver(editBoardValidationSchema),
     defaultValues: {
       boardName: boardFromStore?.boardName,
-      columns: currentColumns
+      columns: columnsFromStore
     }
   });
-
   const { formState: { errors } } = methods;
 
-  const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
+  const onSubmit = async (data: IBoardFormValue) => {
     const editBoardConfigure: IBoardComfigure = {
       boardName: data?.boardName,
       boardId: boardFromStore?._id,
     };
     const editColumnsConfigure: IColumnsComfigure = {
-      boardId: boardFromStore?._id,
-      columns: data?.columns,
-      deletedColumns: data?.deleted,
+      boardId: boardFromStore._id,
+      columns: data.columns as IColumn[],
+      deletedColumns: data.deletedFields as IColumn[],
     };
 
     if (data?.boardName !== boardFromStore?.boardName) dispatch(editBoardAction(editBoardConfigure));
@@ -75,12 +71,13 @@ const EditBoard = () => {
             placeholder='e.g. Web Design'
             errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
           />
-          <AdditionalInput
+          <DynamicInput
             label="Columns"
             id='columns'
             type='text'
-            inputName='columns'
-            buttonName='Add new column'
+            fieldName='columns'
+            inputName="columnName"
+            buttonName='Add new columns'
             errorsMessage={errors?.columns && errors?.columns}
           />
           <ClassicButton

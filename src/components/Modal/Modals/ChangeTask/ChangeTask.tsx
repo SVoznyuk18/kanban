@@ -48,7 +48,7 @@ const ChangeTask = ({ }) => {
     if (isChangedTask(task, data?.status)) dispatch(editTaskAction(configureTask));
     dispatch(editSubtasksAction(subtasks));
   };
-
+  console.log('fields', fields)
   return (
     <ModalContent>
       <Title>{task?.taskName}</Title>

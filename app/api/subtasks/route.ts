@@ -5,6 +5,12 @@ import { Subtask } from '@/ModelsRoot'
 import { ISubtask } from '@/TypesRoot';
 
 
+interface ISubtasksPayload {
+  mainBoardId: string;
+  mainTaskId: string;
+  subtasks: ISubtask[];
+}
+
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
   await connectMongoDB();
@@ -21,10 +27,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectMongoDB();
-  const { mainBoardId, subtasks, mainTaskId } = await req.json();
+  const { mainBoardId, subtasks, mainTaskId }: ISubtasksPayload = await req.json();
 
-  const addedSubtasks = await Promise.all(subtasks.map(async (subtask: string) => {
-    const createdSubtasks = await Subtask.create({ subtaskName: subtask, mainBoardId, mainTaskId });
+  const addedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
+    const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId });
     return createdSubtasks;
   }))
 

@@ -4,13 +4,13 @@ import { IColumn } from "@/TypesRoot";
 
 interface IAddNewColumns {
   mainBoardId: string,
-  columns: { name: string, _id?: string }[]
+  columns: IColumn[]
 };
 
 interface IColumnsComfigure {
   boardId: string;
-  columns?: { name: string, _id?: string }[];
-  deletedColumns?: { name: string, _id?: string }[];
+  columns?: IColumn[];
+  deletedColumns?: IColumn[];
 }
 
 interface IFailure {

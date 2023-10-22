@@ -12,7 +12,7 @@ import { IBoard, IColumn, ITask } from '@/TypesRoot';
 
 interface IAddNewColumns {
   mainBoardId: string,
-  columns: { name: string, _id: string }[]
+  columns: IColumn[]
 }
 
 export async function GET(req: NextRequest) {
@@ -32,9 +32,10 @@ export async function GET(req: NextRequest) {
 export async function POST(req: Request) {
   await connectMongoDB();
   const { columns, mainBoardId }: IAddNewColumns = await req.json();
+  console.log('columns', columns)
 
   const addedColumns = await Promise.all(columns.map(async (column) => {
-    const createdColumns = await Column.create({ columnName: column?.name, mainBoardId });
+    const createdColumns = await Column.create({ columnName: column?.columnName, mainBoardId });
     return createdColumns
   }))
 
@@ -51,8 +52,8 @@ export async function POST(req: Request) {
 
 interface IColumnsComfigure {
   boardId: string;
-  columns: { name: string, _id?: string }[];
-  deletedColumns: { name: string, _id?: string }[];
+  columns: IColumn[];
+  deletedColumns: IColumn[];
 }
 
 export async function PUT(req: NextRequest) {
@@ -73,10 +74,10 @@ export async function PUT(req: NextRequest) {
     const isValidObjectId = mongoose.isValidObjectId(column?._id);
     try {
       if (isValidObjectId) {
-        const updatedColumn = await Column.findOneAndUpdate({ _id: column?._id }, { columnName: column?.name }, { new: true });
+        const updatedColumn = await Column.findOneAndUpdate({ _id: column?._id }, { columnName: column?.columnName }, { new: true });
         return updatedColumn;
       } else {
-        const newColumn = await Column.create({ columnName: column?.name, mainBoardId: boardId });
+        const newColumn = await Column.create({ columnName: column?.columnName, mainBoardId: boardId });
         return newColumn;
       }
     } catch (error) {

@@ -7,12 +7,12 @@ import {
   getAllBoardsSuccessAction,
   addNewColumnsAction
 } from '@/ReduxRoot';
-import { IBoard } from '@/TypesRoot';
+import { IBoard, IColumn } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
 interface INewBoard {
   boardName: string;
-  columns: { name: string, _id: string }[];
+  columns: IColumn[];
 }
 
 interface IResponseBoard {
@@ -35,6 +35,7 @@ function* workAddNewBoards(action: PayloadAction<INewBoard>) {
     yield put(addNewBoardsSuccessAction(allBoards?.result));
 
     if (boardResponse?.success && columns.length > 0) {
+      console.log('columns', columns)
       yield put(addNewColumnsAction({ mainBoardId: boardResponse?.result?._id, columns }))
     } else {
       throw Error()

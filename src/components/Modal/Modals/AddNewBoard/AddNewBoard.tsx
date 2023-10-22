@@ -8,35 +8,31 @@ import { IBoard } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
 import { createAddNewBoardValidationSchema } from '@/LibRoot';
-
-import { ClassicButton, ClassicInput, AdditionalInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, AdditionalInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
+
+import { IColumn, ISubtask } from '@/TypesRoot';
 
 interface IBoardFormValue {
   boardName: string
-  columns?: { name: string, _id?: string }[];
-  deletedColumns?: { name: string, _id?: string }[];
+  columns?: Partial<IColumn>[];
 }
 
 const AddNewBoard = () => {
 
   const dispatch = useDispatch();
   const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
-
   const matchBoardname = (value: string): boolean => {  // check match boardName with Saved boardName
     return boardsFromStore.some((board: IBoard) => board?.url === camelCase(value));
   };
-
   const validationSchema = createAddNewBoardValidationSchema(matchBoardname);
-
-  const methods = useForm<IBoardFormValue>({
+  const methods = useForm({
     mode: "all",
     resolver: yupResolver(validationSchema),
     defaultValues: {
       boardName: ""
     }
   });
-
   const { formState: { errors } } = methods;
 
   const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
@@ -57,12 +53,13 @@ const AddNewBoard = () => {
             placeholder='e.g. Web Design'
             errorMessage={errors?.boardName && errors?.boardName?.message?.toString()}
           />
-          <AdditionalInput
+          <DynamicInput
             label="Columns"
-            id='columnName'
+            id='columns'
             type='text'
-            inputName='columns'
-            buttonName='Add new column'
+            fieldName='columns'
+            inputName="columnName"
+            buttonName='Add new columns'
             errorsMessage={errors?.columns && errors?.columns}
           />
           <ClassicButton

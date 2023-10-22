@@ -1,49 +1,42 @@
 import React from "react"
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema } from '@/LibRoot';
-
-import { IColumn } from '@/TypesRoot';
+import { IColumn, ISubtask } from '@/TypesRoot';
 import { addNewTaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
-import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
 
-interface ITaskFormValue {
+type ITaskFormValue = {
   taskName: string;
   description: string;
   status: string;
-  subtasks?: { name: string }[];
-}
+  subtasks?: Partial<ISubtask>[];
+};
 
 const AddNewTask: React.FC = () => {
 
   const dispatch = useDispatch();
-
   const { columns } = useTypedSelector(state => state?.columns);
   const { board } = useTypedSelector(state => state?.board);
-
   const statuses = columns.map((column: IColumn) => column.columnName);
-
-  const methods = useForm<ITaskFormValue>({
+  const methods = useForm({
     mode: "all",
     resolver: yupResolver(addNewTaskValidationSchema),
     defaultValues: {
       taskName: "",
-      status: ''
+      status: '',
+      subtasks: []
     }
   });
-
   const { formState: { errors } } = methods;
 
-  const onSubmit: SubmitHandler<ITaskFormValue> = async (data) => {
+  const onSubmit = async (data: ITaskFormValue) => {
     const { taskName, description, status, subtasks } = data;
-
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
-
     const configureTaskData = {
       mainBoardId: board?._id,
       columnId: filteredColumnBycolumnName[0]._id,
@@ -78,12 +71,13 @@ const AddNewTask: React.FC = () => {
             resize='none'
             errorMessage={errors?.description && errors?.description?.message?.toString()}
           />
-          <AdditionalInput
+          <DynamicInput
             label="Subtasks"
             id='subtasks'
             type='text'
-            inputName='subtasks'
-            buttonName='Add new subtask'
+            fieldName='subtasks'
+            inputName="subtaskName"
+            buttonName='Add new task'
             errorsMessage={errors?.subtasks && errors?.subtasks}
           />
           <CustomSelect

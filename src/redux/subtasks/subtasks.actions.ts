@@ -5,7 +5,7 @@ import { ISubtask } from "@/TypesRoot";
 interface ISubtasksPayload {
   mainBoardId: string;
   mainTaskId: string;
-  subtasks?: { name: string, _id?: string }[];
+  subtasks?: ISubtask[];
 };
 
 interface IFailure {
