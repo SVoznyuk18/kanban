@@ -1,77 +1,69 @@
 "use client";
 
 import { useContext } from "react";
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { IColumn, ITask, ISubtask } from '@/TypesRoot';
+import { useDispatch } from "react-redux";
 
 import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
-import { useDispatch } from "react-redux";
 import { editTaskAction, editSubtasksAction } from '@/ReduxRoot';
-
 import { Checkbox, ClassicButton, CustomSelect } from "@/ComponentsRoot"
-
-import { ModalContent, Title, Form, GroupCheckbox } from './ChangeTask.styled';
+import { ModalContent, Title, Description, Form, GroupCheckbox, Label } from './ChangeTask.styled';
 
 interface IDataForm {
+  subtasks: ISubtask[];
   status: string;
-  [key: string]: boolean;
-}
-
-const findChangedSubtasks = (subtasks: ISubtask[], changedSubtasks: { [key: string]: boolean }): ISubtask[] => {
-  const result: ISubtask[] = [];
-  subtasks.forEach(subtask => {
-    for (let key in changedSubtasks) {
-      if (subtask?._id === key && subtask?.isCompleted !== changedSubtasks[key]) {
-        result.push({ ...subtask, isCompleted: changedSubtasks[key] })
-      }
-    }
-  });
-  return result;
 }
 
 const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
 
+const countDoneSubtasks = (subtasks: ISubtask[]): string => {
+  const amoutDoneSubtasks: number = subtasks.reduce((accum, subtask) => subtask?.isCompleted ? accum + 1 : accum, 0);
+  return `(${amoutDoneSubtasks} of ${subtasks.length})`
+}
+
 const ChangeTask = ({ }) => {
   const { payload: { subtasks, task, column } } = useContext(ModalContext);
   const { columns } = useTypedSelector(state => state?.columns);
-  // const { subtasks } = useTypedSelector(state => state?.subtasks);
-
   const dispatch = useDispatch();
-
   const statuses = columns.map((column: IColumn) => column.columnName);
-
   const methods = useForm({
     mode: "all",
     defaultValues: {
-      status: column?.columnName
+      status: column?.columnName,
+      subtasks
     }
   });
-
-  const { formState: { errors } } = methods;
+  const { formState: { errors }, control, } = methods;
+  const { fields } = useFieldArray({
+    control,
+    name: "subtasks"
+  });
 
   const onSubmit = async (data: IDataForm) => {
-    const { status, ...changedSubtasks } = data;
-    const changedSubtasksArray = findChangedSubtasks(subtasks, changedSubtasks);
-    const configureTask = { ...task, status: data?.status };
-    if (changedSubtasksArray.length > 0) dispatch(editSubtasksAction(changedSubtasksArray));
+    const { status, subtasks } = data;
+    const configureTask = { ...task, status };
+
     if (isChangedTask(task, data?.status)) dispatch(editTaskAction(configureTask));
+    dispatch(editSubtasksAction(subtasks));
   };
 
   return (
     <ModalContent>
       <Title>{task?.taskName}</Title>
-      {/* <Description></Description> */}
+      <Description>{task?.description}</Description>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <GroupCheckbox>
-            {subtasks && subtasks.map(subtask => (
+            <Label>Subtasks {countDoneSubtasks(subtasks)}</Label>
+            {fields && fields.map((subtask, index) => (
               <Checkbox
                 key={subtask?._id}
                 label={subtask?.subtaskName}
                 htmlFor={subtask?._id}
                 id={subtask?._id}
-                name={subtask?._id}
+                name={`subtasks.${index}.isCompleted`}
                 checked={subtask?.isCompleted}
               />
             ))}
@@ -91,7 +83,7 @@ const ChangeTask = ({ }) => {
             height="40px"
             variant="default"
           >
-            Create New Task
+            Edit Task
           </ClassicButton>
         </Form>
       </FormProvider>

@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-import { useFormContext } from "react-hook-form";
+import { Wrapper, Label, Input } from './Checbox.styled';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string,
@@ -12,29 +13,35 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   checked: boolean;
 }
 
-import { Wrapper, Label, Input } from './Checbox.styled';
-
 const Checkbox = ({ htmlFor, label, id, name, checked }: InputProps) => {
 
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <Wrapper>
-      <Input
-        id={id}
-        type='checkbox'
-        defaultChecked={checked}
-        {...register(name)}
+      <Controller
+        control={control}
+        name={name}
+        render={() => (
+          <>
+            <Input
+              id={id}
+              type='checkbox'
+              defaultChecked={checked}
+              {...register(name)}
+            />
+            {
+              label && (
+                <Label
+                  htmlFor={htmlFor}
+                >
+                  {label}
+                </Label>
+              )
+            }
+          </>
+        )}
       />
-      {
-        label && (
-          <Label
-            htmlFor={htmlFor}
-          >
-            {label}
-          </Label>
-        )
-      }
     </Wrapper>
   )
 };

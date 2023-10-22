@@ -55,7 +55,7 @@ const EditBoard = () => {
       columns: data?.columns,
       deletedColumns: data?.deleted,
     };
-    console.log(editColumnsConfigure)
+
     if (data?.boardName !== boardFromStore?.boardName) dispatch(editBoardAction(editBoardConfigure));
     dispatch(editColumnsAction(editColumnsConfigure));
   };
