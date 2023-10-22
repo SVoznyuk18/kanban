@@ -1,12 +1,14 @@
-import React, { DragEvent } from 'react'
+import React, { DragEvent, useContext } from 'react'
 
 import { ISubtask, ITask, IColumn } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
+import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 
 interface ITaskProps {
   task: ITask,
   column: IColumn,
+  subtasks: ISubtask[];
   draggable: boolean,
   dragOverHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
   dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
@@ -15,9 +17,9 @@ interface ITaskProps {
   dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
 }
 
-const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
+const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
 
-  const { subtasks } = useTypedSelector(state => state?.subtasks);
+  const { handleOpenModal, setPayload } = useContext(ModalContext);
 
   const countDoneSubTasks = (subtasks: ISubtask[]): number => {
     let count: number = 0;
@@ -30,12 +32,18 @@ const Task: React.FC<ITaskProps> = ({ task, column, draggable, dragOverHandler, 
 
   const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
 
+  const openModal = () => {
+    handleOpenModal("ChangeTask");
+    setPayload({ subtasks: filteredSubtasksByTaskId, task, column });
+  }
+
   return (
     <TaskWrapper
       onDragOver={(e) => dragOverHandler(e)}
       onDragLeave={(e) => dragLeaveHandler(e)}
       onDragStart={(e) => dragStartHandler(e, column, task)}
       onDrop={(e) => dropHandler(e, column, task)}
+      onClick={() => openModal()}
       draggable={draggable}
     >
       <Title>{task?.taskName}</Title>

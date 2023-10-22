@@ -37,3 +37,22 @@ export async function POST(req: NextRequest) {
     }
   })
 }
+
+
+export async function PATCH(req: NextRequest) {
+  const task = await req.json();
+
+  await connectMongoDB();
+
+  const updatedTask = await Task.findOneAndUpdate({ _id: task?._id }, { status: task?.status }, { new: true });
+
+  if (!updatedTask) {
+    throw Error("Failed to update task");
+  }
+
+  return NextResponse.json({ success: true, result: updatedTask }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}

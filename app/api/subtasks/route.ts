@@ -2,6 +2,8 @@ import { NextResponse, NextRequest } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 import { Subtask } from '@/ModelsRoot'
+import { ISubtask } from '@/TypesRoot';
+
 
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
@@ -21,16 +23,36 @@ export async function POST(req: Request) {
   await connectMongoDB();
   const { mainBoardId, subtasks, mainTaskId } = await req.json();
 
-  const aadedSubtasks = await Promise.all(subtasks.map(async (subtask: string) => {
+  const addedSubtasks = await Promise.all(subtasks.map(async (subtask: string) => {
     const createdSubtasks = await Subtask.create({ subtaskName: subtask, mainBoardId, mainTaskId });
     return createdSubtasks;
   }))
 
-  if (!aadedSubtasks) {
+  if (!addedSubtasks) {
     throw Error("Failed to create subtasks");
   }
 
-  return NextResponse.json({ success: true, result: aadedSubtasks }, {
+  return NextResponse.json({ success: true, result: addedSubtasks }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}
+
+export async function PATCH(req: NextRequest) {
+  const subtasks: ISubtask[] = await req.json();
+
+  await connectMongoDB();
+
+  const updatedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
+    return await Subtask.findOneAndUpdate({ _id: subtask?._id }, { isCompleted: subtask?.isCompleted }, { new: true });
+  }));
+
+  if (!updatedSubtasks) {
+    throw Error("Failed to update task");
+  }
+
+  return NextResponse.json({ success: true, result: updatedSubtasks }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }

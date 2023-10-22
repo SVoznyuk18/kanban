@@ -20,3 +20,6 @@ export const addNewSubtaskSuccessAction = createAction('subtasks/addNewSubtaskSu
 
 export const getSubtasksByBoardIdAction = createAction('GET_SUBTASKS_BY_BOARD_ID', (mainBoardId: { mainBoardId: string }) => ({ payload: mainBoardId }));
 export const getSubtasksByBoardIdSuccessAction = createAction('subtasks/getSubtasksByBoardIdSuccess', (subtasks: ISubtask[]) => ({ payload: subtasks }));
+
+export const editSubtasksAction = createAction("EDIT_SUBTASKS", (subtasks: ISubtask[]) => ({ payload: subtasks }));
+export const editSubtasksSuccessAction = createAction('subtasks/editSubtasksSuccess', (subtasks: ISubtask[]) => ({ payload: subtasks }));

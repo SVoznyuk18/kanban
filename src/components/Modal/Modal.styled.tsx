@@ -1,5 +1,6 @@
 
 import styled from 'styled-components';
+import { media } from '../../utils/mediaTypes';
 
 interface Iprops {
 	isOpenModal?: boolean
@@ -18,6 +19,9 @@ export const ModalWrapper = styled.div<Iprops>`
 	transform: ${({ isOpenModal }) => (isOpenModal ? 'scale(1)' : 'none')};
 	z-index: ${({ isOpenModal }) => (isOpenModal ? '99999' : -'10')};
 	opacity: ${({ isOpenModal }) => (isOpenModal ? 1 : 0)};
+	${media.mobile} {
+		padding: 0 16px;
+	}
 `;
 
 export const ModalContent = styled.div`
@@ -28,6 +32,11 @@ export const ModalContent = styled.div`
 	padding: 32px ;
 	background-color: ${({ theme }) => theme.secondaryBgColor};
 	border-radius: 20px;
+
+	${media.mobile} {
+		padding: 24px;
+	}
+
 `;
 
 export const CloseButton = styled.div`

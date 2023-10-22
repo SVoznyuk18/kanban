@@ -35,7 +35,10 @@ import {
   addNewTaskSuccessAction,
   getTasksByBoardIdAction,
   getTasksByBoardIdSuccessAction,
-  taskFailureAction
+  taskFailureAction,
+
+  editTaskAction,
+  editTaskSuccessAction
 } from './tasks/tasks.action';
 
 import {
@@ -45,6 +48,8 @@ import {
   subtaskFailureAction,
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
+  editSubtasksAction,
+  editSubtasksSuccessAction
 } from './subtasks/subtasks.actions';
 
 import { store } from './store';
@@ -84,11 +89,15 @@ export {
   getTasksByBoardIdAction,
   getTasksByBoardIdSuccessAction,
   taskFailureAction,
+  editTaskAction,
+  editTaskSuccessAction,
 
   addNewSubtasksAction,
   subtaskLoadingAction,
   addNewSubtaskSuccessAction,
   subtaskFailureAction,
+  editSubtasksAction,
+  editSubtasksSuccessAction,
 
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
