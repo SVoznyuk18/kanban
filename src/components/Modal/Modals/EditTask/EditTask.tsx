@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
-import { addNewTaskAction } from '@/ReduxRoot';
+import { addNewTaskAction, editTaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
@@ -42,18 +42,21 @@ const EditTask: React.FC = () => {
   const { formState: { errors } } = methods;
 
   const onSubmit = async (data: ITaskFormValue) => {
-    // const { taskName, description, status, subtasks } = data;
-    // const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
-    // const configureTaskData = {
-    //   mainBoardId: board?._id,
-    //   columnId: filteredColumnBycolumnName[0]._id,
-    //   taskName,
-    //   description,
-    //   status,
-    //   subtasks
-    // }
+    const { taskName, description, status, subtasks } = data;
+    const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
+    const configureTaskData = {
+      _id: task?._id,
+      mainBoardId: board?._id,
+      columnId: filteredColumnBycolumnName[0]._id,
+      taskName,
+      description,
+      status,
+      // subtasks
+    }
     // dispatch(addNewTaskAction(configureTaskData));
+    dispatch(editTaskAction(configureTaskData));
     console.log('data', data)
+    console.log('filteredColumnBycolumnName', filteredColumnBycolumnName)
   };
 
 

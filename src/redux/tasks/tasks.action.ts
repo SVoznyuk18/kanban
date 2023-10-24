@@ -24,7 +24,7 @@ export const addNewTaskSuccessAction = createAction('tasks/addNewTaskSuccess', (
 export const getTasksByBoardIdAction = createAction('GET_TASKS_BY_BOARD_ID', (mainBoardId: { mainBoardId: string }) => ({ payload: mainBoardId }));
 export const getTasksByBoardIdSuccessAction = createAction('tasks/getTasksByBoardIdSuccess', (tasks: ITask[]) => ({ payload: tasks }));
 
-export const editTaskAction = createAction("EDIT_TASK", (task: ITask) => ({ payload: task }));
-export const editTaskSuccessAction = createAction("tasks/editTaskSuccess", (task: ITask) => ({ payload: task }));
+export const editTaskAction = createAction("EDIT_TASK", (task: Partial<ITask>) => ({ payload: task }));
+export const editTaskSuccessAction = createAction("tasks/editTaskSuccess", (task: Partial<ITask>) => ({ payload: task }));
 
 
