@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
-import { addNewTaskAction, editTaskAction } from '@/ReduxRoot';
+import { addNewTaskAction, editTaskAction, editSubtasksAction, addNewSubtasksAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
@@ -25,7 +25,7 @@ const EditTask: React.FC = () => {
   const { board } = useTypedSelector(state => state?.board);
   // const { tasks } = useTypedSelector(state => state?.tasks);
   // const { subtasks } = useTypedSelector(state => state?.subtasks);
-  const { payload: { subtasks, task, column }, handleOpenModal, setPayload } = useContext(ModalContext);
+  const { payload: { subtasks: currentSubtasks, task }, handleOpenModal, setPayload } = useContext(ModalContext);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
@@ -36,14 +36,28 @@ const EditTask: React.FC = () => {
       taskName: task?.taskName,
       description: task?.description,
       status: task?.status,
-      subtasks: subtasks
+      subtasks: currentSubtasks
     }
   });
   const { formState: { errors } } = methods;
 
+
+  function separateItem<T>(mainArr: T[], newArr: T[]): [T[], T[]] {
+    const dictionaryMain: Record<string, T> = {};
+    //@ts-ignore
+    mainArr.forEach(item => { dictionaryMain[item?._id] = item });
+    //@ts-ignore
+    const extraItems = newArr.filter(item => !(item?._id in dictionaryMain));
+    //@ts-ignore
+    const basicItems = newArr.filter(item => item?._id in dictionaryMain);
+
+    return [extraItems, basicItems];
+  }
+
   const onSubmit = async (data: ITaskFormValue) => {
     const { taskName, description, status, subtasks } = data;
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
+    const [extraSubtasks, basicSubtasks] = separateItem(currentSubtasks as ISubtask[], data?.subtasks as ISubtask[]);
     const configureTaskData = {
       _id: task?._id,
       mainBoardId: board?._id,
@@ -51,12 +65,16 @@ const EditTask: React.FC = () => {
       taskName,
       description,
       status,
-      // subtasks
+    };
+    const configureAddNewSubtasks = {
+      mainBoardId: board?._id,
+      mainTaskId: task?._id,
+      subtasks: extraSubtasks
     }
-    // dispatch(addNewTaskAction(configureTaskData));
-    dispatch(editTaskAction(configureTaskData));
-    console.log('data', data)
-    console.log('filteredColumnBycolumnName', filteredColumnBycolumnName)
+    dispatch(editTaskAction(configureTaskData)); //edit task
+    dispatch(editSubtasksAction(basicSubtasks)); //edit subtasks
+    dispatch(addNewSubtasksAction(configureAddNewSubtasks)); // create new subtasks
+
   };
 
 

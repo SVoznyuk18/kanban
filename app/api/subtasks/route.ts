@@ -51,8 +51,28 @@ export async function PATCH(req: NextRequest) {
   await connectMongoDB();
 
   const updatedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
-    return await Subtask.findOneAndUpdate({ _id: subtask?._id }, { isCompleted: subtask?.isCompleted }, { new: true });
+    const apdatedSubtask = await Subtask.findOneAndUpdate({ _id: subtask?._id }, subtask, { new: true });
+    return apdatedSubtask;
+    // if (apdatedSubtask) return apdatedSubtask;
+    // const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId });
+    // return createdSubtasks;
   }));
+
+  // const updatedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
+  //   const isValidObjectId = mongoose.isValidObjectId(subtask?._id);
+  //   try {
+  //     if (isValidObjectId) {
+  //       const apdatedSubtask = await Subtask.findOneAndUpdate({ _id: subtask?._id }, subtask, { new: true });
+  //       return apdatedSubtask;
+  //     } else {
+  //       const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId });
+  //       return createdSubtasks;
+  //     }
+  //   } catch (error) {
+  //     console.error('Помилка при оновленні або створенні subtask:', error);
+  //   }
+  // }));
+
 
   if (!updatedSubtasks) {
     throw Error("Failed to update task");
