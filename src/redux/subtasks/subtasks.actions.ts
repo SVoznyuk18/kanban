@@ -3,9 +3,9 @@ import { createAction } from "@reduxjs/toolkit";
 import { ISubtask } from "@/TypesRoot";
 
 interface ISubtasksPayload {
-  mainBoardId: string;
-  mainTaskId: string;
-  subtasks?: { name: string, _id?: string }[];
+  mainBoardId?: string;
+  mainTaskId?: string;
+  subtasks?: Partial<ISubtask>[];
 };
 
 interface IFailure {

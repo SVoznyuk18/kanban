@@ -24,7 +24,7 @@ const countDoneSubtasks = (subtasks: ISubtask[]): string => {
 }
 
 const ChangeTask = ({ }) => {
-  const { payload: { subtasks, task, column } } = useContext(ModalContext);
+  const { payload: { subtasks, task, column }, handleOpenModal, setPayload } = useContext(ModalContext);
   const { columns } = useTypedSelector(state => state?.columns);
   const dispatch = useDispatch();
   const statuses = columns.map((column: IColumn) => column.columnName);
@@ -48,6 +48,12 @@ const ChangeTask = ({ }) => {
     if (isChangedTask(task, data?.status)) dispatch(editTaskAction(configureTask));
     dispatch(editSubtasksAction(subtasks));
   };
+
+  const openModal = () => {
+    // handleCloseModal();
+    handleOpenModal("EditTask");
+    setPayload({ subtasks, task, column });
+  }
 
   return (
     <ModalContent>
@@ -87,6 +93,7 @@ const ChangeTask = ({ }) => {
           </ClassicButton>
         </Form>
       </FormProvider>
+      <button onClick={() => openModal()}>sssssssssssssss</button>
     </ModalContent>
   )
 };

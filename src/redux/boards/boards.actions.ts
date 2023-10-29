@@ -1,9 +1,9 @@
 import { createAction } from "@reduxjs/toolkit";
-import { IBoard } from '@/TypesRoot';
+import { IBoard, IColumn } from '@/TypesRoot';
 
 interface INewBoard {
   boardName: string
-  columns?: { name: string, _id?: string }[]
+  columns?: Partial<IColumn>[];
 }
 
 interface IFailure {

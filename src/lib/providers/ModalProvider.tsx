@@ -24,12 +24,12 @@ export const ModalProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [payload, setPayload] = useState<any>(null);
 
   const handleOpenModal = (modaType: string) => {
-    setIsOpenModal(!isOpenModal);
+    setIsOpenModal(true);
     setModalType(modaType);
   }
 
   const handleCloseModal = () => {
-    setIsOpenModal(!isOpenModal);
+    setIsOpenModal(false);
   }
 
   return (

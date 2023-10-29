@@ -12,7 +12,7 @@ import {
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams, patchData } from '@/ApiRoot';
-import { ITask } from '@/TypesRoot';
+import { ITask, ISubtask } from '@/TypesRoot';
 
 interface ITaskPayload {
   taskName: string;
@@ -20,7 +20,7 @@ interface ITaskPayload {
   status: string;
   mainBoardId: string;
   columnId: string;
-  subtasks?: { name: string, _id?: string }[];
+  subtasks?: ISubtask[];
 }
 
 interface IResponseTask {

@@ -17,13 +17,13 @@ interface IResponseColumns {
 };
 interface IAddNewColumns {
   mainBoardId: string,
-  columns: { columnName: string, columnId: string }[]
+  columns: IColumn[]
 }
 
 interface IColumnsComfigure {
   boardId: string;
-  columns?: { name: string, _id?: string }[];
-  deletedColumns?: { name: string, _id?: string }[];
+  columns?: IColumn[];
+  deletedColumns?: IColumn[];
 }
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {

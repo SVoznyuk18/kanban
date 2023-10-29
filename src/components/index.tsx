@@ -16,5 +16,6 @@ import Teaxtarea from './Teaxtarea/Textarea';
 import CustomSelect from './CustomSelect/CustomSelect';
 import DropDownMenu from './DropDownMenu/DropDownMenu';
 import Checkbox from "./Checkbox/Checkbox";
+import DynamicInput from './DynamicInput/DynamicInput';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DropDownMenu, Checkbox };
+export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DropDownMenu, Checkbox, DynamicInput };

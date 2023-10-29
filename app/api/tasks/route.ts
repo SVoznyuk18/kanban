@@ -44,7 +44,7 @@ export async function PATCH(req: NextRequest) {
 
   await connectMongoDB();
 
-  const updatedTask = await Task.findOneAndUpdate({ _id: task?._id }, { status: task?.status }, { new: true });
+  const updatedTask = await Task.findOneAndUpdate({ _id: task?._id }, task, { new: true });
 
   if (!updatedTask) {
     throw Error("Failed to update task");

@@ -1,14 +1,15 @@
-import React from "react"
+
+import React, { useContext } from "react"
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 
-import { addNewTaskValidationSchema } from '@/LibRoot';
+import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
-import { addNewTaskAction } from '@/ReduxRoot';
+import { addNewTaskAction, editTaskAction, editSubtasksAction, addNewSubtasksAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
-import { ModalContent, Title, Form } from './AddNewTask.styled';
+import { ModalContent, Title, Form } from './EditTask.styled';
 
 type ITaskFormValue = {
   taskName: string;
@@ -17,40 +18,69 @@ type ITaskFormValue = {
   subtasks?: Partial<ISubtask>[];
 };
 
-const AddNewTask: React.FC = () => {
+const EditTask: React.FC = () => {
 
   const dispatch = useDispatch();
   const { columns } = useTypedSelector(state => state?.columns);
   const { board } = useTypedSelector(state => state?.board);
+  // const { tasks } = useTypedSelector(state => state?.tasks);
+  // const { subtasks } = useTypedSelector(state => state?.subtasks);
+  const { payload: { subtasks: currentSubtasks, task }, handleOpenModal, setPayload } = useContext(ModalContext);
+
   const statuses = columns.map((column: IColumn) => column.columnName);
+
   const methods = useForm({
     mode: "all",
     resolver: yupResolver(addNewTaskValidationSchema),
     defaultValues: {
-      taskName: "",
-      status: '',
-      subtasks: []
+      taskName: task?.taskName,
+      description: task?.description,
+      status: task?.status,
+      subtasks: currentSubtasks
     }
   });
   const { formState: { errors } } = methods;
 
+
+  function separateItem<T>(mainArr: T[], newArr: T[]): [T[], T[]] {
+    const dictionaryMain: Record<string, T> = {};
+    //@ts-ignore
+    mainArr.forEach(item => { dictionaryMain[item?._id] = item });
+    //@ts-ignore
+    const extraItems = newArr.filter(item => !(item?._id in dictionaryMain));
+    //@ts-ignore
+    const basicItems = newArr.filter(item => item?._id in dictionaryMain);
+
+    return [extraItems, basicItems];
+  }
+
   const onSubmit = async (data: ITaskFormValue) => {
     const { taskName, description, status, subtasks } = data;
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
+    const [extraSubtasks, basicSubtasks] = separateItem(currentSubtasks as ISubtask[], data?.subtasks as ISubtask[]);
     const configureTaskData = {
+      _id: task?._id,
       mainBoardId: board?._id,
       columnId: filteredColumnBycolumnName[0]._id,
       taskName,
       description,
       status,
-      subtasks
+    };
+    const configureAddNewSubtasks = {
+      mainBoardId: board?._id,
+      mainTaskId: task?._id,
+      subtasks: extraSubtasks
     }
-    dispatch(addNewTaskAction(configureTaskData));
+    dispatch(editTaskAction(configureTaskData)); //edit task
+    dispatch(editSubtasksAction(basicSubtasks)); //edit subtasks
+    dispatch(addNewSubtasksAction(configureAddNewSubtasks)); // create new subtasks
+
   };
+
 
   return (
     <ModalContent>
-      <Title>Add New Task</Title>
+      <Title>Edit Task</Title>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <ClassicInput
@@ -103,4 +133,4 @@ const AddNewTask: React.FC = () => {
   )
 }
 
-export default AddNewTask;
+export default EditTask;
