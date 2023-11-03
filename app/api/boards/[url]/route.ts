@@ -21,6 +21,7 @@ export async function DELETE(req: NextRequest) {
 
   const boardId = req.nextUrl.searchParams.get('id');
 
+
   await connectMongoDB();
 
   const deletedBoard = await Board.deleteOne({ _id: boardId });

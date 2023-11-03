@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
-import { addNewTaskAction, editTaskAction, editSubtasksAction, addNewSubtasksAction } from '@/ReduxRoot';
+import { addNewTaskAction, editTaskAction, editSubtasksAction, addNewSubtasksAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
@@ -16,6 +16,7 @@ type ITaskFormValue = {
   description: string;
   status: string;
   subtasks?: Partial<ISubtask>[];
+  deletedFields?: ISubtask[];
 };
 
 const EditTask: React.FC = () => {
@@ -39,7 +40,7 @@ const EditTask: React.FC = () => {
       subtasks: currentSubtasks
     }
   });
-  const { formState: { errors } } = methods;
+  const { handleSubmit, formState: { errors } } = methods;
 
 
   function separateItem<T>(mainArr: T[], newArr: T[]): [T[], T[]] {
@@ -55,7 +56,8 @@ const EditTask: React.FC = () => {
   }
 
   const onSubmit = async (data: ITaskFormValue) => {
-    const { taskName, description, status, subtasks } = data;
+    const { taskName, description, status, subtasks, deletedFields } = data;
+
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
     const [extraSubtasks, basicSubtasks] = separateItem(currentSubtasks as ISubtask[], data?.subtasks as ISubtask[]);
     const configureTaskData = {
@@ -73,16 +75,17 @@ const EditTask: React.FC = () => {
     }
     dispatch(editTaskAction(configureTaskData)); //edit task
     dispatch(editSubtasksAction(basicSubtasks)); //edit subtasks
-    dispatch(addNewSubtasksAction(configureAddNewSubtasks)); // create new subtasks
-
+    if (extraSubtasks.length > 0) dispatch(addNewSubtasksAction(configureAddNewSubtasks));  // create new subtasks
+    if (Array.isArray(deletedFields) && deletedFields.length > 0) {
+      dispatch(deleteSubtaskAction(deletedFields as ISubtask[]));     // delete subtasks
+    }
   };
-
 
   return (
     <ModalContent>
       <Title>Edit Task</Title>
       <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <ClassicInput
             label="Title"
             htmlFor='taskName'

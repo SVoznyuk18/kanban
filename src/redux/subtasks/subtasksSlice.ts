@@ -41,6 +41,7 @@ const subtasksSlice = createSlice({
     editSubtasksSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
       const newSubtasks = state.subtasks;
       const dictionaryUpdatedSubtasks: { [key: string]: ISubtask } = {};
+
       payload.forEach(subtask => { dictionaryUpdatedSubtasks[subtask?._id] = subtask });
 
       newSubtasks.forEach((subtask, index) => {
@@ -50,7 +51,18 @@ const subtasksSlice = createSlice({
 
       state.isLoading = false;
       state.subtasks = newSubtasks;
-    }
+    },
+    deleteSubtaskSuccess: (state: ISubtasksState, { payload }: PayloadAction<ISubtask[]>) => {
+      const dictionaryDeletedSubtasks: { [key: string]: ISubtask } = {};
+      payload.forEach(subtask => { dictionaryDeletedSubtasks[subtask?._id] = subtask });
+
+      const newSubtasks = state.subtasks.filter((subtask) => (
+        subtask?._id !== dictionaryDeletedSubtasks[subtask?._id]?._id
+      ));
+
+      state.isLoading = false;
+      state.subtasks = newSubtasks;
+    },
   }
 });
 

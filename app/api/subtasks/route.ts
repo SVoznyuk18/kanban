@@ -84,3 +84,28 @@ export async function PATCH(req: NextRequest) {
     }
   })
 }
+
+
+export async function DELETE(req: NextRequest) {
+
+  const subtasks: ISubtask[] = await req.json();
+
+  await connectMongoDB();
+
+  const deletedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
+    const deletedSubtask = await Subtask.findOneAndDelete({ _id: subtask?._id });
+    return deletedSubtask;
+  }));
+
+  if (deletedSubtasks?.length === 0) {
+    return NextResponse.json({ success: false, msg: "Failed to delete subtasks" }, {
+      status: 404
+    })
+  }
+
+  return NextResponse.json({ success: true, result: deletedSubtasks }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}
