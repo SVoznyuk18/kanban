@@ -49,7 +49,9 @@ import {
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,
   editSubtasksAction,
-  editSubtasksSuccessAction
+  editSubtasksSuccessAction,
+  deleteSubtaskAction,
+  deleteSubtaskSuccessAction
 } from './subtasks/subtasks.actions';
 
 import { store } from './store';
@@ -98,6 +100,8 @@ export {
   subtaskFailureAction,
   editSubtasksAction,
   editSubtasksSuccessAction,
+  deleteSubtaskAction,
+  deleteSubtaskSuccessAction,
 
   getSubtasksByBoardIdAction,
   getSubtasksByBoardIdSuccessAction,

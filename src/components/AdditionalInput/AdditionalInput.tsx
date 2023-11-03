@@ -26,14 +26,7 @@ const AdditionalInput = ({
 
   const [deletedInputs, setDeletedInputs] = useState<{ id: string; name: string; _id: string }[]>([]);
 
-  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
-    e.preventDefault();
-    // @ts-ignore
-    const deletedColumns: { id: string; name: string; _id: string }[] = fields.filter(field => field?._id === fields[index]._id);
-    setDeletedInputs([...deletedInputs, ...deletedColumns]);
-    setValue(`deleted${name}`, [...deletedInputs, ...deletedColumns])
-    remove(index);
-  }
+
 
   const {
     control,
@@ -50,6 +43,14 @@ const AdditionalInput = ({
   const handleAddInput = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     append({ name: '', _id: `${Date.now()}` });
+  }
+  const handleDeleteInput = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    e.preventDefault();
+    // @ts-ignore
+    const deletedColumns: { id: string; name: string; _id: string }[] = fields.filter(field => field?._id === fields[index]._id);
+    setDeletedInputs([...deletedInputs, ...deletedColumns]);
+    setValue(`deleted`, [...deletedInputs, ...deletedColumns])
+    remove(index);
   }
 
   return (

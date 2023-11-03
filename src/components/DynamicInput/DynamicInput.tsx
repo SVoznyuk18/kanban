@@ -42,15 +42,16 @@ const DynamicInput = ({
 
   const handleDeleteInput = (index: number) => {
     // @ts-ignore
-    const deletedColumns: IColumn | ISubtask | ITask = fields.filter(field => {
+    const deletedFields: IColumn | ISubtask | ITask = fields.filter(field => {
       if ('createdAt' in field) {
         // @ts-ignore
         return field?._id === fields[index]._id
       }
     })
-    setDeletedInputs(prev => [...prev, deletedColumns]);
     // @ts-ignore
-    setValue(`deletedFields`, [...deletedInputs, ...deletedColumns])
+    setDeletedInputs(prev => [...prev, ...deletedFields]);
+    // @ts-ignore
+    setValue(`deletedFields`, [...deletedInputs, ...deletedFields])
     remove(index);
   }
 
@@ -58,8 +59,8 @@ const DynamicInput = ({
     <Wrapper>
       <Title>{label}</Title>
       {
-        fields && fields.map((subtask, index) => (
-          <InputWrapper key={index}>
+        fields && fields.map((field, index) => (
+          <InputWrapper key={field?.id}>
             <Input
               type={type}
               {...register(`${[fieldName]}.${index}.${[inputName]}`)}

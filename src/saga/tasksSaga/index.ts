@@ -71,7 +71,6 @@ function* workEditTask(action: PayloadAction<ITask>) {
   const task = action?.payload;
   try {
     const { success, result }: IResponseTask = yield call(patchData, `/tasks`, task);
-    console.log("action", action);
     if (success) yield put(editTaskSuccessAction(result))
   } catch (error) {
     yield put(taskFailureAction({ errorMessage: `Failed to edit task` }));

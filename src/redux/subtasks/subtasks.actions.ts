@@ -23,3 +23,6 @@ export const getSubtasksByBoardIdSuccessAction = createAction('subtasks/getSubta
 
 export const editSubtasksAction = createAction("EDIT_SUBTASKS", (subtasks: ISubtask[]) => ({ payload: subtasks }));
 export const editSubtasksSuccessAction = createAction('subtasks/editSubtasksSuccess', (subtasks: ISubtask[]) => ({ payload: subtasks }));
+
+export const deleteSubtaskAction = createAction("DELETE_SUBTASKS", (subtasks: ISubtask[]) => ({ payload: subtasks }));
+export const deleteSubtaskSuccessAction = createAction("subtasks/deleteSubtaskSuccess", (subtasks: ISubtask[]) => ({ payload: subtasks }));

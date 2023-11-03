@@ -5,10 +5,11 @@ import {
   addNewSubtaskSuccessAction,
   subtaskFailureAction,
   getSubtasksByBoardIdSuccessAction,
-  editSubtasksSuccessAction
+  editSubtasksSuccessAction,
+  deleteSubtaskSuccessAction
 } from '@/ReduxRoot';
 
-import { postData, getDataByParams, patchData } from '@/ApiRoot';
+import { postData, getDataByParams, patchData, deleteData, deleteDataTest } from '@/ApiRoot';
 
 import { ISubtask } from '@/TypesRoot';
 
@@ -60,8 +61,22 @@ function* workEditSubtasks(action: PayloadAction<ISubtask[]>) {
   }
 }
 
+function* workDeleteSubtasks(action: PayloadAction<ISubtask[]>) {
+  const deletedSubtask = action.payload;
+  try {
+    yield put(subtaskLoadingAction());
+    const { success, result }: IResponseSubtasks = yield call(deleteDataTest, `/subtasks`, deletedSubtask);
+    if (success) {
+      yield put(deleteSubtaskSuccessAction(result))
+    }
+  } catch (error) {
+    yield put(subtaskFailureAction({ errorMessage: `Failed to DELETE subtasks` }));
+  }
+}
+
 export function* watchSubtasks() {
   yield takeLatest('ADD_NEW_SUBTASKS', workAddNewSubtasks);
   yield takeLatest('GET_SUBTASKS_BY_BOARD_ID', workGetSubtasks);
   yield takeLatest('EDIT_SUBTASKS', workEditSubtasks);
+  yield takeLatest('DELETE_SUBTASKS', workDeleteSubtasks);
 }

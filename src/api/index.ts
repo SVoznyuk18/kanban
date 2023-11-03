@@ -65,9 +65,21 @@ export const patchData = async<T>(url: string, post): Promise<T | undefined> => 
   }
 }
 
-export const deleteData = async<T>(url: string, id: string): Promise<T | undefined> => {
+export const deleteData = async<T>(url: string, post: any): Promise<T | undefined> => {
   try {
-    const response: AxiosResponse<T> = await server.delete(url, { params: { id } });
+    const response: AxiosResponse<T> = await server.delete(url, { params: { post } });
+    return response.data;
+    //@ts-ignore
+
+  } catch (error: AxiosError<ErrorResponse>) {
+    console.error(`Error deleting data to ${url}:`, error.message);
+  }
+}
+
+
+export const deleteDataTest = async<T>(url: string, post: any): Promise<T | undefined> => {
+  try {
+    const response: AxiosResponse<T> = await server.delete(url, { data: post });
     return response.data;
     //@ts-ignore
 
