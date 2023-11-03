@@ -62,7 +62,7 @@ function* workerDeleteBoard(action: PayloadAction<{ boardId: string }>) {
 
   try {
     yield put(boardLoadingAction());
-    const { success, result }: { success: boolean, result: string } = yield call(deleteData, `/boards/${boardId}`, boardId);
+    const { success, result }: { success: boolean, result: string } = yield call(deleteData, `/boards`, { boardId });
     if (success) {
       yield put(deleteBoardSuccessAction());
       yield put(deletBoardByIdSuccesAction(boardId));
