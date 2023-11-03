@@ -9,7 +9,7 @@ import {
   deleteSubtaskSuccessAction
 } from '@/ReduxRoot';
 
-import { postData, getDataByParams, patchData, deleteData, deleteDataTest } from '@/ApiRoot';
+import { postData, getDataByParams, patchData, deleteData } from '@/ApiRoot';
 
 import { ISubtask } from '@/TypesRoot';
 
@@ -65,7 +65,7 @@ function* workDeleteSubtasks(action: PayloadAction<ISubtask[]>) {
   const deletedSubtask = action.payload;
   try {
     yield put(subtaskLoadingAction());
-    const { success, result }: IResponseSubtasks = yield call(deleteDataTest, `/subtasks`, deletedSubtask);
+    const { success, result }: IResponseSubtasks = yield call(deleteData, `/subtasks`, deletedSubtask);
     if (success) {
       yield put(deleteSubtaskSuccessAction(result))
     }
