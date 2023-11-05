@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 
 interface IProps {
-  position?: string;
-  top: string;
-  right: string;
-  isShow: boolean;
+	position?: string;
+	top: string;
+	right: string;
+	isShow: boolean;
 }
 
 export const BurgerMenuWrapper = styled.div`
@@ -60,18 +60,4 @@ export const MenuList = styled.ul`
 	justify-content: center;
 	align-items: start;
 	row-gap: 16px;
-`;
-
-export const MenuItem = styled.li`
-	width: 100%;
-	color: #828FA3;
-	font-size: 13px;
-	font-weight: 500;
-	list-style-type: none;
-	line-height: 23px;
-	cursor: pointer;
-	&:hover {
-	
-		background-color: #E4EBFA;
-	}
 `;

@@ -1,8 +1,8 @@
 'use client'
-import React, { memo, useContext, useState } from "react";
+import React, { Dispatch, SetStateAction, memo } from "react";
 
 import { ModalContext } from '@/LibRoot';
-import { BurgerMenuWrapper, Controls, Menu, MenuList, MenuItem } from './BurgerMenu.styled';
+import { BurgerMenuWrapper, Controls, Menu, MenuList } from './BurgerMenu.styled';
 
 interface IMenuItems {
   title: string;
@@ -10,33 +10,26 @@ interface IMenuItems {
 }
 
 interface IProps {
+  children: React.ReactNode;
   top: string;
   right: string;
-  menuItems: IMenuItems[];
+  isShow: boolean;
+  toggleShowCb: Dispatch<SetStateAction<boolean>>
+
 }
 
-const BurgerMenu = ({ top, right, menuItems }: IProps) => {
-
-  const { handleOpenModal } = useContext(ModalContext);
-  const [toggleMenu, setToggleMenu] = useState<boolean>(false);
-
-  const openModal = (modalType: string): void => {
-    handleOpenModal(modalType);
-    setToggleMenu(prev => !prev);
-  }
+const BurgerMenu = ({ children, top, right, isShow, toggleShowCb }: IProps) => {
 
   return (
     <BurgerMenuWrapper>
-      <Controls onClick={() => setToggleMenu(prev => !prev)}>
+      <Controls onClick={() => toggleShowCb(prev => !prev)}>
         <span></span>
         <span></span>
         <span></span>
       </Controls>
-      <Menu top={top} right={right} isShow={toggleMenu}>
+      <Menu top={top} right={right} isShow={isShow}>
         <MenuList>
-          {menuItems && menuItems.map((elem, index) => (
-            <MenuItem key={index} onClick={() => openModal(elem?.modalType)} >{elem?.title}</MenuItem>
-          ))}
+          {children}
         </MenuList>
       </Menu>
     </BurgerMenuWrapper>

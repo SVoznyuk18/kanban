@@ -21,7 +21,7 @@ const DeleteTask = () => {
     <ModalContent>
       <Title>Delete Task</Title>
       <Description>
-        `Are you sure you want to delete the &lsquo;${task?.taskName}&lsquo; This action will remove all subtasks.`
+        `Are you sure you want to delete the &lsquo;{task?.taskName}&lsquo; This action will remove all subtasks.`
       </Description>
       <ButtonsWrapper>
         <ClassicButton

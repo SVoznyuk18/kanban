@@ -10,28 +10,23 @@ import { MobileMenu, CustomSVG, ClassicButton, BurgerMenu } from '@/ComponentsRo
 import { SVGPath } from '@/ConstantsRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 
-import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection } from './Header.styled';
-
-const menuItems = [
-	{
-		title: "Edit Board",
-		modalType: "EditBoard",
-	},
-	{
-		title: "Edit Board",
-		modalType: "EditBoard",
-	}
-]
+import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, MenuItem } from './Header.styled';
 
 const Header = () => {
 	const { isMobile } = useContext(WindowSizeContext);
 	const { handleOpenModal } = useContext(ModalContext);
 	const [toggleMobileMenu, setToggleMobileMenu] = useState<boolean>(false);
+	const [toggleShowMenu, setToggleShowMenu] = useState<boolean>(false);
 
 	const pathname = usePathname()
 
 	const { board } = useTypedSelector(state => state?.board);
 	const { columns } = useTypedSelector(state => state?.columns);
+
+	const openModal = (modalType: string): void => {
+		handleOpenModal(modalType);
+		setToggleShowMenu(prev => !prev);
+	}
 
 	return (
 		<HeaderSection>
@@ -74,8 +69,12 @@ const Header = () => {
 					<BurgerMenu
 						top="50px"
 						right="0"
-						menuItems={menuItems}
-					/>
+						isShow={toggleShowMenu}
+						toggleShowCb={setToggleShowMenu}
+					>
+						<MenuItem onClick={() => openModal('EditBoard')}>Edit Board</MenuItem>
+						<MenuItem onClick={() => openModal('DeleteBoard')}>Delete Board</MenuItem>
+					</BurgerMenu>
 
 				</ControlsSection>
 			</HeaderMainSection>
