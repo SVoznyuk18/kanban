@@ -33,7 +33,7 @@ const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOve
   const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
 
   const openModal = () => {
-    handleOpenModal("ChangeTask");
+    handleOpenModal("CheckSubtask");
     setPayload({ subtasks: filteredSubtasksByTaskId, task, column });
   }
 

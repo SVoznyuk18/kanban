@@ -6,17 +6,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { WindowSizeContext, ModalContext } from '@/LibRoot';
-import { MobileMenu, CustomSVG, ClassicButton, DropDownMenu } from '@/ComponentsRoot';
+import { MobileMenu, CustomSVG, ClassicButton, BurgerMenu } from '@/ComponentsRoot';
 import { SVGPath } from '@/ConstantsRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 
-import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection, EditBoardControl, MenuList, MenuItem } from './Header.styled';
+import { HeaderSection, LogoSection, HeaderMainSection, TitleSection, Title, ControlsSection } from './Header.styled';
+
+const menuItems = [
+	{
+		title: "Edit Board",
+		modalType: "EditBoard",
+	},
+	{
+		title: "Edit Board",
+		modalType: "EditBoard",
+	}
+]
 
 const Header = () => {
 	const { isMobile } = useContext(WindowSizeContext);
 	const { handleOpenModal } = useContext(ModalContext);
 	const [toggleMobileMenu, setToggleMobileMenu] = useState<boolean>(false);
-	const [toggleEditBoardMenu, setToggleEditBoardMenu] = useState<boolean>(false);
 
 	const pathname = usePathname()
 
@@ -61,26 +71,16 @@ const Header = () => {
 					>
 						+ {!isMobile && 'Add New Task'}
 					</ClassicButton>
-					<EditBoardControl onClick={() => setToggleEditBoardMenu(!toggleEditBoardMenu)}>
-						<span></span>
-						<span></span>
-						<span></span>
-
-					</EditBoardControl>
-					<DropDownMenu
+					<BurgerMenu
 						top="50px"
 						right="0"
-						isActive={toggleEditBoardMenu}
-					>
-						<MenuList>
-							<MenuItem onClick={() => handleOpenModal('EditBoard')}>Edit Board</MenuItem>
-							<MenuItem onClick={() => handleOpenModal('DeleteBoard')}>Delete Board</MenuItem>
-						</MenuList>
-					</DropDownMenu>
+						menuItems={menuItems}
+					/>
+
 				</ControlsSection>
 			</HeaderMainSection>
 			{/* <MobileMenu isShow={toggleMobileMenu} /> */}
-		</HeaderSection>
+		</HeaderSection >
 	)
 }
 

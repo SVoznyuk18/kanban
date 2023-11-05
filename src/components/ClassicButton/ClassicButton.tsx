@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from './ClassicButton.styled';
 
 interface IClassicButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,4 +30,4 @@ const ClassicButton = ({ children, type, style, variant, width, height, disabled
 	)
 }
 
-export default ClassicButton;
+export default memo(ClassicButton);

@@ -1,12 +1,12 @@
 
 import React, { useContext } from "react"
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
-import { addNewTaskAction, editTaskAction, editSubtasksAction, addNewSubtasksAction, deleteSubtaskAction } from '@/ReduxRoot';
+import { editTaskAction, editSubtasksAction, addNewSubtasksAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
@@ -26,7 +26,7 @@ const EditTask: React.FC = () => {
   const { board } = useTypedSelector(state => state?.board);
   // const { tasks } = useTypedSelector(state => state?.tasks);
   // const { subtasks } = useTypedSelector(state => state?.subtasks);
-  const { payload: { subtasks: currentSubtasks, task }, handleOpenModal, setPayload } = useContext(ModalContext);
+  const { payload: { subtasks: currentSubtasks, task } } = useContext(ModalContext);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
 
@@ -110,7 +110,7 @@ const EditTask: React.FC = () => {
             type='text'
             fieldName='subtasks'
             inputName="subtaskName"
-            buttonName='Add new task'
+            buttonName='+ Add New Subtask'
             errorsMessage={errors?.subtasks && errors?.subtasks}
           />
           <CustomSelect
@@ -128,7 +128,7 @@ const EditTask: React.FC = () => {
             height="40px"
             variant="default"
           >
-            Create New Task
+            Save Task
           </ClassicButton>
         </Form>
       </FormProvider>

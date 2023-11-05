@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { memo } from 'react';
 import { SVG } from './CustomSVG.styled';
 
 interface ISvgProps {
@@ -39,4 +39,4 @@ const CustomSVG = ({ width, height, fill, path, fillHover, stroke, strokeHover, 
   )
 }
 
-export default CustomSVG;
+export default memo(CustomSVG);
