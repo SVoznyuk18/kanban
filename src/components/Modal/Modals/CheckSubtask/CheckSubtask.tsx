@@ -8,13 +8,24 @@ import { useDispatch } from "react-redux";
 import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { editTaskAction, editSubtasksAction } from '@/ReduxRoot';
-import { Checkbox, ClassicButton, CustomSelect } from "@/ComponentsRoot"
-import { ModalContent, Title, Description, Form, GroupCheckbox, Label } from './ChangeTask.styled';
+import { Checkbox, ClassicButton, CustomSelect, BurgerMenu } from "@/ComponentsRoot"
+import { ModalContent, Title, Description, Form, GroupCheckbox, Label } from './CheckSubtask.styled';
 
 interface IDataForm {
   subtasks: ISubtask[];
   status: string;
 }
+
+const menuItems = [
+  {
+    title: "Edit Task",
+    modalType: "EditTask",
+  },
+  {
+    title: "Delete Task",
+    modalType: "DeleteTask",
+  }
+]
 
 const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
 
@@ -23,8 +34,8 @@ const countDoneSubtasks = (subtasks: ISubtask[]): string => {
   return `(${amoutDoneSubtasks} of ${subtasks.length})`
 }
 
-const ChangeTask = ({ }) => {
-  const { payload: { subtasks, task, column }, handleOpenModal, setPayload } = useContext(ModalContext);
+const CheckSubtask = ({ }) => {
+  const { payload: { subtasks, task, column } } = useContext(ModalContext);
   const { columns } = useTypedSelector(state => state?.columns);
   const dispatch = useDispatch();
   const statuses = columns.map((column: IColumn) => column.columnName);
@@ -49,15 +60,15 @@ const ChangeTask = ({ }) => {
     dispatch(editSubtasksAction(subtasks));
   };
 
-  const openModal = () => {
-    // handleCloseModal();
-    handleOpenModal("EditTask");
-    setPayload({ subtasks, task, column });
-  }
-
   return (
     <ModalContent>
-      <Title>{task?.taskName}</Title>
+      <Title>{task?.taskName}
+        <BurgerMenu
+          top="50px"
+          right="0"
+          menuItems={menuItems}
+        />
+      </Title>
       <Description>{task?.description}</Description>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -89,12 +100,11 @@ const ChangeTask = ({ }) => {
             height="40px"
             variant="default"
           >
-            Edit Task
+            Save change
           </ClassicButton>
         </Form>
       </FormProvider>
-      <button onClick={() => openModal()}>sssssssssssssss</button>
     </ModalContent>
   )
 };
-export default ChangeTask;
+export default CheckSubtask;

@@ -11,6 +11,9 @@ export const ModalContent = styled.div`
 `;
 
 export const Title = styled.h3`
+display: flex;
+justify-content: space-between;
+align-items:center;
   width: 100%;
   color: ${({ theme }) => theme.textColor};
   font-size: 18px;
