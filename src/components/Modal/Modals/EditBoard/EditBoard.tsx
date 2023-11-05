@@ -1,11 +1,12 @@
+import { useContext } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useTypedSelector } from '@/UtilsRoot';
-import { editBoardValidationSchema } from '@/LibRoot';
+import { editBoardValidationSchema, ModalContext } from '@/LibRoot';
 import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
-import { ClassicButton, ClassicInput, AdditionalInput, DynamicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
 
 import { IColumn, ISubtask } from '@/TypesRoot';
@@ -31,6 +32,8 @@ const EditBoard = () => {
   const dispatch = useDispatch();
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
+  const { handleCloseModal, payload: { subtasks: currentSubtasks, task } } = useContext(ModalContext);
+
   const methods = useForm({
     mode: "all",
     resolver: yupResolver(editBoardValidationSchema),
@@ -54,6 +57,7 @@ const EditBoard = () => {
 
     if (data?.boardName !== boardFromStore?.boardName) dispatch(editBoardAction(editBoardConfigure));
     dispatch(editColumnsAction(editColumnsConfigure));
+    handleCloseModal();
   };
 
   return (

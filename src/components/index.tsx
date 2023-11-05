@@ -11,11 +11,10 @@ import Column from "./Column/Column";
 import Task from './Task/Task';
 import EmptyBoard from './EmptyBoard/EmptyBoard';
 import ClassicInput from './ClassicInput/ClassicInput';
-import AdditionalInput from './AdditionalInput/AdditionalInput';
 import Teaxtarea from './Teaxtarea/Textarea';
 import CustomSelect from './CustomSelect/CustomSelect';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Checkbox from "./Checkbox/Checkbox";
 import DynamicInput from './DynamicInput/DynamicInput';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, BurgerMenu, Checkbox, DynamicInput };
+export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, Teaxtarea, CustomSelect, BurgerMenu, Checkbox, DynamicInput };

@@ -36,9 +36,10 @@ import {
   getTasksByBoardIdAction,
   getTasksByBoardIdSuccessAction,
   taskFailureAction,
-
   editTaskAction,
-  editTaskSuccessAction
+  editTaskSuccessAction,
+  deleteTaskAction,
+  deleteTaskActionSuccess,
 } from './tasks/tasks.action';
 
 import {
@@ -93,6 +94,8 @@ export {
   taskFailureAction,
   editTaskAction,
   editTaskSuccessAction,
+  deleteTaskAction,
+  deleteTaskActionSuccess,
 
   addNewSubtasksAction,
   subtaskLoadingAction,

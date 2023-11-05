@@ -8,10 +8,11 @@ import {
   addNewTaskSuccessAction,
   getTasksByBoardIdSuccessAction,
   addNewSubtasksAction,
-  editTaskSuccessAction
+  editTaskSuccessAction,
+  deleteTaskActionSuccess
 } from '@/ReduxRoot';
 
-import { postData, getDataByParams, patchData } from '@/ApiRoot';
+import { postData, getDataByParams, patchData, deleteData } from '@/ApiRoot';
 import { ITask, ISubtask } from '@/TypesRoot';
 
 interface ITaskPayload {
@@ -77,8 +78,22 @@ function* workEditTask(action: PayloadAction<ITask>) {
   }
 }
 
+function* workDeleteTask(action: PayloadAction<ITask>) {
+  const task = action?.payload;
+  try {
+    const { success, result }: IResponseTask = yield call(deleteData, `/tasks`, task);
+
+    if (success) {
+      yield put(deleteTaskActionSuccess(result))
+    }
+  } catch (error) {
+    yield put(taskFailureAction({ errorMessage: `Failed to delete task` }));
+  }
+}
+
 export function* watchTasks() {
   yield takeLatest('ADD_NEW_TASK_ACTION', workAddNewTask);
   yield takeLatest('GET_TASKS_BY_BOARD_ID', workGetTasksByBoardId);
   yield takeLatest("EDIT_TASK", workEditTask);
+  yield takeLatest("DELETE_TASK", workDeleteTask);
 }

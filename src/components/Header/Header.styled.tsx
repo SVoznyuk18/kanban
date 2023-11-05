@@ -81,3 +81,17 @@ export const ControlsSection = styled.div`
 	align-items: center;
 	justify-content: center;
 `;
+
+export const MenuItem = styled.li`
+	width: 100%;
+	color: #828FA3;
+	font-size: 13px;
+	font-weight: 500;
+	list-style-type: none;
+	line-height: 23px;
+	cursor: pointer;
+	&:hover {
+	
+		background-color: #E4EBFA;
+	}
+`;

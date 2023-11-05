@@ -1,37 +1,29 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { useDispatch } from "react-redux";
 import { useRouter } from 'next/navigation'
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { ModalContext } from '@/LibRoot';
-import { deleteBoardAction } from '@/ReduxRoot';
+import { deleteTaskAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { ClassicButton } from "@/ComponentsRoot";
-import { ModalContent, Title, Description, ButtonsWrapper } from './DeleteBoard.styled';
+import { ModalContent, Title, Description, ButtonsWrapper } from './DeleteTask.styled';
 
-const DeleteBoard: React.FC = () => {
+const DeleteTask = () => {
 
-  const { handleCloseModal } = useContext(ModalContext);
+  const { handleCloseModal, payload: { subtasks: currentSubtasks, task } } = useContext(ModalContext);
   const dispatch = useDispatch();
-  const { push } = useRouter();
-  const { board } = useTypedSelector(state => state?.board);
 
   const handleDeleteBoard = () => {
-    dispatch(deleteBoardAction({ boardId: board?._id }));
+    dispatch(deleteTaskAction(task));
+    dispatch(deleteSubtaskAction(currentSubtasks));
     handleCloseModal();
   };
 
-  useEffect(() => {
-    if (board?._id === undefined) {
-      push('/');
-      handleCloseModal();
-    }
-  }, [board])
-
   return (
     <ModalContent>
-      <Title>Delete Board</Title>
+      <Title>Delete Task</Title>
       <Description>
-        `Are you sure you want to delete the &lsquo;${board?.boardName}&lsquo; This action will remove all columns and tasks and cannot be reversed.`
+        `Are you sure you want to delete the &lsquo;{task?.taskName}&lsquo; This action will remove all subtasks.`
       </Description>
       <ButtonsWrapper>
         <ClassicButton
@@ -57,4 +49,4 @@ const DeleteBoard: React.FC = () => {
   )
 }
 
-export default DeleteBoard;
+export default DeleteTask;

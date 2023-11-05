@@ -8,7 +8,7 @@ import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
 import { editTaskAction, editSubtasksAction, addNewSubtasksAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
-import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
 
 type ITaskFormValue = {

@@ -1,13 +1,13 @@
-import React from "react"
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import React, { useContext } from "react"
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 
-import { addNewTaskValidationSchema } from '@/LibRoot';
+import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
 import { IColumn, ISubtask } from '@/TypesRoot';
 import { addNewTaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
-import { ClassicButton, ClassicInput, AdditionalInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
 
 type ITaskFormValue = {
@@ -18,7 +18,7 @@ type ITaskFormValue = {
 };
 
 const AddNewTask: React.FC = () => {
-
+  const { handleCloseModal } = useContext(ModalContext);
   const dispatch = useDispatch();
   const { columns } = useTypedSelector(state => state?.columns);
   const { board } = useTypedSelector(state => state?.board);
@@ -46,6 +46,7 @@ const AddNewTask: React.FC = () => {
       subtasks
     }
     dispatch(addNewTaskAction(configureTaskData));
+    handleCloseModal();
   };
 
   return (
