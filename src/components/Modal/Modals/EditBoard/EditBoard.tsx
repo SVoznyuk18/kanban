@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTypedSelector } from '@/UtilsRoot';
 import { editBoardValidationSchema, ModalContext } from '@/LibRoot';
 import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
-import { ClassicButton, ClassicInput, AdditionalInput, DynamicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
 
 import { IColumn, ISubtask } from '@/TypesRoot';
