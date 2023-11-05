@@ -28,15 +28,16 @@ export const ModalContent = styled.div`
 	position: relative;
 	width: 480px;
 	min-width: 340px;
-	height: auto;
+	max-height: 600px;
 	padding: 32px ;
 	background-color: ${({ theme }) => theme.secondaryBgColor};
 	border-radius: 20px;
+	overflow: auto;
 
 	${media.mobile} {
 		padding: 24px;
+		max-height: 500px;
 	}
-
 `;
 
 export const CloseButton = styled.div`

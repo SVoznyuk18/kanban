@@ -110,7 +110,7 @@ const EditTask: React.FC = () => {
             type='text'
             fieldName='subtasks'
             inputName="subtaskName"
-            buttonName='Add new task'
+            buttonName='+ Add New Subtask'
             errorsMessage={errors?.subtasks && errors?.subtasks}
           />
           <CustomSelect
@@ -128,7 +128,7 @@ const EditTask: React.FC = () => {
             height="40px"
             variant="default"
           >
-            Create New Task
+            Save Task
           </ClassicButton>
         </Form>
       </FormProvider>

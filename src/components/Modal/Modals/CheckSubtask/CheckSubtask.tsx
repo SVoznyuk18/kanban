@@ -100,7 +100,7 @@ const CheckSubtask = ({ }) => {
             height="40px"
             variant="default"
           >
-            Save change
+            Save Task
           </ClassicButton>
         </Form>
       </FormProvider>
