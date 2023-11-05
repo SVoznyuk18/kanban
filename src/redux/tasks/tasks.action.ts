@@ -27,4 +27,6 @@ export const getTasksByBoardIdSuccessAction = createAction('tasks/getTasksByBoar
 export const editTaskAction = createAction("EDIT_TASK", (task: Partial<ITask>) => ({ payload: task }));
 export const editTaskSuccessAction = createAction("tasks/editTaskSuccess", (task: Partial<ITask>) => ({ payload: task }));
 
+export const deleteTaskAction = createAction("DELETE_TASK", (task: ITask) => ({ payload: task }));
+export const deleteTaskActionSuccess = createAction("tasks/deleteTaskSuccess", (task: ITask) => ({ payload: task }));
 

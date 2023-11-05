@@ -45,6 +45,11 @@ const tasksSlice = createSlice({
 			state.tasks = newTasks;
 			state.isLoading = false;
 		},
+		deleteTaskSuccess: (state: ITasksState, { payload }: PayloadAction<ITask>) => {
+			const newTasks = state.tasks.filter(task => task?._id !== payload?._id);
+			state.isLoading = false;
+			state.tasks = newTasks;
+		},
 	}
 });
 
