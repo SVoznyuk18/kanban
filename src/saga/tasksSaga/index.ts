@@ -8,7 +8,8 @@ import {
   addNewTaskSuccessAction,
   getTasksByBoardIdSuccessAction,
   addNewSubtasksAction,
-  editTaskSuccessAction
+  editTaskSuccessAction,
+  deleteTaskActionSuccess
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams, patchData, deleteData } from '@/ApiRoot';
@@ -81,8 +82,9 @@ function* workDeleteTask(action: PayloadAction<ITask>) {
   const task = action?.payload;
   try {
     const { success, result }: IResponseTask = yield call(deleteData, `/tasks`, task);
+
     if (success) {
-      // yield put(editTaskSuccessAction(result))
+      yield put(deleteTaskActionSuccess(result))
     }
   } catch (error) {
     yield put(taskFailureAction({ errorMessage: `Failed to delete task` }));

@@ -4,6 +4,8 @@ import { NextResponse, NextRequest } from "next/server"
 import { connectMongoDB } from "@/LibRoot";
 
 import { Task } from '@/ModelsRoot'
+import { ITask } from '@/TypesRoot';
+
 // import { NextApiRequest, NextApiResponse } from "next";
 
 
@@ -51,6 +53,27 @@ export async function PATCH(req: NextRequest) {
   }
 
   return NextResponse.json({ success: true, result: updatedTask }, {
+    status: 200, headers: {
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}
+
+export async function DELETE(req: NextRequest) {
+
+  const task: ITask = await req.json();
+
+  await connectMongoDB();
+
+  const deletedTask = await Task.findOneAndDelete({ _id: task?._id });
+
+  if (Object.keys(deletedTask).length === 0) {
+    return NextResponse.json({ success: false, msg: "Failed to delete subtasks" }, {
+      status: 404
+    })
+  }
+
+  return NextResponse.json({ success: true, result: deletedTask }, {
     status: 200, headers: {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }

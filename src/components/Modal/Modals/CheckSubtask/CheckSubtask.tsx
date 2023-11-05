@@ -25,7 +25,7 @@ const countDoneSubtasks = (subtasks: ISubtask[]): string => {
 
 const CheckSubtask = () => {
   const [toggleShowMenu, setToggleShowMenu] = useState<boolean>(false);
-  const { payload: { subtasks, task, column }, handleOpenModal } = useContext(ModalContext);
+  const { payload: { subtasks, task, column }, handleOpenModal, handleCloseModal } = useContext(ModalContext);
   const { columns } = useTypedSelector(state => state?.columns);
   const dispatch = useDispatch();
   const statuses = columns.map((column: IColumn) => column.columnName);
@@ -49,6 +49,7 @@ const CheckSubtask = () => {
 
     if (isChangedTask(task, data?.status)) dispatch(editTaskAction(configureTask));
     dispatch(editSubtasksAction(subtasks));
+    handleCloseModal();
   };
 
   const openModal = (modalType: string): void => {

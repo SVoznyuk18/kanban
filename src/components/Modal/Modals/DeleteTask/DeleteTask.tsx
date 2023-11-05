@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { ModalContext } from '@/LibRoot';
-import { deleteTaskActionSuccess, deleteSubtaskAction } from '@/ReduxRoot';
+import { deleteTaskAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { ClassicButton } from "@/ComponentsRoot";
 import { ModalContent, Title, Description, ButtonsWrapper } from './DeleteTask.styled';
 
@@ -14,8 +14,9 @@ const DeleteTask = () => {
   const dispatch = useDispatch();
 
   const handleDeleteBoard = () => {
-    // dispatch(deleteTaskActionSuccess(task));
-    // dispatch(deleteSubtaskAction(currentSubtasks));
+    dispatch(deleteTaskAction(task));
+    dispatch(deleteSubtaskAction(currentSubtasks));
+    handleCloseModal();
   };
 
   return (

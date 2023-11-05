@@ -1,4 +1,5 @@
 'use client'
+import React, { useContext } from "react"
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 import { camelCase } from 'lodash';
@@ -7,8 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IBoard } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
-import { createAddNewBoardValidationSchema } from '@/LibRoot';
-import { ClassicButton, ClassicInput, AdditionalInput, DynamicInput } from "@/ComponentsRoot";
+import { createAddNewBoardValidationSchema, ModalContext } from '@/LibRoot';
+import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
 
 import { IColumn, ISubtask } from '@/TypesRoot';
@@ -19,7 +20,7 @@ interface IBoardFormValue {
 }
 
 const AddNewBoard = () => {
-
+  const { handleCloseModal } = useContext(ModalContext);
   const dispatch = useDispatch();
   const boardsFromStore = useTypedSelector(state => state?.boards?.boards);
   const matchBoardname = (value: string): boolean => {  // check match boardName with Saved boardName
@@ -37,6 +38,7 @@ const AddNewBoard = () => {
 
   const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
     dispatch(addNewBoardsAction(data));
+    handleCloseModal();
   };
 
   return (

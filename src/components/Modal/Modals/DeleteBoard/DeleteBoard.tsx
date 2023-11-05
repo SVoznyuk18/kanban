@@ -17,6 +17,7 @@ const DeleteBoard: React.FC = () => {
 
   const handleDeleteBoard = () => {
     dispatch(deleteBoardAction({ boardId: board?._id }));
+    handleCloseModal();
   };
 
   useEffect(() => {
