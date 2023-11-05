@@ -14,6 +14,22 @@ export const GlobalStyles = createGlobalStyle`
     max-height: 100vh;
     overflow-x: hidden;
   }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: rgba(0, 0,0,0);
+    
+  }
+  ::-webkit-scrollbar{
+    width: 8px;
+    background-color: rgba(0, 0,0,0);
+    
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #635FC7;
+
+  }
 `;
 
 export const Main = styled.main`
