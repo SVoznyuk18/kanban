@@ -11,10 +11,10 @@ interface ITaskProps {
   subtasks: ISubtask[];
   draggable: boolean,
   dragOverHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
+  // dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
   dragStartHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void,
-  dragEndHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
+  // dragEndHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
+  // dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
 }
 
 const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
@@ -40,9 +40,9 @@ const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOve
   return (
     <TaskWrapper
       onDragOver={(e) => dragOverHandler(e)}
-      onDragLeave={(e) => dragLeaveHandler(e)}
+      // onDragLeave={(e) => dragLeaveHandler(e)}
       onDragStart={(e) => dragStartHandler(e, column, task)}
-      onDrop={(e) => dropHandler(e, column, task)}
+      // onDrop={(e) => dropHandler(e, column, task)}
       onClick={() => openModal()}
       draggable={draggable}
     >
