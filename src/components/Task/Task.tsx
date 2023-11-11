@@ -1,55 +1,46 @@
-import React, { DragEvent, useContext } from 'react'
+import React, { useContext, useMemo, memo } from 'react'
 
-import { ISubtask, ITask, IColumn } from '@/TypesRoot';
+import { ISubtask, ITask, IColumn, TDragStartHandler, TDragOverHandler } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
 import { ModalContext } from '@/LibRoot';
-import { useTypedSelector } from '@/UtilsRoot';
 
 interface ITaskProps {
   task: ITask,
   column: IColumn,
   subtasks: ISubtask[];
   draggable: boolean,
-  dragOverHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dragStartHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void,
-  dragEndHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
+  dragStartHandler: TDragStartHandler;
+  dragOverHandler: TDragOverHandler
 }
 
-const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
+const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragStartHandler }) => {
 
   const { handleOpenModal, setPayload } = useContext(ModalContext);
 
-  const countDoneSubTasks = (subtasks: ISubtask[]): number => {
-    let count: number = 0;
+  const filteredSubtasksByTaskId: ISubtask[] = useMemo(() => (
+    subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id)
+  ), [subtasks, task]);
 
-    subtasks.forEach((subtask: ISubtask) => {
-      if (subtask?.isCompleted) count + 1;
-    });
-    return count;
-  }
-
-  const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
+  const countDoneSubTasks: number = useMemo(() => (
+    filteredSubtasksByTaskId.reduce((accum, subtask) => subtask?.isCompleted ? accum + 1 : accum, 0)
+  ), [filteredSubtasksByTaskId]);
 
   const openModal = () => {
-    handleOpenModal("CheckSubtask");
+    handleOpenModal("ChangeSubtask");
     setPayload({ subtasks: filteredSubtasksByTaskId, task, column });
   }
 
   return (
     <TaskWrapper
-      onDragOver={(e) => dragOverHandler(e)}
-      onDragLeave={(e) => dragLeaveHandler(e)}
-      onDragStart={(e) => dragStartHandler(e, column, task)}
-      onDrop={(e) => dropHandler(e, column, task)}
-      onClick={() => openModal()}
+      onDragOver={(e) => dragOverHandler(e, column)}
+      onDragStart={(e) => dragStartHandler(e, task)}
+      onClick={openModal}
       draggable={draggable}
     >
       <Title>{task?.taskName}</Title>
-      <SubTitle>{`${countDoneSubTasks(filteredSubtasksByTaskId)} of ${filteredSubtasksByTaskId.length} subtasks`}</SubTitle>
+      <SubTitle>{`${countDoneSubTasks} of ${filteredSubtasksByTaskId.length} subtasks`}</SubTitle>
     </TaskWrapper>
   )
 }
 
-export default Task;
+export default memo(Task);

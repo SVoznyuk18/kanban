@@ -9,7 +9,7 @@ import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { editTaskAction, editSubtasksAction } from '@/ReduxRoot';
 import { Checkbox, ClassicButton, CustomSelect, BurgerMenu } from "@/ComponentsRoot"
-import { ModalContent, Title, Description, Form, GroupCheckbox, Label, MenuItem } from './CheckSubtask.styled';
+import { ModalContent, Title, Description, Form, GroupCheckbox, Label, MenuItem } from './ChangeSubtask.styled';
 
 interface IDataForm {
   subtasks: ISubtask[];
@@ -23,7 +23,7 @@ const countDoneSubtasks = (subtasks: ISubtask[]): string => {
   return `(${amoutDoneSubtasks} of ${subtasks.length})`
 }
 
-const CheckSubtask = () => {
+const ChangeSubtask = () => {
   const [toggleShowMenu, setToggleShowMenu] = useState<boolean>(false);
   const { payload: { subtasks, task, column }, handleOpenModal, handleCloseModal } = useContext(ModalContext);
   const { columns } = useTypedSelector(state => state?.columns);
@@ -108,4 +108,4 @@ const CheckSubtask = () => {
     </ModalContent>
   )
 };
-export default CheckSubtask;
+export default ChangeSubtask;
