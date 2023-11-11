@@ -1,23 +1,19 @@
-import React, { DragEvent, useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 
-import { ISubtask, ITask, IColumn } from '@/TypesRoot';
+import { ISubtask, ITask, IColumn, TDragStartHandler, TDragOverHandler } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
 import { ModalContext } from '@/LibRoot';
-import { useTypedSelector } from '@/UtilsRoot';
 
 interface ITaskProps {
   task: ITask,
   column: IColumn,
   subtasks: ISubtask[];
   draggable: boolean,
-  dragOverHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  // dragLeaveHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  dragStartHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void,
-  // dragEndHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>) => void,
-  // dropHandler: (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn, task: ITask) => void
+  dragStartHandler: TDragStartHandler;
+  dragOverHandler: TDragOverHandler
 }
 
-const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragLeaveHandler, dragStartHandler, dragEndHandler, dropHandler }) => {
+const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOverHandler, dragStartHandler }) => {
 
   const { handleOpenModal, setPayload } = useContext(ModalContext);
 
@@ -39,10 +35,8 @@ const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOve
 
   return (
     <TaskWrapper
-      onDragOver={(e) => dragOverHandler(e)}
-      // onDragLeave={(e) => dragLeaveHandler(e)}
-      onDragStart={(e) => dragStartHandler(e, column, task)}
-      // onDrop={(e) => dropHandler(e, column, task)}
+      onDragOver={(e) => dragOverHandler(e, column)}
+      onDragStart={(e) => dragStartHandler(e, task)}
       onClick={() => openModal()}
       draggable={draggable}
     >
