@@ -1,7 +1,6 @@
 'use client'
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 
-import { useDispatch } from "react-redux";
 import { ITask, IColumn, TDragStartHandler, TDropHandler, TDragOverHandler } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { Task } from '@/ComponentsRoot'
@@ -19,7 +18,8 @@ const Column: React.FC<IColumnProps> = ({ column, dragStartHandler, dropHandler,
 
   const { tasks } = useTypedSelector(state => state?.tasks);
   const { subtasks } = useTypedSelector(state => state?.subtasks);
-  const filteredTasksByColumnStatus: ITask[] = tasks.filter((task: ITask) => task?.status === column?.columnName);
+
+  const filteredTasksByColumnStatus: ITask[] = useMemo(() => tasks.filter((task: ITask) => task?.status === column?.columnName), [tasks, column]) ?? [];
 
   return (
     <ColumnWrapper >
@@ -47,4 +47,4 @@ const Column: React.FC<IColumnProps> = ({ column, dragStartHandler, dropHandler,
   )
 }
 
-export default Column;
+export default memo(Column);

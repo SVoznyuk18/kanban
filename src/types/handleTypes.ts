@@ -7,5 +7,4 @@ export type TDropHandler = (e: DragEvent<HTMLUListElement>, column: IColumn) => 
 export type TDragOverHandler = {
   (e: DragEvent<HTMLUListElement | HTMLLIElement>, column: IColumn): void;
   (e: DragEvent<HTMLUListElement | HTMLLIElement>): void;
-
 }

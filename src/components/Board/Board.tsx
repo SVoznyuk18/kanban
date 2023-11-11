@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, memo } from 'react';
 import { useDispatch } from "react-redux";
 
 import { useTypedSelector } from '@/UtilsRoot';
@@ -22,9 +22,9 @@ const Board: React.FC<IProps> = ({ params }) => {
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
   const [targetColumnId, setTargetColumnId] = useState('')
 
-  const dragStartHandler: TDragStartHandler = (e, task) => {
+  const dragStartHandler: TDragStartHandler = useCallback((e, task) => {
     setCurrentTask(task);
-  }
+  }, []);
 
   const dropHandler: TDropHandler = useCallback((e, column) => {
     e.preventDefault();
@@ -71,4 +71,4 @@ const Board: React.FC<IProps> = ({ params }) => {
   )
 }
 
-export default Board;
+export default memo(Board);

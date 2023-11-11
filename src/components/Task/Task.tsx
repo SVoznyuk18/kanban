@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, memo } from 'react'
 
 import { ISubtask, ITask, IColumn, TDragStartHandler, TDragOverHandler } from '@/TypesRoot';
 import { TaskWrapper, Title, SubTitle } from './Task.styled';
@@ -17,19 +17,16 @@ const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOve
 
   const { handleOpenModal, setPayload } = useContext(ModalContext);
 
-  const countDoneSubTasks = (subtasks: ISubtask[]): number => {
-    let count: number = 0;
+  const filteredSubtasksByTaskId: ISubtask[] = useMemo(() => (
+    subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id)
+  ), [subtasks, task]);
 
-    subtasks.forEach((subtask: ISubtask) => {
-      if (subtask?.isCompleted) count + 1;
-    });
-    return count;
-  }
-
-  const filteredSubtasksByTaskId: ISubtask[] = subtasks.filter((subtask: ISubtask) => subtask?.mainTaskId === task?._id);
+  const countDoneSubTasks: number = useMemo(() => (
+    filteredSubtasksByTaskId.reduce((accum, subtask) => subtask?.isCompleted ? accum + 1 : accum, 0)
+  ), [filteredSubtasksByTaskId]);
 
   const openModal = () => {
-    handleOpenModal("CheckSubtask");
+    handleOpenModal("ChangeSubtask");
     setPayload({ subtasks: filteredSubtasksByTaskId, task, column });
   }
 
@@ -37,13 +34,13 @@ const Task: React.FC<ITaskProps> = ({ task, subtasks, column, draggable, dragOve
     <TaskWrapper
       onDragOver={(e) => dragOverHandler(e, column)}
       onDragStart={(e) => dragStartHandler(e, task)}
-      onClick={() => openModal()}
+      onClick={openModal}
       draggable={draggable}
     >
       <Title>{task?.taskName}</Title>
-      <SubTitle>{`${countDoneSubTasks(filteredSubtasksByTaskId)} of ${filteredSubtasksByTaskId.length} subtasks`}</SubTitle>
+      <SubTitle>{`${countDoneSubTasks} of ${filteredSubtasksByTaskId.length} subtasks`}</SubTitle>
     </TaskWrapper>
   )
 }
 
-export default Task;
+export default memo(Task);
