@@ -1,6 +1,7 @@
 'use client'
-import React, { useEffect, useState, useCallback, memo } from 'react';
+import React, { useEffect, useState, useCallback, memo, useContext } from 'react';
 import { useDispatch } from "react-redux";
+import { ModalContext } from '@/LibRoot';
 
 import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction, editTaskAction } from '@/ReduxRoot';
@@ -16,6 +17,8 @@ interface IProps {
 
 const Board: React.FC<IProps> = ({ params }) => {
   const dispatch = useDispatch();
+  const { handleOpenModal, setPayload } = useContext(ModalContext);
+
   const { columns } = useTypedSelector(state => state?.columns);
   const decodeURI = decodeURIComponent(params?.url);
 
@@ -63,7 +66,7 @@ const Board: React.FC<IProps> = ({ params }) => {
         height='100%'
         variant='column'
         type='button'
-        onClick={() => console.log('test')}
+        onClick={() => handleOpenModal("AddNewColumn")}
       >
         + New Column
       </ClassicButton>

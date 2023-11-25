@@ -5,5 +5,6 @@ import DeleteBoard from './DeleteBoard/DeleteBoard';
 import ChangeSubtask from './ChangeSubtask/ChangeSubtask';
 import EditTask from './EditTask/EditTask';
 import DeleteTask from './DeleteTask/DeleteTask';
+import AddNewColumn from './AddNewColumn/AddNewColumn';
 
-export { AddNewBoard, AddNewTask, EditBoard, DeleteBoard, ChangeSubtask, EditTask, DeleteTask };
+export { AddNewBoard, AddNewTask, EditBoard, DeleteBoard, ChangeSubtask, EditTask, DeleteTask, AddNewColumn };
