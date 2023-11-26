@@ -1,7 +1,7 @@
 'use client';
 
 import styled, { css } from 'styled-components';
-import { media } from '../../utils/mediaTypes';
+import { media } from '@/UtilsRoot';
 interface IProps {
   isShowSidebar?: boolean | undefined,
   isShowButton?: boolean | undefined,
@@ -88,7 +88,7 @@ export const HideSection = styled.div`
     color: #828FA3;
   }
 
-  &: hover {
+  &:hover {
     background-color: #E4EBFA;
 
     p {

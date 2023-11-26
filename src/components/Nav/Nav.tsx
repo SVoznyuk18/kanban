@@ -1,11 +1,11 @@
 'use client';
-import React from 'react';
+import React, { memo, useContext } from 'react';
 import Link from 'next/link';
+
+import { ModalContext } from '@/LibRoot';
 import { IBoard } from '@/TypesRoot';
 import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
-
 import { NavWrapper, Title, NavList, NavItemHover, NavItemActive } from './Nav.styled';
-
 import { SVGPath } from '@/ConstantsRoot';
 
 interface INavProps {
@@ -14,6 +14,8 @@ interface INavProps {
 }
 
 const Nav: React.FC<INavProps> = ({ boards, board }) => {
+  const { handleOpenModal } = useContext(ModalContext);
+
   return (
     <NavWrapper>
       <Title>{`ALL BOARDS (${boards && boards.length})`}</Title>
@@ -49,10 +51,23 @@ const Nav: React.FC<INavProps> = ({ boards, board }) => {
             )
           }
         })}
+        <NavItemHover
+          onClick={() => handleOpenModal("AddNewBoard")}
+        >
+          <div>
+            <CustomSVG
+              width='16px'
+              height='16px'
+              fill='#828FA3'
+              path={SVGPath.board}
+            />
+            <p>+ Create New Board</p>
+          </div>
+        </NavItemHover>
       </NavList>
       <ThemeSwitcher />
     </NavWrapper>
   )
 }
 
-export default Nav;
+export default memo(Nav);

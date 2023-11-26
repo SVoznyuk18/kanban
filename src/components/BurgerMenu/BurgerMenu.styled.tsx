@@ -34,7 +34,6 @@ export const Controls = styled.button`
 `;
 
 export const Menu = styled.div<IProps>`
-
   position: absolute;
   top: ${({ top }) => top ? top : 0};
   right: ${({ right }) => right ? right : 0};

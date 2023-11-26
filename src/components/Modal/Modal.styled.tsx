@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import { media } from '../../utils/mediaTypes';
+import { media } from '@/UtilsRoot';
 
 interface Iprops {
 	isOpenModal?: boolean
