@@ -6,7 +6,7 @@ interface IAddNewColumns {
   mainBoardId: string,
   columns: IColumn[]
 };
-
+// columns: Extract<IColumn, "columnName" | "_id">[]
 interface IColumnsComfigure {
   boardId: string;
   columns?: IColumn[];

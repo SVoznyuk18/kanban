@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 
-import { AddNewBoard, AddNewTask, EditBoard, DeleteBoard, ChangeSubtask, EditTask, DeleteTask } from './Modals';
+import { AddNewBoard, AddNewTask, EditBoard, DeleteBoard, ChangeSubtask, EditTask, DeleteTask, AddNewColumn } from './Modals';
 import { ModalContext } from '@/LibRoot';
 import { ModalWrapper, ModalContent, CloseButton } from './Modal.styled';
 
@@ -31,6 +31,8 @@ const RenderModal = ({ modalType, ...props }: IModalContext) => {
       return <EditTask />
     case 'DeleteTask':
       return <DeleteTask />
+    case 'AddNewColumn':
+      return <AddNewColumn />
     default:
       return <h1>Default</h1>
   }

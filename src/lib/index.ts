@@ -4,7 +4,7 @@ import { WindowSizeProvider, WindowSizeContext } from './providers/WindowSizePro
 import { ReduxProvider } from './providers/ReduxProvider';
 import { connectMongoDB } from './mongodb';
 
-import { createAddNewBoardValidationSchema, editBoardValidationSchema, addNewTaskValidationSchema } from './validationSchemas';
+import { createAddNewBoardValidationSchema, editBoardValidationSchema, addNewTaskValidationSchema, createAddNewColumnValidationSchema } from './validationSchemas';
 
 export {
   ModalProvider,
@@ -17,5 +17,6 @@ export {
   connectMongoDB,
   createAddNewBoardValidationSchema,
   editBoardValidationSchema,
-  addNewTaskValidationSchema
+  addNewTaskValidationSchema,
+  createAddNewColumnValidationSchema
 };

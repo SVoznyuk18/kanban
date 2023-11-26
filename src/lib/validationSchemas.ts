@@ -36,7 +36,17 @@ export const addNewTaskValidationSchema = yup.object().shape({
       // columnId: yup.string().required("Required field"),
     })
   ),
-})
+});
+
+export const createAddNewColumnValidationSchema = (isMatchColumnName: (value: string) => boolean) => {
+  return yup.object().shape({
+    columnName: yup.string().required("Required field")
+      .test('unique-column-name', 'Column name must be unique', (value) => {
+        const contextIsMatch = isMatchColumnName(value);
+        return !contextIsMatch;
+      })
+  });
+};
 
 
 // subtasks: yup.array().of(
