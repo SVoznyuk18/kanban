@@ -20,6 +20,7 @@ const Header = () => {
 
 	const pathname = usePathname()
 
+	const { boards } = useTypedSelector(state => state?.boards);
 	const { board } = useTypedSelector(state => state?.board);
 	const { columns } = useTypedSelector(state => state?.columns);
 
@@ -52,7 +53,7 @@ const Header = () => {
 							fill='none'
 							stroke='#635FC7'
 							strokeWidth="2"
-							transform={toggleMobileMenu ? 'rotate(180deg)' : 'none'}
+							transform={toggleMobileMenu ? 'rotate(180deg)' : 'rotate(0)'}
 						/>
 					}
 				</TitleSection>
@@ -75,10 +76,9 @@ const Header = () => {
 						<MenuItem onClick={() => openModal('EditBoard')}>Edit Board</MenuItem>
 						<MenuItem onClick={() => openModal('DeleteBoard')}>Delete Board</MenuItem>
 					</BurgerMenu>
-
 				</ControlsSection>
 			</HeaderMainSection>
-			{/* <MobileMenu isShow={toggleMobileMenu} /> */}
+			<MobileMenu isShow={toggleMobileMenu} boards={boards} board={board} />
 		</HeaderSection >
 	)
 }

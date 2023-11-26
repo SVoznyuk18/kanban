@@ -1,18 +1,21 @@
 'use client'
 import React from "react";
 
+import { IBoard } from '@/TypesRoot';
 import { Nav } from "@/ComponentsRoot";
-
 import { MenuWrap } from './MobileMenu.styled';
 
 interface IProps {
-  isShow: boolean
+  isShow: boolean,
+  boards: IBoard[],
+  board: IBoard
+
 }
 
-const MobileMenu = ({ isShow }: IProps) => {
+const MobileMenu = ({ isShow, boards, board }: IProps) => {
   return (
     <MenuWrap isShow={isShow}>
-      {/* <Nav /> */}
+      <Nav boards={boards} board={board} />
     </MenuWrap>
   )
 }

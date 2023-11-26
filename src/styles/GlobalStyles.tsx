@@ -20,11 +20,13 @@ export const GlobalStyles = createGlobalStyle`
     background-color: rgba(0, 0,0,0);
     
   }
+  
   ::-webkit-scrollbar{
     width: 8px;
+    height: 8px;
     background-color: rgba(0, 0,0,0);
-    
   }
+    
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #635FC7;

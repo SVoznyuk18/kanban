@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../utils/mediaTypes';
+import { media } from '@/UtilsRoot';
 export const ThemeSwitcherWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ export const Switcher = styled.label`
     background-color: #fff; 
   }
 
-  &: hover {
+  &:hover {
     span {
       background-color: #A8A4FF;
     }
@@ -49,7 +49,7 @@ export const Switcher = styled.label`
     left: 0;
     transition: background-color 0.2s ease;
 
-  &:before {
+    &:before {
       position: absolute;
       content: "";
       left: 2px;

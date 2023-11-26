@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { media } from '@/UtilsRoot';
 
 interface IProps {
 	isShow: boolean
@@ -13,12 +14,15 @@ export const MenuWrap = styled.div <IProps>`
 	padding: 16px 0;
 	border-radius: 8px;
 	width: 0;
-	height: 0;
+	max-height: 0;
 	overflow: hidden;
+	transition: max-height 0.5s ease-out;
 
-	${props => props.isShow && css`
+	${media.mobile} {
+		${props => props.isShow && css`
 		width: 265px;
-		height: auto;
+		max-height: 1000px;
 		overflow: visible;
 	`}
+	}
 `;

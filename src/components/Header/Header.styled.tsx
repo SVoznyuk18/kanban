@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { media } from '../../utils/mediaTypes';
+import { media } from '@/UtilsRoot';
 
 export const HeaderSection = styled.header`
 	display: flex;
