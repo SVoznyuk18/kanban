@@ -1,38 +1,20 @@
 import { useContext } from 'react';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { IColumn, IBoardForm, IEditColumnsType, IEditBoardType } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { editBoardValidationSchema, ModalContext } from '@/LibRoot';
 import { editBoardAction, editColumnsAction } from '@/ReduxRoot'
 import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditBoard.styled';
 
-import { IColumn, ISubtask } from '@/TypesRoot';
-
-interface IBoardComfigure {
-  boardName: string;
-  boardId: string
-}
-
-interface IColumnsComfigure {
-  boardId: string;
-  columns: IColumn[];
-  deletedColumns: IColumn[];
-}
-
-interface IBoardFormValue {
-  boardName: string
-  columns?: Partial<IColumn>[];
-  deletedFields?: Partial<IColumn>[];
-}
-
 const EditBoard = () => {
   const dispatch = useDispatch();
   const boardFromStore = useTypedSelector(state => state?.board?.board);
   const columnsFromStore = useTypedSelector(state => state?.columns?.columns);
-  const { handleCloseModal, payload: { subtasks: currentSubtasks, task } } = useContext(ModalContext);
+  const { handleCloseModal } = useContext(ModalContext);
 
   const methods = useForm({
     mode: "all",
@@ -44,12 +26,12 @@ const EditBoard = () => {
   });
   const { formState: { errors } } = methods;
 
-  const onSubmit = async (data: IBoardFormValue) => {
-    const editBoardConfigure: IBoardComfigure = {
+  const onSubmit = async (data: IBoardForm) => {
+    const editBoardConfigure: IEditBoardType = {
       boardName: data?.boardName,
       boardId: boardFromStore?._id,
     };
-    const editColumnsConfigure: IColumnsComfigure = {
+    const editColumnsConfigure: IEditColumnsType = {
       boardId: boardFromStore._id,
       columns: data.columns as IColumn[],
       deletedColumns: data.deletedFields as IColumn[],

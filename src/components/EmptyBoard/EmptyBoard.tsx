@@ -2,13 +2,13 @@
 
 import { useContext } from "react";
 
-import { ModalContext } from "../../lib/providers/ModalProvider";
+import { ModalContext } from "@/LibRoot";
 import { ClassicButton } from "@/ComponentsRoot";
-
 import { Wrapper, Title } from './EmptyBoard.styled';
+
 const EmptyBoard = () => {
 
-  const { handleOpenModal, handleCloseModal, modalType, isOpenModal } = useContext(ModalContext);
+  const { handleOpenModal } = useContext(ModalContext);
 
   return (
     <Wrapper>

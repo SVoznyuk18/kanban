@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IBoard } from '@/TypesRoot';
+import { IBoard, IFailure } from '@/TypesRoot';
 
 export interface IBoartState {
   board: IBoard,
@@ -12,10 +12,6 @@ const boardInitialState = {
   isLoading: false,
   errors: ''
 };
-
-interface IFailure {
-  errorMessage: string
-}
 
 const boardSlice = createSlice({
   name: 'board',

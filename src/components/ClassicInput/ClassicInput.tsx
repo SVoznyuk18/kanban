@@ -1,9 +1,8 @@
 'use client'
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Controller, useFormContext } from "react-hook-form";
 import { Wrapper, Input, ErrorMessage, Label } from './ClassicInput.styled';
-
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   width?: string | undefined,
@@ -67,4 +66,4 @@ export const ClassicInput = ({
 }
 
 
-export default ClassicInput;
+export default memo(ClassicInput);

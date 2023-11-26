@@ -12,17 +12,8 @@ import {
   deleteBoardSuccessAction,
   deletBoardByIdSuccesAction
 } from '@/ReduxRoot';
-import { IBoard } from '@/TypesRoot';
+import { IEditBoardType, IResponseBoard } from '@/TypesRoot';
 import { getDataByParams, putData, deleteData } from '@/ApiRoot';
-
-interface IResponseBoard {
-  result: IBoard,
-  success: boolean
-}
-interface IEditBoardPayload {
-  boardName: string;
-  boardId: string;
-}
 
 function* workGetBoard(action: PayloadAction<{ boardUrl: string }>) {
   const { boardUrl } = action?.payload;
@@ -41,7 +32,7 @@ function* workGetBoard(action: PayloadAction<{ boardUrl: string }>) {
   }
 }
 
-function* workerEditBoard(action: PayloadAction<IEditBoardPayload>) {
+function* workerEditBoard(action: PayloadAction<IEditBoardType>) {
   const { boardId, boardName } = action?.payload;
 
   try {

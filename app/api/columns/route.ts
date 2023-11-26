@@ -1,19 +1,9 @@
-
 import { NextResponse, NextRequest } from "next/server"
 import mongoose from "mongoose";
 
 import { connectMongoDB } from "@/LibRoot";
-
-import { findExtraElement } from "@/UtilsRoot";
 import { Column, Task } from '@/ModelsRoot'
-import { IBoard, IColumn, ITask } from '@/TypesRoot';
-
-// import { NextApiRequest, NextApiResponse } from "next";
-
-interface IAddNewColumns {
-  mainBoardId: string,
-  columns: IColumn[]
-}
+import { IColumn, ITask, IEditColumnsType, IAddNewColumnsType } from '@/TypesRoot';
 
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
@@ -31,7 +21,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectMongoDB();
-  const { columns, mainBoardId }: IAddNewColumns = await req.json();
+  const { columns, mainBoardId }: IAddNewColumnsType = await req.json();
   console.log('columns', columns)
 
   const addedColumns = await Promise.all(columns.map(async (column) => {
@@ -50,14 +40,8 @@ export async function POST(req: Request) {
   })
 }
 
-interface IColumnsComfigure {
-  boardId: string;
-  columns: IColumn[];
-  deletedColumns: IColumn[];
-}
-
 export async function PUT(req: NextRequest) {
-  const { boardId, deletedColumns, columns }: IColumnsComfigure = await req.json();
+  const { boardId, deletedColumns, columns }: Required<IEditColumnsType> = await req.json();
 
   if (Array.isArray(deletedColumns) && deletedColumns.length > 0) {
     try {

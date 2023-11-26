@@ -2,15 +2,12 @@
 import { NextResponse, NextRequest } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
-
 import { Task } from '@/ModelsRoot'
 import { ITask } from '@/TypesRoot';
 
-// import { NextApiRequest, NextApiResponse } from "next";
-
-
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
+
   await connectMongoDB();
 
   const tasks = await Task.find().where({ mainBoardId: query }).exec();
@@ -24,8 +21,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const { taskName, description, status, mainBoardId, columnId } = await req.json();
 
-  const { taskName, description, status, mainBoardId, columnId, subtasks } = await req.json();
   await connectMongoDB();
   const addedTask = await Task.create({ taskName, description, status, mainBoardId, columnId })
 
@@ -60,7 +57,6 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-
   const task: ITask = await req.json();
 
   await connectMongoDB();

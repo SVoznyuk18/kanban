@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { IColumn } from "@/TypesRoot";
+import { IColumn, IFailure } from "@/TypesRoot";
 
 const culumnsInitialState = {
   columns: [] as IColumn[],
@@ -13,10 +13,6 @@ interface IColumnsState {
   isLoading: boolean,
   errors: string
 };
-
-interface IFailure {
-  errorMessage: string
-}
 
 const columnsSlice = createSlice({
   name: 'columns',

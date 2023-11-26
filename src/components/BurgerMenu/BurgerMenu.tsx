@@ -1,13 +1,6 @@
 'use client'
 import React, { Dispatch, SetStateAction, memo } from "react";
-
-import { ModalContext } from '@/LibRoot';
 import { BurgerMenuWrapper, Controls, Menu, MenuList } from './BurgerMenu.styled';
-
-interface IMenuItems {
-  title: string;
-  modalType: string;
-}
 
 interface IProps {
   children: React.ReactNode;
@@ -15,7 +8,6 @@ interface IProps {
   right: string;
   isShow: boolean;
   toggleShowCb: Dispatch<SetStateAction<boolean>>
-
 }
 
 const BurgerMenu = ({ children, top, right, isShow, toggleShowCb }: IProps) => {

@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
   subtaskLoadingAction,
@@ -11,20 +11,9 @@ import {
 
 import { postData, getDataByParams, patchData, deleteData } from '@/ApiRoot';
 
-import { ISubtask } from '@/TypesRoot';
+import { ISubtask, IAddSubtasksType, IResponseSubtasks } from '@/TypesRoot';
 
-interface ISubtasksPayload {
-  mainBoardId: string;
-  mainTaskId: string;
-  subtasks?: ISubtask[];
-}
-
-interface IResponseSubtasks {
-  success: boolean;
-  result: ISubtask[];
-}
-
-function* workAddNewSubtasks(action: PayloadAction<ISubtasksPayload>) {
+function* workAddNewSubtasks(action: PayloadAction<IAddSubtasksType>) {
   try {
     yield put(subtaskLoadingAction());
     const { success, result }: IResponseSubtasks = yield call(postData, '/subtasks', { ...action?.payload });

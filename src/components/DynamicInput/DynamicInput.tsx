@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { IColumn, ISubtask, ITask } from '@/TypesRoot';
@@ -95,4 +95,4 @@ const DynamicInput = ({
   )
 }
 
-export default DynamicInput;
+export default memo(DynamicInput);

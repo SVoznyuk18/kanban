@@ -2,7 +2,7 @@
 
 import { useContext, useState } from "react";
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
-import { IColumn, ITask, ISubtask } from '@/TypesRoot';
+import { IColumn, ITask, ISubtask, IChangeSubtaskForm } from '@/TypesRoot';
 import { useDispatch } from "react-redux";
 
 import { ModalContext } from '@/LibRoot';
@@ -10,11 +10,6 @@ import { useTypedSelector } from '@/UtilsRoot';
 import { editTaskAction, editSubtasksAction } from '@/ReduxRoot';
 import { Checkbox, ClassicButton, CustomSelect, BurgerMenu } from "@/ComponentsRoot"
 import { ModalContent, Title, Description, Form, GroupCheckbox, Label, MenuItem } from './ChangeSubtask.styled';
-
-interface IDataForm {
-  subtasks: ISubtask[];
-  status: string;
-}
 
 const isChangedTask = (task: ITask, status: string): boolean => task?.status !== status;
 
@@ -43,7 +38,7 @@ const ChangeSubtask = () => {
     name: "subtasks"
   });
 
-  const onSubmit = async (data: IDataForm) => {
+  const onSubmit = async (data: IChangeSubtaskForm) => {
     const { status, subtasks } = data;
     const configureTask = { ...task, status };
 

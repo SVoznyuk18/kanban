@@ -8,23 +8,8 @@ import {
   editColumnsSuccessAction,
   getTasksByBoardIdAction
 } from '@/ReduxRoot';
-import { IColumn } from '@/TypesRoot';
+import { IColumn, IEditColumnsType, IAddNewColumnsType, IResponseColumns } from '@/TypesRoot';
 import { getDataByParams, postData, putData } from '@/ApiRoot';
-
-interface IResponseColumns {
-  result: Array<IColumn>
-  success: boolean
-};
-interface IAddNewColumns {
-  mainBoardId: string,
-  columns: IColumn[]
-}
-
-interface IColumnsComfigure {
-  boardId: string;
-  columns?: IColumn[];
-  deletedColumns?: IColumn[];
-}
 
 function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
   const { mainBoardId } = action.payload;
@@ -39,7 +24,7 @@ function* workGetColumns(action: PayloadAction<{ mainBoardId: string }>) {
   }
 }
 
-function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
+function* workAddNewColumns(action: PayloadAction<IAddNewColumnsType>) {
   const { mainBoardId, columns } = action.payload;
 
   try {
@@ -51,7 +36,7 @@ function* workAddNewColumns(action: PayloadAction<IAddNewColumns>) {
   }
 }
 
-function* workEditColumns(action: PayloadAction<IColumnsComfigure>) {
+function* workEditColumns(action: PayloadAction<IEditColumnsType>) {
   const { boardId, columns, deletedColumns } = action.payload;
 
   yield put(columnsLoadingAction());

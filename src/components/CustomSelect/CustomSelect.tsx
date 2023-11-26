@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react"
+import React, { useState, memo } from "react"
 import { Controller, useFormContext } from "react-hook-form";
 
 import { Wrapper, Input, Label, DropDownMenu, OptionsList, OptionItem, ErrorMessage } from './CustomSelect.styled';
@@ -83,4 +83,4 @@ const CustomSelect = ({
   )
 }
 
-export default CustomSelect;
+export default memo(CustomSelect);

@@ -7,15 +7,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTypedSelector } from '@/UtilsRoot';
 import { addNewColumnsAction } from '@/ReduxRoot'
 import { createAddNewColumnValidationSchema, ModalContext } from '@/LibRoot';
-import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
+import { ClassicButton, ClassicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewColumn.styled';
 
-import { IColumn, ISubtask } from '@/TypesRoot';
-
-interface IAddNewColumns {
-  mainBoardId: string,
-  columns: IColumn[]
-};
+import { IColumn, IAddNewColumnsType, TAddNewColumnsForm } from '@/TypesRoot';
 
 const AddNewColumn = () => {
   const { handleCloseModal } = useContext(ModalContext);
@@ -35,13 +30,13 @@ const AddNewColumn = () => {
   });
   const { formState: { errors } } = methods;
 
-  const onSubmit: SubmitHandler<Pick<IColumn, 'columnName'>> = async (data) => {
+  const onSubmit: SubmitHandler<TAddNewColumnsForm> = async (data) => {
     const configureData = {
       mainBoardId: boardFromStore?._id,
       columns: [data]
     }
 
-    dispatch(addNewColumnsAction(configureData as IAddNewColumns));
+    dispatch(addNewColumnsAction(configureData as IAddNewColumnsType));
     handleCloseModal();
   };
 

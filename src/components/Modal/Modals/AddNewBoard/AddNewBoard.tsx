@@ -5,19 +5,12 @@ import { useDispatch } from "react-redux";
 import { camelCase } from 'lodash';
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { IBoard } from '@/TypesRoot';
+import { IBoard, IBoardForm, IAddNewBoardType } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { addNewBoardsAction } from '@/ReduxRoot'
 import { createAddNewBoardValidationSchema, ModalContext } from '@/LibRoot';
 import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewBoard.styled';
-
-import { IColumn, ISubtask } from '@/TypesRoot';
-
-interface IBoardFormValue {
-  boardName: string
-  columns?: Partial<IColumn>[];
-}
 
 const AddNewBoard = () => {
   const { handleCloseModal } = useContext(ModalContext);
@@ -36,8 +29,8 @@ const AddNewBoard = () => {
   });
   const { formState: { errors } } = methods;
 
-  const onSubmit: SubmitHandler<IBoardFormValue> = async (data) => {
-    dispatch(addNewBoardsAction(data));
+  const onSubmit: SubmitHandler<IBoardForm> = async (data) => {
+    dispatch(addNewBoardsAction(data as IAddNewBoardType));
     handleCloseModal();
   };
 
