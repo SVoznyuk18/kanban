@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ITask } from "@/TypesRoot";
+import { ITask, IFailure } from "@/TypesRoot";
 
 const tasksInitialState = {
 	tasks: [] as ITask[],
@@ -12,10 +12,6 @@ interface ITasksState {
 	tasks: ITask[];
 	isLoading: boolean;
 	errors: string
-};
-
-interface IFailure {
-	errorMessage: string
 };
 
 const tasksSlice = createSlice({

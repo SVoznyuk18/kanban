@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { memo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { Wrapper, Label, Input } from './Checbox.styled';
@@ -46,4 +46,4 @@ const Checkbox = ({ htmlFor, label, id, name, checked }: InputProps) => {
   )
 };
 
-export default Checkbox;
+export default memo(Checkbox);

@@ -4,18 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
-import { IColumn, ISubtask } from '@/TypesRoot';
+import { IColumn, ITaskForm } from '@/TypesRoot';
 import { addNewTaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewTask.styled';
-
-type ITaskFormValue = {
-  taskName: string;
-  description: string;
-  status: string;
-  subtasks?: Partial<ISubtask>[];
-};
 
 const AddNewTask: React.FC = () => {
   const { handleCloseModal } = useContext(ModalContext);
@@ -34,7 +27,7 @@ const AddNewTask: React.FC = () => {
   });
   const { formState: { errors } } = methods;
 
-  const onSubmit = async (data: ITaskFormValue) => {
+  const onSubmit = async (data: ITaskForm) => {
     const { taskName, description, status, subtasks } = data;
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
     const configureTaskData = {

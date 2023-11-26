@@ -2,16 +2,11 @@ import { NextResponse, NextRequest } from "next/server"
 
 import { connectMongoDB } from "@/LibRoot";
 import { Subtask } from '@/ModelsRoot'
-import { ISubtask } from '@/TypesRoot';
-
-interface ISubtasksPayload {
-  mainBoardId: string;
-  mainTaskId: string;
-  subtasks: ISubtask[];
-}
+import { ISubtask, IAddSubtasksType } from '@/TypesRoot';
 
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('mainBoardId');
+
   await connectMongoDB();
 
   const subtasks = await Subtask.find().where({ mainBoardId: query }).exec();
@@ -25,8 +20,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: Request) {
+  const { mainBoardId, subtasks, mainTaskId }: Required<IAddSubtasksType> = await req.json();
+
   await connectMongoDB();
-  const { mainBoardId, subtasks, mainTaskId }: ISubtasksPayload = await req.json();
 
   const addedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
     const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId });
@@ -66,7 +62,6 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-
   const subtasks: ISubtask[] = await req.json();
 
   await connectMongoDB();

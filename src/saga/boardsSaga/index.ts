@@ -7,25 +7,10 @@ import {
   getAllBoardsSuccessAction,
   addNewColumnsAction
 } from '@/ReduxRoot';
-import { IBoard, IColumn } from '@/TypesRoot';
+import { IAddNewBoardType, IResponseBoard, IResponseAllBoards } from '@/TypesRoot';
 import { postData, getData } from '@/ApiRoot';
 
-interface INewBoard {
-  boardName: string;
-  columns: IColumn[];
-}
-
-interface IResponseBoard {
-  result: IBoard,
-  success: boolean
-}
-
-interface IResponseAllBoards {
-  result: Array<IBoard>
-  success: boolean
-}
-
-function* workAddNewBoards(action: PayloadAction<INewBoard>) {
+function* workAddNewBoards(action: PayloadAction<IAddNewBoardType>) {
   const { boardName, columns } = action?.payload;
 
   try {

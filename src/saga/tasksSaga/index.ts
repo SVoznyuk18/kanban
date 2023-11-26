@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { isEmpty } from 'lodash';
 import { PayloadAction } from "@reduxjs/toolkit";
 
 import {
@@ -13,28 +12,9 @@ import {
 } from '@/ReduxRoot';
 
 import { postData, getDataByParams, patchData, deleteData } from '@/ApiRoot';
-import { ITask, ISubtask } from '@/TypesRoot';
+import { ITask, IAddTaskType, IResponseTask, IResponseAllTasks } from '@/TypesRoot';
 
-interface ITaskPayload {
-  taskName: string;
-  description: string;
-  status: string;
-  mainBoardId: string;
-  columnId: string;
-  subtasks?: ISubtask[];
-}
-
-interface IResponseTask {
-  success: boolean;
-  result: ITask;
-}
-
-interface IResponseAllTasks {
-  success: boolean;
-  result: ITask[];
-}
-
-function* workAddNewTask(action: PayloadAction<ITaskPayload>) {
+function* workAddNewTask(action: PayloadAction<IAddTaskType>) {
   const { taskName, description, status, mainBoardId, columnId, subtasks } = action?.payload;
 
   try {

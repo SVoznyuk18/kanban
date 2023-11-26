@@ -5,27 +5,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 
 import { addNewTaskValidationSchema, ModalContext } from '@/LibRoot';
-import { IColumn, ISubtask } from '@/TypesRoot';
+import { IColumn, ISubtask, ITaskForm } from '@/TypesRoot';
 import { editTaskAction, editSubtasksAction, addNewSubtasksAction, deleteSubtaskAction } from '@/ReduxRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { ClassicButton, ClassicInput, Teaxtarea, CustomSelect, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './EditTask.styled';
-
-type ITaskFormValue = {
-  taskName: string;
-  description: string;
-  status: string;
-  subtasks?: Partial<ISubtask>[];
-  deletedFields?: ISubtask[];
-};
 
 const EditTask: React.FC = () => {
 
   const dispatch = useDispatch();
   const { columns } = useTypedSelector(state => state?.columns);
   const { board } = useTypedSelector(state => state?.board);
-  // const { tasks } = useTypedSelector(state => state?.tasks);
-  // const { subtasks } = useTypedSelector(state => state?.subtasks);
   const { payload: { subtasks: currentSubtasks, task } } = useContext(ModalContext);
 
   const statuses = columns.map((column: IColumn) => column.columnName);
@@ -55,7 +45,7 @@ const EditTask: React.FC = () => {
     return [extraItems, basicItems];
   }
 
-  const onSubmit = async (data: ITaskFormValue) => {
+  const onSubmit = async (data: ITaskForm) => {
     const { taskName, description, status, subtasks, deletedFields } = data;
 
     const filteredColumnBycolumnName = columns.filter(column => column?.columnName === status);
