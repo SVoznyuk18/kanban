@@ -5,12 +5,17 @@ import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useTypedSelector } from '@/UtilsRoot';
-import { addNewBoardsAction } from '@/ReduxRoot'
+import { addNewColumnsAction } from '@/ReduxRoot'
 import { createAddNewColumnValidationSchema, ModalContext } from '@/LibRoot';
 import { ClassicButton, ClassicInput, DynamicInput } from "@/ComponentsRoot";
 import { ModalContent, Title, Form } from './AddNewColumn.styled';
 
 import { IColumn, ISubtask } from '@/TypesRoot';
+
+interface IAddNewColumns {
+  mainBoardId: string,
+  columns: IColumn[]
+};
 
 const AddNewColumn = () => {
   const { handleCloseModal } = useContext(ModalContext);
@@ -31,10 +36,13 @@ const AddNewColumn = () => {
   const { formState: { errors } } = methods;
 
   const onSubmit: SubmitHandler<Pick<IColumn, 'columnName'>> = async (data) => {
-    // dispatch(addNewBoardsAction(data));
-    // handleCloseModal();
-    console.log('data', data);
-    console.log('boardFromStore', boardFromStore);
+    const configureData = {
+      mainBoardId: boardFromStore?._id,
+      columns: [data]
+    }
+
+    dispatch(addNewColumnsAction(configureData as IAddNewColumns));
+    handleCloseModal();
   };
 
   return (
