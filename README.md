@@ -31,6 +31,7 @@
 
 - [NEXT 13.4](https://nextjs.org/docs);
 - [TypeScript](https://www.typescriptlang.org/docs/);
+- [Mongoose](https://mongoosejs.com/docs/);
 - [React-Hook-Form](https://react-hook-form.com/);
 - [Redux](https://redux-toolkit.js.org/);
 - [Redux-Saga](https://redux-saga.js.org/);
