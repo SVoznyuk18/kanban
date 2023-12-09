@@ -4,6 +4,7 @@ export interface ISubtask {
   isCompleted: boolean,
   mainBoardId: string,
   mainTaskId: string,
+  mainColumnId: string,
   createdAt: Date,
   updatedAt: Date
 }
@@ -69,6 +70,7 @@ export interface IAddSubtasksType {
   mainBoardId?: string;
   mainTaskId?: string;
   subtasks?: Partial<ISubtask>[];
+  mainColumnId?: string;
 };
 
 export interface IFailure {

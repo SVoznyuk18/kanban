@@ -27,7 +27,8 @@ function* workAddNewTask(action: PayloadAction<IAddTaskType>) {
         const subtasksConfigure = {
           mainBoardId,
           subtasks,
-          mainTaskId: result?._id
+          mainTaskId: result?._id,
+          mainColumnId: columnId
         }
         yield put(addNewSubtasksAction(subtasksConfigure));
       }
