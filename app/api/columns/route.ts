@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server"
 import mongoose from "mongoose";
 
 import { connectMongoDB } from "@/LibRoot";
-import { Column, Task } from '@/ModelsRoot'
+import { Column, Task, Subtask } from '@/ModelsRoot'
 import { IColumn, ITask, IEditColumnsType, IAddNewColumnsType } from '@/TypesRoot';
 
 export async function GET(req: NextRequest) {
@@ -46,7 +46,8 @@ export async function PUT(req: NextRequest) {
     try {
       await Promise.all(deletedColumns.map(async (column) => {
         await Column.deleteOne({ _id: column?._id });
-        await Task.deleteOne({ columnId: column });
+        await Task.deleteMany({ columnId: column });
+        await Subtask.deleteMany({ mainColumnId: column?._id });
       }))
     } catch (error) {
       console.error('Помилка при видаленні стовпців', error);

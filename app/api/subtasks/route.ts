@@ -20,12 +20,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: Request) {
-  const { mainBoardId, subtasks, mainTaskId }: Required<IAddSubtasksType> = await req.json();
+  const { mainBoardId, subtasks, mainTaskId, mainColumnId }: Required<IAddSubtasksType> = await req.json();
 
   await connectMongoDB();
 
   const addedSubtasks = await Promise.all(subtasks.map(async (subtask) => {
-    const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId });
+    const createdSubtasks = await Subtask.create({ subtaskName: subtask?.subtaskName, mainBoardId, mainTaskId, mainColumnId });
     return createdSubtasks;
   }))
 

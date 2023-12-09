@@ -61,7 +61,8 @@ const EditTask: React.FC = () => {
     const configureAddNewSubtasks = {
       mainBoardId: board?._id,
       mainTaskId: task?._id,
-      subtasks: extraSubtasks
+      subtasks: extraSubtasks,
+      mainColumnId: filteredColumnBycolumnName[0]._id
     }
     dispatch(editTaskAction(configureTaskData)); //edit task
     dispatch(editSubtasksAction(basicSubtasks)); //edit subtasks
