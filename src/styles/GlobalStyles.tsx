@@ -1,6 +1,7 @@
 'use client';
 
 import styled, { createGlobalStyle } from "styled-components";
+import { media } from '@/UtilsRoot';
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -12,7 +13,6 @@ export const GlobalStyles = createGlobalStyle`
   html, body {
     max-width: 100vw;
     max-height: 100vh;
-    overflow-x: hidden;
   }
 
   ::-webkit-scrollbar-track {
@@ -39,4 +39,8 @@ export const Main = styled.main`
   height: calc(100vh - 96px);
   background-color: ${({ theme }) => theme.primaryBgColor};
   display: flex;
+
+  ${media.mobile} {
+    height: calc(100vh - 63px);
+	}
 `;

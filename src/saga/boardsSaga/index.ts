@@ -20,7 +20,6 @@ function* workAddNewBoards(action: PayloadAction<IAddNewBoardType>) {
     yield put(addNewBoardsSuccessAction(allBoards?.result));
 
     if (boardResponse?.success && columns.length > 0) {
-      console.log('columns', columns)
       yield put(addNewColumnsAction({ mainBoardId: boardResponse?.result?._id, columns }))
     } else {
       throw Error()
