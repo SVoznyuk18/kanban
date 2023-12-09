@@ -36,7 +36,8 @@ export const ModalContent = styled.div`
 
 	${media.mobile} {
 		padding: 24px;
-		max-height: 500px;
+		max-height: 440px;
+		min-width: 300px;
 	}
 `;
 

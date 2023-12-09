@@ -17,4 +17,23 @@ import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Checkbox from "./Checkbox/Checkbox";
 import DynamicInput from './DynamicInput/DynamicInput';
 
-export { Modal, Sidebar, ThemeSwitcher, Nav, CustomSVG, Header, MobileMenu, ClassicButton, Board, Column, Task, EmptyBoard, ClassicInput, Teaxtarea, CustomSelect, BurgerMenu, Checkbox, DynamicInput };
+export {
+  Modal,
+  Sidebar,
+  ThemeSwitcher,
+  Nav,
+  CustomSVG,
+  Header,
+  MobileMenu,
+  ClassicButton,
+  Board,
+  Column,
+  Task,
+  EmptyBoard,
+  ClassicInput,
+  Teaxtarea,
+  CustomSelect,
+  BurgerMenu,
+  Checkbox,
+  DynamicInput
+};

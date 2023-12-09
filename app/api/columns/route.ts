@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: Request) {
   await connectMongoDB();
   const { columns, mainBoardId }: IAddNewColumnsType = await req.json();
-  console.log('columns', columns)
 
   const addedColumns = await Promise.all(columns.map(async (column) => {
     const createdColumns = await Column.create({ columnName: column?.columnName, mainBoardId });
