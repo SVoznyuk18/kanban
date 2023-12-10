@@ -3,6 +3,7 @@ import { RootLayoutThemeProvider, ThemeContext } from './providers/ThemeProvider
 import { WindowSizeProvider, WindowSizeContext } from './providers/WindowSizeProvider';
 import { ReduxProvider } from './providers/ReduxProvider';
 import { connectMongoDB } from './mongodb';
+import ToastHoc from "./HOCs/ToastHoc";
 
 import { createAddNewBoardValidationSchema, editBoardValidationSchema, addNewTaskValidationSchema, createAddNewColumnValidationSchema } from './validationSchemas';
 
@@ -18,5 +19,6 @@ export {
   createAddNewBoardValidationSchema,
   editBoardValidationSchema,
   addNewTaskValidationSchema,
-  createAddNewColumnValidationSchema
+  createAddNewColumnValidationSchema,
+  ToastHoc
 };

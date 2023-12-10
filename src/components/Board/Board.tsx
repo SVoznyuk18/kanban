@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback, memo, useContext } from 'react';
 import { useDispatch } from "react-redux";
 import { ModalContext } from '@/LibRoot';
-
 import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction, editTaskAction } from '@/ReduxRoot';
 import { IColumn, ITask, TDragStartHandler, TDropHandler, TDragOverHandler } from '@/TypesRoot';
@@ -18,7 +17,6 @@ interface IProps {
 const Board: React.FC<IProps> = ({ params }) => {
   const dispatch = useDispatch();
   const { handleOpenModal } = useContext(ModalContext);
-
   const { columns } = useTypedSelector(state => state?.columns);
   const decodeURI = decodeURIComponent(params?.url);
 
@@ -36,7 +34,7 @@ const Board: React.FC<IProps> = ({ params }) => {
       const configureTask = { ...currentTask, columnId: column?._id, status: column?.columnName };
       dispatch(editTaskAction(configureTask))
     }
-  }, [currentTask]);
+  }, [currentTask, dispatch]);
 
   const dragOverHandler: TDragOverHandler = useCallback((e, column) => {
     e.preventDefault();
@@ -45,7 +43,7 @@ const Board: React.FC<IProps> = ({ params }) => {
 
   useEffect(() => {
     if (params?.url) dispatch(getBoardAction({ boardUrl: decodeURI }));
-  }, [dispatch, params]);
+  }, [decodeURI, dispatch, params]);
 
   return (
     <BoardWrapper>

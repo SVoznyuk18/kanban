@@ -1,7 +1,7 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 import { StyledComponentsRegistry } from '@/UtilsRoot';
-import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider, ReduxProvider } from '@/LibRoot'
+import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider, ReduxProvider, ToastHoc } from '@/LibRoot'
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
 
@@ -24,11 +24,13 @@ export default async function RootLayout({
             <RootLayoutThemeProvider>
               <ReduxProvider>
                 <ModalProvider>
-                  <Header />
-                  <Main>
-                    <Sidebar />
-                    {children}
-                  </Main>
+                  <ToastHoc>
+                    <Header />
+                    <Main>
+                      <Sidebar />
+                      {children}
+                    </Main>
+                  </ToastHoc>
                   <Modal />
                   <GlobalStyles />
                 </ModalProvider>
