@@ -36,3 +36,4 @@
 - [Redux](https://redux-toolkit.js.org/);
 - [Redux-Saga](https://redux-saga.js.org/);
 - [Styled-Components](https://styled-components.com/);
+- [React-Toastify](https://www.npmjs.com/package/react-toastify);
