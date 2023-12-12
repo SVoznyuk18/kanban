@@ -1,9 +1,15 @@
 import type { Metadata } from 'next';
-
+import { Plus_Jakarta_Sans } from "@next/font/google"
 import { StyledComponentsRegistry } from '@/UtilsRoot';
 import { RootLayoutThemeProvider, ModalProvider, WindowSizeProvider, ReduxProvider, ToastHoc } from '@/LibRoot'
 import { GlobalStyles, Main } from '@/StylesRoot';
 import { Modal, Sidebar, Header } from '@/ComponentsRoot';
+
+const jacarta = Plus_Jakarta_Sans({
+  weight: ['500', '600', '700'],
+  style: "normal",
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
   title: 'Kanban',
@@ -18,7 +24,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className={jacarta.className}>
         <StyledComponentsRegistry>
           <WindowSizeProvider>
             <RootLayoutThemeProvider>
