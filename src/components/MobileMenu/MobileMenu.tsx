@@ -8,14 +8,14 @@ import { MenuWrap } from './MobileMenu.styled';
 interface IProps {
   isShow: boolean,
   boards: IBoard[],
-  board: IBoard
-
+  board: IBoard;
+  isLoading: boolean;
 }
 
-const MobileMenu = ({ isShow, boards, board }: IProps) => {
+const MobileMenu = ({ isShow, boards, board, isLoading }: IProps) => {
   return (
     <MenuWrap isShow={isShow}>
-      <Nav boards={boards} board={board} />
+      <Nav boards={boards} board={board} isLoading={isLoading} />
     </MenuWrap>
   )
 }

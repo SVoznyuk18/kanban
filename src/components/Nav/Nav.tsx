@@ -4,22 +4,26 @@ import Link from 'next/link';
 
 import { ModalContext } from '@/LibRoot';
 import { IBoard } from '@/TypesRoot';
-import { ThemeSwitcher, CustomSVG } from '@/ComponentsRoot';
+import { ThemeSwitcher, CustomSVG, SkeletonLoader } from '@/ComponentsRoot';
 import { NavWrapper, Title, NavList, NavItemHover, NavItemActive } from './Nav.styled';
 import { SVGPath } from '@/ConstantsRoot';
 
 interface INavProps {
-  boards: Array<IBoard>
-  board: IBoard
+  boards: Array<IBoard>;
+  board: IBoard;
+  isLoading: boolean;
 }
 
-const Nav: React.FC<INavProps> = ({ boards, board }) => {
+const Nav: React.FC<INavProps> = ({ boards, board, isLoading }) => {
   const { handleOpenModal } = useContext(ModalContext);
 
   return (
     <NavWrapper>
       <Title>{`ALL BOARDS (${boards && boards.length})`}</Title>
       <NavList>
+        {
+          isLoading && <SkeletonLoader count={5} variants="board" />
+        }
         {boards && boards.map(boardItem => {
           if (boardItem?._id === board?._id) {
             return (

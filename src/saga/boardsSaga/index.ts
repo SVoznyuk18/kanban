@@ -16,13 +16,11 @@ function* workAddNewBoards(action: PayloadAction<IAddNewBoardType>) {
   try {
     yield put(boardsLoadingAction());
     const boardResponse: IResponseBoard | undefined = yield call(postData, '/boards', { boardName });
+    const allBoards: IResponseAllBoards = yield call(getData, '/boards');
+    yield put(addNewBoardsSuccessAction(allBoards?.result));
 
     if (boardResponse?.success && columns.length > 0) {
-      const allBoards: IResponseAllBoards = yield call(getData, '/boards');
-      yield put(addNewBoardsSuccessAction(allBoards?.result));
       yield put(addNewColumnsAction({ mainBoardId: boardResponse?.result?._id, columns }))
-    } else {
-      throw Error()
     }
   } catch (error) {
     yield put(boardsFailureAction({ errorMessage: `Failed to create board ${boardName}` }));
