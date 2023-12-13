@@ -5,7 +5,7 @@ import { ModalContext } from '@/LibRoot';
 import { useTypedSelector } from '@/UtilsRoot';
 import { getBoardAction, editTaskAction } from '@/ReduxRoot';
 import { IColumn, ITask, TDragStartHandler, TDropHandler, TDragOverHandler } from '@/TypesRoot';
-import { ClassicButton, Column } from "@/ComponentsRoot";
+import { ClassicButton, Column, SkeletonLoader } from "@/ComponentsRoot";
 import { BoardWrapper } from './Board.styled';
 
 interface IProps {
@@ -17,7 +17,7 @@ interface IProps {
 const Board: React.FC<IProps> = ({ params }) => {
   const dispatch = useDispatch();
   const { handleOpenModal } = useContext(ModalContext);
-  const { columns } = useTypedSelector(state => state?.columns);
+  const { columns, isLoading } = useTypedSelector(state => state?.columns);
   const decodeURI = decodeURIComponent(params?.url);
 
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
@@ -47,6 +47,9 @@ const Board: React.FC<IProps> = ({ params }) => {
 
   return (
     <BoardWrapper>
+      {
+        isLoading && <SkeletonLoader count={2} variants="column" />
+      }
       {columns?.length > 0 && columns?.map((column: IColumn) => (
         <Column
           key={column?._id}
