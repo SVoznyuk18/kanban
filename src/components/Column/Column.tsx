@@ -3,7 +3,7 @@ import React, { memo, useMemo } from 'react';
 
 import { ITask, IColumn, TDragStartHandler, TDropHandler, TDragOverHandler } from '@/TypesRoot';
 import { useTypedSelector } from '@/UtilsRoot';
-import { Task } from '@/ComponentsRoot'
+import { Task, SkeletonLoader } from '@/ComponentsRoot'
 import { ColumnWrapper, Title, TasksList } from './Column.styled';
 
 interface IColumnProps {
@@ -16,7 +16,7 @@ interface IColumnProps {
 
 const Column: React.FC<IColumnProps> = ({ column, dragStartHandler, dropHandler, dragOverHandler, targetColumnId }) => {
 
-  const { tasks } = useTypedSelector(state => state?.tasks);
+  const { tasks, isLoading } = useTypedSelector(state => state?.tasks);
   const { subtasks } = useTypedSelector(state => state?.subtasks);
 
   const filteredTasksByColumnStatus: ITask[] = useMemo(() => tasks.filter((task: ITask) => task?.status === column?.columnName), [tasks, column]) ?? [];
@@ -29,6 +29,9 @@ const Column: React.FC<IColumnProps> = ({ column, dragStartHandler, dropHandler,
         onDragOver={(e) => dragOverHandler(e, column)}
         onDrop={(e) => dropHandler(e, column)}
       >
+        {
+          isLoading && <SkeletonLoader count={3} variants="task" />
+        }
         {
           filteredTasksByColumnStatus.length > 0 && filteredTasksByColumnStatus.map(task => (
             <Task

@@ -13,7 +13,7 @@ const Sidebar: React.FC = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const { boards } = useTypedSelector(state => state?.boards);
+  const { boards, isLoading } = useTypedSelector(state => state?.boards);
   const { board } = useTypedSelector(state => state?.board);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
           alt='showSidebarIcon'
         />
       </ToggleSideBar>
-      <Nav boards={boards} board={board} />
+      <Nav boards={boards} board={board} isLoading={isLoading} />
       <HideSection onClick={() => setToggleSidebar(!toggleSidebar)}>
         <Image
           width='16'

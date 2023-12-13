@@ -16,6 +16,7 @@ import CustomSelect from './CustomSelect/CustomSelect';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Checkbox from "./Checkbox/Checkbox";
 import DynamicInput from './DynamicInput/DynamicInput';
+import SkeletonLoader from "./SkeletonLoader/SkeletonLoader";
 
 export {
   Modal,
@@ -35,5 +36,6 @@ export {
   CustomSelect,
   BurgerMenu,
   Checkbox,
-  DynamicInput
+  DynamicInput,
+  SkeletonLoader
 };

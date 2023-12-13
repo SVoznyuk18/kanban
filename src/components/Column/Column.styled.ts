@@ -25,7 +25,7 @@ export const Title = styled.h3`
 `;
 
 export const TasksList = styled.ul<IProps>`
-paDding: 8px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   align-items: start;

@@ -20,7 +20,7 @@ const Header = () => {
 
 	const pathname = usePathname()
 
-	const { boards } = useTypedSelector(state => state?.boards);
+	const { boards, isLoading } = useTypedSelector(state => state?.boards);
 	const { board } = useTypedSelector(state => state?.board);
 	const { columns } = useTypedSelector(state => state?.columns);
 
@@ -78,7 +78,7 @@ const Header = () => {
 					</BurgerMenu>
 				</ControlsSection>
 			</HeaderMainSection>
-			<MobileMenu isShow={toggleMobileMenu} boards={boards} board={board} />
+			<MobileMenu isShow={toggleMobileMenu} boards={boards} board={board} isLoading={isLoading} />
 		</HeaderSection >
 	)
 }

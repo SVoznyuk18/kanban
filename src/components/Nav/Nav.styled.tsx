@@ -27,7 +27,6 @@ export const Title = styled.p`
 
 export const NavList = styled.ul`
   padding-right: 24px;
-  /* margin-bottom: 30px; */
   display: flex;
   flex-direction: column;
   align-self: start;
@@ -38,7 +37,6 @@ export const NavList = styled.ul`
   height: calc(100% - 30px);
   ${media.mobile} {
     height: calc(100% - 10px);
-    /* margin-bottom: 10px; */
 	}
 `;
 

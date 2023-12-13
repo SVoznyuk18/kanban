@@ -47,7 +47,6 @@ const Board: React.FC<IProps> = ({ params }) => {
 
   return (
     <BoardWrapper>
-      {/* <h1>{result?.boardName}</h1> */}
       {columns?.length > 0 && columns?.map((column: IColumn) => (
         <Column
           key={column?._id}
