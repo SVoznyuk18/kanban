@@ -11,7 +11,7 @@ export const ColumnWrapper = styled.div`
   align-items: start;
   justify-content: start;
   row-gap: 24px;
-  min-width: 280px;
+  width: auto;
   height: 100%;
 `;
 
@@ -34,6 +34,7 @@ export const TasksList = styled.ul<IProps>`
   height: 100%;
   row-gap: 20px;
   border-radius: 24px;
+  overflow-y: auto;
 
   ${({ columnTarget }) => columnTarget && css`
     box-shadow: 0px 1px 9px 3px rgba(99,95,199,0.86);
