@@ -5,11 +5,11 @@ export const TaskWrapper = styled.li`
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: center;
+  justify-content: space-between;
   row-gap: 8px;
   padding: 16px 23px;
-  width: 100%;
-  height: 88px;
+  width: 280px;
+  height: auto;
   border-radius: 8px;
   list-style-type: none;
   background-color: ${({ theme }) => theme.secondaryBgColor};
