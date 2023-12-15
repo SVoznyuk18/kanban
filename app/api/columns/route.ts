@@ -23,10 +23,11 @@ export async function POST(req: Request) {
   await connectMongoDB();
   const { columns, mainBoardId }: IAddNewColumnsType = await req.json();
 
-  const addedColumns = await Promise.all(columns.map(async (column) => {
-    const createdColumns = await Column.create({ columnName: column?.columnName, mainBoardId });
-    return createdColumns
-  }))
+  const prepareColumns = columns.map(column => (
+    { columnName: column?.columnName, mainBoardId }
+  ));
+
+  const addedColumns = await Column.insertMany(prepareColumns);
 
   if (!addedColumns) {
     throw Error("Failed to create partner");
